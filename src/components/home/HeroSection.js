@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     height: '100%',
     padding: '6rem 2rem',
-    gap: '7rem',
+    gap: '5rem',
     alignItems: 'center',
     justifyContent: 'center',
     [theme.breakpoints.down('md')]: {
@@ -17,16 +17,20 @@ const useStyles = makeStyles((theme) => ({
   },
   leftContainer: {
     display: 'flex',
-    flexBasis: '30%',
+    flexBasis: '40%',
     flexDirection: 'column',
     gap: '1.8rem',
     [theme.breakpoints.down('md')]: {
+      flexBasis: '100%',
       alignItems: 'center'
     }
   },
   createButton: {
     [theme.breakpoints.down('md')]: {
       width: '75%'
+    },
+    [theme.breakpoints.down('md')]: {
+      width: '100%'
     }
   },
   heroImage: {
@@ -36,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
       height: '18em'
     },
     [theme.breakpoints.down('sm')]: {
-      height: '12.5em'
+      height: '10.5em'
     }
   }
 }));
