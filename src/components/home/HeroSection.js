@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     [theme.breakpoints.down('md')]: {
       gap: '3rem',
+      padding: '2rem',
       flexDirection: 'column'
     }
   },
@@ -33,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: 'cover',
     [theme.breakpoints.down('md')]: {
       height: '18em'
+    },
+    [theme.breakpoints.down('sm')]: {
+      height: '12.5em'
     }
   }
 }));
