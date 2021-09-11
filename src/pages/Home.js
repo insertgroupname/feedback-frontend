@@ -1,19 +1,8 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Link,
-  TextField,
-  Typography
-} from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import HeroSection from '../components/home/HeroSection';
 
 const Home = () => {
-  const navigate = useNavigate();
-
   return (
     <>
       <Helmet>

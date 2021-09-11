@@ -61,6 +61,7 @@ const HeroSection = () => {
       <Box>
         <img
           src="static/images/undraw_Pitching_re_fpgk.svg"
+          alt="hero-section"
           className={classes.heroImage}
         />
       </Box>
