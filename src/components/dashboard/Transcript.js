@@ -1,7 +1,12 @@
-import { v4 as uuid } from 'uuid';
+import { useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import reactStringReplace from 'react-string-replace';
-
+import moment from 'moment';
+import IconButton from '@material-ui/core/IconButton';
+import FirstPageIcon from '@material-ui/icons/FirstPage';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import LastPageIcon from '@material-ui/icons/LastPage';
 import {
   Box,
   Card,
@@ -9,73 +14,179 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
+  TablePagination,
+  TableFooter,
   TableHead,
-  TableRow
+  TableRow,
+  makeStyles,
+  useTheme
 } from '@material-ui/core';
 
-const sentences = [
-  {
-    id: uuid(),
-    sentence:
-      'It is a real pleasure to be here %HESITATION you know I I dont work in an office I work at home and I I forget what offices are like it I was around the corner and I %HESITATION I saw this big',
-    started_timestamp: '00:01:97',
-    ended_timestamp: '00:13:65'
-  },
-  {
-    id: uuid(),
-    sentence: 'Open refrigerator with all kinds of the',
-    started_timestamp: '00:14:57',
-    ended_timestamp: '00:16:77'
-  },
-  {
-    id: uuid(),
-    sentence: 'like how cool is that %HESITATION',
-    started_timestamp: '00:19:11',
-    ended_timestamp: '00:20:69'
-  },
-  {
-    id: uuid(),
-    sentence:
-      'Hi am I at so with all my new book which %HESITATION you know there are many things that I can see all kinds of %HESITATION things about it but I I thought I would talk about an idea that is actually not in the book but %HESITATION that I have been thinking about a lot %HESITATION since writing it and which %HESITATION encapsulates a lot of what the book is about and it some',
-    started_timestamp: '00:21:88',
-    ended_timestamp: '00:42:54'
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexShrink: 0,
+    marginLeft: theme.spacing(2.5)
   }
-];
+}));
+
+function TablePaginationActions(props) {
+  const classes = useStyles();
+  const theme = useTheme();
+  const { count, page, rowsPerPage, onPageChange } = props;
+
+  const handleFirstPageButtonClick = (event) => {
+    onPageChange(event, 0);
+  };
+
+  const handleBackButtonClick = (event) => {
+    onPageChange(event, page - 1);
+  };
+
+  const handleNextButtonClick = (event) => {
+    onPageChange(event, page + 1);
+  };
+
+  const handleLastPageButtonClick = (event) => {
+    onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+  };
+
+  return (
+    <div className={classes.root}>
+      <IconButton
+        onClick={handleFirstPageButtonClick}
+        disabled={page === 0}
+        aria-label="first page"
+      >
+        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+      </IconButton>
+      <IconButton
+        onClick={handleBackButtonClick}
+        disabled={page === 0}
+        aria-label="previous page"
+      >
+        {theme.direction === 'rtl' ? (
+          <KeyboardArrowRight />
+        ) : (
+          <KeyboardArrowLeft />
+        )}
+      </IconButton>
+      <IconButton
+        onClick={handleNextButtonClick}
+        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        aria-label="next page"
+      >
+        {theme.direction === 'rtl' ? (
+          <KeyboardArrowLeft />
+        ) : (
+          <KeyboardArrowRight />
+        )}
+      </IconButton>
+      <IconButton
+        onClick={handleLastPageButtonClick}
+        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        aria-label="last page"
+      >
+        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+      </IconButton>
+    </div>
+  );
+}
 
 const Transcript = (props) => {
+  const transcriptdata = props.transcriptdata || [];
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const emptyRows =
+    rowsPerPage -
+    Math.min(rowsPerPage, transcriptdata.length - page * rowsPerPage);
+
+  const formatted = (secs) => {
+    let secondToFormat = moment.utc(secs * 1000).format('mm:ss.SS');
+    return secondToFormat;
+  };
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
   return (
     <Card {...props}>
       <CardHeader title="Transcript" />
       <PerfectScrollbar>
         <Box>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Sentences</TableCell>
-                <TableCell>From</TableCell>
-                <TableCell>To</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {sentences.map((sentence) => (
-                <TableRow hover key={sentence.id}>
-                  <TableCell>
-                    {reactStringReplace(
-                      sentence.sentence,
-                      '%HESITATION',
-                      (match, i) => (
-                        <span key={i} style={{ color: 'red' }}>
-                          {match}
-                        </span>
-                      )
-                    )}
-                  </TableCell>
-                  <TableCell>{sentence.started_timestamp}</TableCell>
-                  <TableCell>{sentence.ended_timestamp}</TableCell>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Sentences</TableCell>
+                  <TableCell>From</TableCell>
+                  <TableCell>To</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHead>
+              <TableBody>
+                {(rowsPerPage > 0
+                  ? transcriptdata.slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage
+                    )
+                  : transcriptdata
+                ).map((sentence, index) => (
+                  <TableRow hover key={index}>
+                    <TableCell component="th" scope="row">
+                      {reactStringReplace(
+                        sentence.transcript,
+                        '%HESITATION',
+                        (match, i) => (
+                          <span key={i} style={{ color: 'red' }}>
+                            {match}
+                          </span>
+                        )
+                      )}
+                    </TableCell>
+                    <TableCell style={{ width: 160 }}>
+                      {formatted(sentence.timestamps[0][1])}
+                    </TableCell>
+                    <TableCell style={{ width: 160 }}>
+                      {formatted(sentence.timestamps[0][2])}
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: 53 * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    rowsPerPageOptions={[
+                      5,
+                      10,
+                      25,
+                      { label: 'All', value: -1 }
+                    ]}
+                    colSpan={3}
+                    count={transcriptdata.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    SelectProps={{
+                      inputProps: { 'aria-label': 'rows per page' },
+                      native: true
+                    }}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    ActionsComponent={TablePaginationActions}
+                  />
+                </TableRow>
+              </TableFooter>
+            </Table>
+          </TableContainer>
         </Box>
       </PerfectScrollbar>
     </Card>

@@ -1,4 +1,5 @@
 import { Box, Typography, Button, makeStyles } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   wrapperContainer: {
@@ -46,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   const classes = useStyles();
   return (
     <Box className={classes.wrapperContainer}>
@@ -62,6 +64,9 @@ const HeroSection = () => {
           size="large"
           style={{ borderColor: '#fff', color: '#fff' }}
           className={classes.createButton}
+          onClick={() => {
+            navigate('/register', { replace: true });
+          }}
         >
           CREATE AN ACCOUNT
         </Button>

@@ -36,8 +36,7 @@ const Register = () => {
               email: '',
               firstName: '',
               lastName: '',
-              password: '',
-              policy: false
+              password: ''
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
@@ -48,8 +47,7 @@ const Register = () => {
                 .max(255)
                 .required('First name is required'),
               lastName: Yup.string().max(255).required('Last name is required'),
-              password: Yup.string().max(255).required('password is required'),
-              policy: Yup.boolean().oneOf([true], 'This field must be checked')
+              password: Yup.string().max(255).required('password is required')
             })}
             onSubmit={() => {
               navigate('/app/dashboard', { replace: true });
@@ -127,34 +125,6 @@ const Register = () => {
                   value={values.password}
                   variant="outlined"
                 />
-                <Box
-                  sx={{
-                    alignItems: 'center',
-                    display: 'flex',
-                    ml: -1
-                  }}
-                >
-                  <Checkbox
-                    checked={values.policy}
-                    name="policy"
-                    onChange={handleChange}
-                  />
-                  <Typography color="textSecondary" variant="body1">
-                    I have read the{' '}
-                    <Link
-                      color="primary"
-                      component={RouterLink}
-                      to="#"
-                      underline="always"
-                      variant="h6"
-                    >
-                      Terms and Conditions
-                    </Link>
-                  </Typography>
-                </Box>
-                {Boolean(touched.policy && errors.policy) && (
-                  <FormHelperText error>{errors.policy}</FormHelperText>
-                )}
                 <Box sx={{ py: 2 }}>
                   <Button
                     color="primary"
@@ -164,13 +134,13 @@ const Register = () => {
                     type="submit"
                     variant="contained"
                   >
-                    Sign up now
+                    Register now
                   </Button>
                 </Box>
                 <Typography color="textSecondary" variant="body1">
                   Have an account?{' '}
                   <Link component={RouterLink} to="/login" variant="h6">
-                    Sign in
+                    Login
                   </Link>
                 </Typography>
               </form>
