@@ -75,62 +75,62 @@ const Soundwave = (props) => {
 
   const [regions, setRegions] = useState([
     //Malcomm
-    {
-      id: 'region-1',
-      start: 3.74,
-      end: 46.95,
-      color: 'rgba(255, 68, 68, .5)',
-      drag: false,
-      resize: false,
-      data: {
-        systemRegionId: 31
-      }
-    },
-    {
-      id: 'region-2',
-      start: 82.36,
-      end: 90.38,
-      color: 'rgba(255, 187, 51, .5)',
-      drag: false,
-      resize: false,
-      data: {
-        systemRegionId: 32
-      }
-    },
-    {
-      id: 'region-3',
-      start: 103.23,
-      end: 143.09,
-      color: 'rgba(255, 68, 68, .5)',
-      drag: false,
-      resize: false,
-      data: {
-        systemRegionId: 33
-      }
-    },
-    {
-      id: 'region-4',
-      start: 230.14,
-      end: 238.33,
-      color: 'rgba(255, 187, 51, .5)',
-      drag: false,
-      resize: false,
-      data: {
-        systemRegionId: 34
-      }
-    }
-    //Bill
     // {
     //   id: 'region-1',
-    //   start: 234.48,
-    //   end: 237.67,
-    //   color: 'rgba(255, 187, 51, .5)',
+    //   start: 3.74,
+    //   end: 46.95,
+    //   color: 'rgba(255, 68, 68, .5)',
     //   drag: false,
     //   resize: false,
     //   data: {
     //     systemRegionId: 31
     //   }
+    // },
+    // {
+    //   id: 'region-2',
+    //   start: 82.36,
+    //   end: 90.38,
+    //   color: 'rgba(255, 187, 51, .5)',
+    //   drag: false,
+    //   resize: false,
+    //   data: {
+    //     systemRegionId: 32
+    //   }
+    // },
+    // {
+    //   id: 'region-3',
+    //   start: 103.23,
+    //   end: 143.09,
+    //   color: 'rgba(255, 68, 68, .5)',
+    //   drag: false,
+    //   resize: false,
+    //   data: {
+    //     systemRegionId: 33
+    //   }
+    // },
+    // {
+    //   id: 'region-4',
+    //   start: 230.14,
+    //   end: 238.33,
+    //   color: 'rgba(255, 187, 51, .5)',
+    //   drag: false,
+    //   resize: false,
+    //   data: {
+    //     systemRegionId: 34
+    //   }
     // }
+    //Bill
+    {
+      id: 'region-1',
+      start: 234.48,
+      end: 237.67,
+      color: 'rgba(255, 187, 51, .5)',
+      drag: false,
+      resize: false,
+      data: {
+        systemRegionId: 31
+      }
+    }
   ]);
 
   const regionsRef = useRef(regions);
@@ -173,7 +173,7 @@ const Soundwave = (props) => {
     (waveSurfer) => {
       wavesurferRef.current = waveSurfer;
       if (wavesurferRef.current) {
-        wavesurferRef.current.load('/MalcolmGladwell_success_1st_4mins.flac');
+        wavesurferRef.current.load('/TheNextOutbreakFull.flac');
 
         wavesurferRef.current.on('region-created', regionCreatedHandler);
 

@@ -5,9 +5,7 @@ import { Formik } from 'formik';
 import {
   Box,
   Button,
-  Checkbox,
   Container,
-  FormHelperText,
   Link,
   TextField,
   Typography
@@ -50,7 +48,7 @@ const Register = () => {
               password: Yup.string().max(255).required('password is required')
             })}
             onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
+              navigate('/app/landing', { replace: true });
             }}
           >
             {({

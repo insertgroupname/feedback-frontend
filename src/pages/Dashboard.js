@@ -7,6 +7,7 @@ import {
   Typography,
   CircularProgress
 } from '@material-ui/core';
+import { useParams } from 'react-router-dom';
 import AveragePace from 'src/components/dashboard/AveragePace';
 import Pace from 'src/components/dashboard/Pace';
 import Fillers from 'src/components/dashboard/Fillers';
@@ -20,12 +21,13 @@ import Soundwave from 'src/components/dashboard/Soundwave';
 import axios from 'axios';
 
 const Dashboard = () => {
+  let { videoUUID } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [videoData, setVideoData] = useState({
     videoName: ''
   });
   // const [soundwaveData, setSoundwaveData] = useState();
-  // const [soundDetailData, setSoundDetailData] = useState();
+  const [soundDetailData, setSoundDetailData] = useState();
   // const [averagePaceData, setAveragePaceData] = useState();
   // const [paceData, setPaceData] = useState();
   // const [filterData, setFilterData] = useState();
@@ -34,13 +36,9 @@ const Dashboard = () => {
   // const [vocabularyData, setVocabularyData] = useState();
   // const [keywordData, setKeywordData] = useState();
   const [transcriptData, setTranscriptData] = useState();
-
-  // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-
   useEffect(() => {
     const fetchDetailData = async () => {
       let userId = '0000';
-      let videoUUID = 'file-6JeGGVuz44BtmFwB7APtCC.mp4';
       setIsLoading(true);
       try {
         const response = await axios.get(
@@ -54,6 +52,7 @@ const Dashboard = () => {
           videoName: responseData.videoName,
           status: responseData.status
         });
+        setSoundDetailData(responseData.postProcessing);
         setTranscriptData(responseData.results);
       } catch (e) {
         if (e.response) {
@@ -69,8 +68,7 @@ const Dashboard = () => {
       }
     };
     fetchDetailData();
-  }, []);
-
+  }, [videoUUID]);
   return (
     <>
       <Helmet>
@@ -91,13 +89,15 @@ const Dashboard = () => {
           <CircularProgress />
         ) : (
           <Container maxWidth={false}>
-            <Typography variant="h3">{videoData.videoName}</Typography>
+            <Typography variant="h3" style={{ paddingBottom: '1rem' }}>
+              {videoData.videoName}
+            </Typography>
             <Grid container spacing={3}>
               <Grid item lg={9} md={12} xl={9} xs={12}>
                 <Soundwave />
               </Grid>
               <Grid item lg={3} md={12} xl={3} xs={12}>
-                <SoundDetail sx={{ height: '100%' }} />
+                <SoundDetail sound={soundDetailData} sx={{ height: '100%' }} />
               </Grid>
               <Grid item lg={8} md={12} xl={8} xs={12}>
                 <AveragePace />
