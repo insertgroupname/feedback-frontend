@@ -24,6 +24,8 @@ import ZoomInIcon from '@material-ui/icons/ZoomIn';
 import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 
 const Soundwave = (props) => {
+  const videoUUID = props.uuid;
+
   const wavesurferRef = useRef();
 
   const initialZoom = 0;
@@ -173,7 +175,9 @@ const Soundwave = (props) => {
     (waveSurfer) => {
       wavesurferRef.current = waveSurfer;
       if (wavesurferRef.current) {
-        wavesurferRef.current.load('/TheNextOutbreakFull.flac');
+        wavesurferRef.current.load(
+          `http://10.4.56.44/api/v1/video/${videoUUID}`
+        );
 
         wavesurferRef.current.on('region-created', regionCreatedHandler);
 
@@ -182,7 +186,7 @@ const Soundwave = (props) => {
         }
       }
     },
-    [regionCreatedHandler]
+    [regionCreatedHandler, videoUUID]
   );
 
   const togglePlayPause = useCallback(() => {

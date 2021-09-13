@@ -10,80 +10,23 @@ import {
   ResponsiveContainer,
   Label
 } from 'recharts';
-
-const data = [
-  {
-    timestamp: '00:00:20',
-    fillers: 2
-  },
-  {
-    timestamp: '00:00:40',
-    fillers: 6
-  },
-  {
-    timestamp: '00:01:00',
-    fillers: 1
-  },
-  {
-    timestamp: '00:01:20',
-    fillers: 4
-  },
-  {
-    timestamp: '00:01:40',
-    fillers: 3
-  },
-  {
-    timestamp: '00:02:00',
-    fillers: 5
-  },
-  {
-    timestamp: '00:02:20',
-    fillers: 5
-  },
-  {
-    timestamp: '00:02:40',
-    fillers: 0
-  },
-  {
-    timestamp: '00:03:00',
-    fillers: 0
-  },
-  {
-    timestamp: '00:03:20',
-    fillers: 0
-  },
-  {
-    timestamp: '00:03:40',
-    fillers: 0
-  },
-  {
-    timestamp: '00:04:00',
-    fillers: 3
-  }
-];
-
-const renderQuarterTick = (tickProps) => {
-  const { x, y, payload } = tickProps;
-  const { value, offset } = payload;
-  const date = new Date(value);
-  // const month = date.getMonth();
-
-  // const quarterNo = Math.floor(month / 3) + 1;
-
-  // if (month % 3 === 1) {
-  //   return <text x={x} y={y - 4} textAnchor="middle">{`${quarterNo}.00`}</text>;
-  // }
-
-  // const isLast = month === 11;
-
-  // if (month % 3 === 0 || isLast) {
-  //   const pathX = Math.floor(isLast ? x + offset : x - offset) + 0.5;
-  //   return <path d={`M${pathX},${y - 4}v${-35}`} stroke="red" />;
-  // }
-  // return null;
-};
+import moment from 'moment';
 
 const FillersChart = (props) => {
+  const formatted = (secs) => {
+    let secondToFormat = moment.utc(secs * 1000).format('mm:ss');
+    return secondToFormat;
+  };
+
+  const fillerChartData = props.fillerchart || {};
+  let formatData = [];
+  for (const [key, value] of Object.entries(fillerChartData)) {
+    formatData.push({
+      timestamp: formatted(key.split('-')[1]),
+      fillers: value.hes_count
+    });
+  }
+
   return (
     <Card {...props}>
       <CardHeader
@@ -98,7 +41,7 @@ const FillersChart = (props) => {
           <BarChart
             width={500}
             height={300}
-            data={data}
+            data={formatData}
             margin={{
               top: 5,
               right: 30,
@@ -113,7 +56,7 @@ const FillersChart = (props) => {
               axisLine={false}
               tickLine={false}
               interval={0}
-              tick={renderQuarterTick}
+              tick={false}
               height={1}
               scale="band"
               xAxisId="quarter"

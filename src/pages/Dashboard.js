@@ -26,15 +26,14 @@ const Dashboard = () => {
   const [videoData, setVideoData] = useState({
     videoName: ''
   });
-  // const [soundwaveData, setSoundwaveData] = useState();
   const [soundDetailData, setSoundDetailData] = useState();
   // const [averagePaceData, setAveragePaceData] = useState();
-  // const [paceData, setPaceData] = useState();
+  const [paceData, setPaceData] = useState();
   // const [filterData, setFilterData] = useState();
-  // const [filterChartData, setFilterChartData] = useState();
-  // const [repetitionWordData, setRepetitionWordData] = useState();
-  // const [vocabularyData, setVocabularyData] = useState();
-  // const [keywordData, setKeywordData] = useState();
+  const [filterChartData, setFilterChartData] = useState();
+  const [repetitionWordData, setRepetitionWordData] = useState();
+  const [vocabularyData, setVocabularyData] = useState();
+  const [keywordData, setKeywordData] = useState();
   const [transcriptData, setTranscriptData] = useState();
   useEffect(() => {
     const fetchDetailData = async () => {
@@ -42,7 +41,7 @@ const Dashboard = () => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          `http://10.4.56.44/api/records/${userId}/${videoUUID}`
+          `http://10.4.56.44/api/v1/records/${userId}/${videoUUID}`
         );
         setIsLoading(false);
         const responseData = response.data[0];
@@ -52,7 +51,12 @@ const Dashboard = () => {
           videoName: responseData.videoName,
           status: responseData.status
         });
+        setFilterChartData(responseData.postProcessing.hestiation_.marker);
+        setPaceData(responseData.postProcessing.avg_wpm);
         setSoundDetailData(responseData.postProcessing);
+        setRepetitionWordData(responseData.postProcessing.word_frequency);
+        setVocabularyData(responseData.postProcessing.vocab);
+        setKeywordData(responseData.postProcessing.keyword);
         setTranscriptData(responseData.results);
       } catch (e) {
         if (e.response) {
@@ -69,6 +73,7 @@ const Dashboard = () => {
     };
     fetchDetailData();
   }, [videoUUID]);
+
   return (
     <>
       <Helmet>
@@ -94,7 +99,7 @@ const Dashboard = () => {
             </Typography>
             <Grid container spacing={3}>
               <Grid item lg={9} md={12} xl={9} xs={12}>
-                <Soundwave />
+                <Soundwave uuid={videoUUID} />
               </Grid>
               <Grid item lg={3} md={12} xl={3} xs={12}>
                 <SoundDetail sound={soundDetailData} sx={{ height: '100%' }} />
@@ -103,25 +108,25 @@ const Dashboard = () => {
                 <AveragePace />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
-                <Pace sx={{ height: '100%' }} />
+                <Pace pace={paceData} sx={{ height: '100%' }} />
               </Grid>
               <Grid item lg={6} md={12} xl={6} xs={12}>
                 <Fillers sx={{ height: '100%' }} />
               </Grid>
               <Grid item lg={6} md={12} xl={6} xs={12}>
-                <FillersChart />
+                <FillersChart fillerchart={filterChartData} />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
-                <RepetitionWords />
+                <RepetitionWords repetition={repetitionWordData} />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
-                <Vocabulary />
+                <Vocabulary vocabulary={vocabularyData} />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
-                <Keyword />
+                <Keyword keyword={keywordData} />
               </Grid>
               <Grid item lg={12} md={12} xl={12} xs={12}>
-                <Transcript transcriptdata={transcriptData} />
+                <Transcript transcript={transcriptData} />
               </Grid>
             </Grid>
           </Container>

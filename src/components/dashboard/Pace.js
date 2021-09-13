@@ -30,6 +30,7 @@ let renderLabel = function (entry) {
 };
 
 const Pace = (props) => {
+  const pace = props.pace || 0;
   return (
     <Card {...props}>
       <CardHeader title="Pace" />
@@ -79,7 +80,7 @@ const Pace = (props) => {
                         transform: 'translateY(-2.75rem)'
                       }}
                     >
-                      {'178'}
+                      {Math.floor(pace)}
                     </Text>
                   );
                 }}

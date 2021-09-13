@@ -94,18 +94,18 @@ function TablePaginationActions(props) {
 }
 
 const Transcript = (props) => {
-  const transcriptdata = props.transcriptdata || [];
+  const transcript = props.transcript || [];
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const emptyRows =
-    rowsPerPage -
-    Math.min(rowsPerPage, transcriptdata.length - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, transcript.length - page * rowsPerPage);
 
   const formatted = (secs) => {
     let secondToFormat = moment.utc(secs * 1000).format('mm:ss.SS');
     return secondToFormat;
   };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -130,11 +130,11 @@ const Transcript = (props) => {
               </TableHead>
               <TableBody>
                 {(rowsPerPage > 0
-                  ? transcriptdata.slice(
+                  ? transcript.slice(
                       page * rowsPerPage,
                       page * rowsPerPage + rowsPerPage
                     )
-                  : transcriptdata
+                  : transcript
                 ).map((sentence, index) => (
                   <TableRow hover key={index}>
                     <TableCell component="th" scope="row">
@@ -172,7 +172,7 @@ const Transcript = (props) => {
                       { label: 'All', value: -1 }
                     ]}
                     colSpan={3}
-                    count={transcriptdata.length}
+                    count={transcript.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     SelectProps={{

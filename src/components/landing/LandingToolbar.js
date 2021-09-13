@@ -17,9 +17,13 @@ const LandingToolbar = (props) => {
     formData.append('file', file);
 
     try {
-      const res = await axios.post('http://10.4.56.44/api/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+      const res = await axios.post(
+        'http://10.4.56.44/api/v1/upload',
+        formData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        }
+      );
       console.log(res.data);
     } catch (e) {
       if (e.response) {

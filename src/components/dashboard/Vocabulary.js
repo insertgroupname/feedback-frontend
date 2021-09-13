@@ -33,35 +33,38 @@ const words = [
   }
 ];
 
-const Vocabulary = () => (
-  <Card>
-    <CardHeader
-      title="Vocabulary"
-      action={
-        <Button color="primary" size="small" variant="text">
-          Show more
-        </Button>
-      }
-    />
-    <Box>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Word</TableCell>
-            <TableCell align="right">Part of Speech</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {words.map((word) => (
-            <TableRow hover key={word.id}>
-              <TableCell>{word.word}</TableCell>
-              <TableCell align="right">{word.partOfSpeech}</TableCell>
+const Vocabulary = (props) => {
+  // const vocabulary = props.vocabulary;
+  return (
+    <Card>
+      <CardHeader
+        title="Vocabulary"
+        action={
+          <Button color="primary" size="small" variant="text">
+            Show more
+          </Button>
+        }
+      />
+      <Box>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Word</TableCell>
+              <TableCell align="right">Part of Speech</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Box>
-  </Card>
-);
+          </TableHead>
+          <TableBody>
+            {words.map((word) => (
+              <TableRow hover key={word.id}>
+                <TableCell>{word.word}</TableCell>
+                <TableCell align="right">{word.partOfSpeech}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Box>
+    </Card>
+  );
+};
 
 export default Vocabulary;

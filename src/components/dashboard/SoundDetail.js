@@ -5,6 +5,9 @@ const SoundDetail = (props) => {
   const soundDetail = props.sound || {
     video_len: 0,
     total_words: 0,
+    hestiation_: {
+      total_count: 0
+    },
     silence: {
       total_silence: 0
     }
@@ -71,7 +74,12 @@ const SoundDetail = (props) => {
           <Typography variant="body1" color="primary">
             Filler per Minute
           </Typography>
-          <Typography variant="h3">6.75 per Minute</Typography>
+          <Typography variant="h3">
+            {Math.floor(
+              (60 * soundDetail.hestiation_.total_count) / soundDetail.video_len
+            )}{' '}
+            filler per minute
+          </Typography>
         </Box>
         <Divider flexItem />
         <Box

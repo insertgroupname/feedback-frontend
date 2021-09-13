@@ -7,6 +7,7 @@ import {
   Button,
   Typography
 } from '@material-ui/core';
+import moment from 'moment';
 
 const LandingCard = ({ user, ...rest }) => {
   const navigate = useNavigate();
@@ -31,10 +32,11 @@ const LandingCard = ({ user, ...rest }) => {
           Status: {user.status}
         </Typography>
         <Typography color="textPrimary" gutterBottom variant="body1">
-          Created at: {user.createDate}
+          Created at:{' '}
+          {moment(user.createDate).format('MMMM Do YYYY, h:mm:ss a')}
         </Typography>
       </CardContent>
-      {user.status === 'done' && (
+      {user.status === 'Done' && (
         <CardActions>
           <Button
             size="small"

@@ -6,44 +6,42 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  TableHead
+  TableHead,
+  Button
 } from '@material-ui/core';
 
-const words = [
-  {
-    id: '1',
-    word: 'Memphis'
-  },
-  {
-    id: '2',
-    word: 'Ability'
-  },
-  {
-    id: '3',
-    word: 'Book'
-  }
-];
-
-const Keyword = () => (
-  <Card sx={{ height: '100%' }}>
-    <CardHeader title="Keyword" />
-    <Box>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Your rehearsal is match with those topics.</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {words.map((word) => (
-            <TableRow hover key={word.id}>
-              <TableCell>{word.word}</TableCell>
+const Keyword = (props) => {
+  const keyword = props.keyword || [];
+  return (
+    <Card sx={{ height: '100%' }}>
+      <CardHeader
+        title="Keyword"
+        action={
+          <Button color="primary" size="small" variant="text">
+            Show more
+          </Button>
+        }
+      />
+      <Box>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Your rehearsal is match with those topics.</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Box>
-  </Card>
-);
+          </TableHead>
+          <TableBody>
+            {keyword
+              .map((word, index) => (
+                <TableRow hover key={index}>
+                  <TableCell>{word}</TableCell>
+                </TableRow>
+              ))
+              .slice(0, 4)}
+          </TableBody>
+        </Table>
+      </Box>
+    </Card>
+  );
+};
 
 export default Keyword;
