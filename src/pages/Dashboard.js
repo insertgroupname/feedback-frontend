@@ -41,7 +41,7 @@ const Dashboard = () => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          `http://10.4.56.44/api/v1/records/${userId}/${videoUUID}`
+          `http://10.4.56.44:81/api/v1/records/${userId}/${videoUUID}`
         );
         setIsLoading(false);
         const responseData = response.data[0];

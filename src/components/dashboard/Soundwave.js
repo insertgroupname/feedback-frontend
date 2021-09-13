@@ -176,7 +176,7 @@ const Soundwave = (props) => {
       wavesurferRef.current = waveSurfer;
       if (wavesurferRef.current) {
         wavesurferRef.current.load(
-          `http://10.4.56.44/api/v1/video/${videoUUID}`
+          `http://10.4.56.44:81/api/v1/video/${videoUUID}`
         );
 
         wavesurferRef.current.on('region-created', regionCreatedHandler);

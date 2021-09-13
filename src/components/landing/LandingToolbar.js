@@ -18,7 +18,7 @@ const LandingToolbar = (props) => {
 
     try {
       const res = await axios.post(
-        'http://10.4.56.44/api/v1/upload',
+        'http://10.4.56.44:81/api/v1/upload',
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' }
