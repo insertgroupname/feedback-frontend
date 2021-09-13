@@ -24,11 +24,11 @@ const routes = [
     path: '/',
     element: <MainLayout />,
     children: [
-      { path: 'home', element: <Home /> },
+      // { path: 'home', element: <Home /> },
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> },
       { path: '404', element: <NotFound /> },
-      { path: '/', element: <Navigate to="/home" /> },
+      { path: '/', element: <Home /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   }
