@@ -75,10 +75,11 @@ const SoundDetail = (props) => {
             Filler per Minute
           </Typography>
           <Typography variant="h3">
-            {Math.floor(
-              (60 * soundDetail.hestiation_.total_count) / soundDetail.video_len
-            )}{' '}
-            filler per minute
+            {(
+              (60 * soundDetail.hestiation_.total_count) /
+              soundDetail.video_len
+            ).toFixed(2)}{' '}
+            fillers per minute
           </Typography>
         </Box>
         <Divider flexItem />

@@ -25,14 +25,13 @@ import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 
 const Soundwave = (props) => {
   const videoUUID = props.uuid;
+  const hesitation = props.hesitation || {};
 
   const wavesurferRef = useRef();
-
   const initialZoom = 0;
   const [zoom, setZoom] = useState(initialZoom);
 
   const [isPlaying, setIsPlaying] = useState(false);
-
   const zoomIn = () => {
     setZoom((prevZoom) => prevZoom + 5);
   };
@@ -75,65 +74,52 @@ const Soundwave = (props) => {
     return chunkInterval;
   }, []);
 
-  const [regions, setRegions] = useState([
-    //Malcomm
-    // {
-    //   id: 'region-1',
-    //   start: 3.74,
-    //   end: 46.95,
-    //   color: 'rgba(255, 68, 68, .5)',
-    //   drag: false,
-    //   resize: false,
-    //   data: {
-    //     systemRegionId: 31
-    //   }
-    // },
-    // {
-    //   id: 'region-2',
-    //   start: 82.36,
-    //   end: 90.38,
-    //   color: 'rgba(255, 187, 51, .5)',
-    //   drag: false,
-    //   resize: false,
-    //   data: {
-    //     systemRegionId: 32
-    //   }
-    // },
-    // {
-    //   id: 'region-3',
-    //   start: 103.23,
-    //   end: 143.09,
-    //   color: 'rgba(255, 68, 68, .5)',
-    //   drag: false,
-    //   resize: false,
-    //   data: {
-    //     systemRegionId: 33
-    //   }
-    // },
-    // {
-    //   id: 'region-4',
-    //   start: 230.14,
-    //   end: 238.33,
-    //   color: 'rgba(255, 187, 51, .5)',
-    //   drag: false,
-    //   resize: false,
-    //   data: {
-    //     systemRegionId: 34
-    //   }
-    // }
-    //Bill
-    {
-      id: 'region-1',
-      start: 234.48,
-      end: 237.67,
-      color: 'rgba(255, 187, 51, .5)',
+  let formatHesitation = [];
+  Object.entries(hesitation).forEach(([key, value], index) => {
+    formatHesitation.push({
+      id: index,
+      start: key.split('-')[0],
+      end: key.split('-')[1],
+      fillers: value.hes_count,
+
       drag: false,
       resize: false,
       data: {
-        systemRegionId: 31
+        systemRegionId: index
       }
-    }
-  ]);
+    });
+  });
+
+  const url = `http://10.4.56.44:81/api/v1/video/${videoUUID}`;
+
+  // if hes_count > 0 && <= 3 -> Yellow
+  // if hes_count > 3  -> Red
+
+  const filterRegionYellow = formatHesitation.filter((ele) => {
+    return ele.fillers > 0 && ele.fillers <= 3;
+  });
+
+  const fillRegionYellow = filterRegionYellow.map((ele) => {
+    return {
+      ...ele,
+      color: 'rgba(255, 187, 51, .5)'
+    };
+  });
+
+  const filterRegionRed = formatHesitation.filter((ele) => {
+    return ele.fillers > 3;
+  });
+
+  const fillRegionRed = filterRegionRed.map((ele) => {
+    return {
+      ...ele,
+      color: 'rgba(255, 87, 51, .5)'
+    };
+  });
+
+  const filterRegion = [...fillRegionYellow, ...fillRegionRed];
+
+  const [regions, setRegions] = useState(filterRegion);
 
   const regionsRef = useRef(regions);
 
@@ -161,6 +147,7 @@ const Soundwave = (props) => {
         plugin: TimelinePlugin,
         options: {
           container: '#timeline',
+          backend: 'MediaElement',
           timeInterval: timeIntervalHandler
         }
       },
@@ -175,9 +162,7 @@ const Soundwave = (props) => {
     (waveSurfer) => {
       wavesurferRef.current = waveSurfer;
       if (wavesurferRef.current) {
-        wavesurferRef.current.load(
-          `http://10.4.56.44:81/api/v1/video/${videoUUID}`
-        );
+        wavesurferRef.current.load(url);
 
         wavesurferRef.current.on('region-created', regionCreatedHandler);
 
@@ -186,7 +171,7 @@ const Soundwave = (props) => {
         }
       }
     },
-    [regionCreatedHandler, videoUUID]
+    [regionCreatedHandler, url]
   );
 
   const togglePlayPause = useCallback(() => {

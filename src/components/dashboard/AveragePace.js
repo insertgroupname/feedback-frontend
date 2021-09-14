@@ -9,59 +9,23 @@ import {
   Label,
   ResponsiveContainer
 } from 'recharts';
-
-const data = [
-  {
-    timestamp: '0.00',
-    pace: 0
-  },
-  {
-    timestamp: '0.30',
-    pace: 166
-  },
-  {
-    timestamp: '1.00',
-    pace: 181
-  },
-  {
-    timestamp: '1.30',
-    pace: 177
-  },
-  {
-    timestamp: '2.00',
-    pace: 174
-  },
-  {
-    timestamp: '2.30',
-    pace: 195
-  },
-  {
-    timestamp: '3.00',
-    pace: 178
-  },
-  {
-    timestamp: '3.30',
-    pace: 175
-  },
-  {
-    timestamp: '4.00',
-    pace: 176
-  }
-];
-
-const formatData = data.map((ele) => {
-  return {
-    ...ele,
-    range: [140, 175]
-  };
-});
+import { secondToFormat } from '../../utils/secondTomin';
 
 const AveragePace = (props) => {
+  const averagePace = props.average || {};
+  let formatData = [];
+  for (const [key, value] of Object.entries(averagePace)) {
+    formatData.push({
+      timestamp: secondToFormat(key.split('-')[1], 'mm:ss'),
+      pace: value.wpm,
+      range: [130, 160]
+    });
+  }
   return (
     <Card {...props}>
       <CardHeader
         title="Average Pace"
-        subheader="Average pace for good speaking is around 140 to 175 WPM"
+        subheader="Average pace for good speaking is around 130 to 160 WPM"
       />
       <Divider />
       <CardContent sx={{ height: '420px' }}>

@@ -16,6 +16,7 @@ const phrasesData = [
 ];
 
 const Fillers = (props) => {
+  const fillerCount = props.filler || 0;
   return (
     <Card {...props}>
       <CardHeader
@@ -26,11 +27,11 @@ const Fillers = (props) => {
       <Divider />
       <CardContent>
         <Box sx={{ padding: '1.25rem 0 2.25rem 0' }}>
-          <Typography>Hesitation Count: 27 times</Typography>
+          <Typography>Hesitation Count: {fillerCount} times</Typography>
         </Box>
         <Divider />
         <Box sx={{ padding: '2.25rem 0' }}>
-          <Typography>Filler Words: 27 times</Typography>
+          <Typography>Filler Words: </Typography>
         </Box>
         <Divider />
         <Box sx={{ padding: '2.25rem 0' }}>

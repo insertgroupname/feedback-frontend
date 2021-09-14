@@ -6,23 +6,19 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
+  // Legend,
   ResponsiveContainer,
   Label
 } from 'recharts';
-import moment from 'moment';
+import { secondToFormat } from '../../utils/secondTomin';
 
 const FillersChart = (props) => {
-  const formatted = (secs) => {
-    let secondToFormat = moment.utc(secs * 1000).format('mm:ss');
-    return secondToFormat;
-  };
-
   const fillerChartData = props.fillerchart || {};
+
   let formatData = [];
   for (const [key, value] of Object.entries(fillerChartData)) {
     formatData.push({
-      timestamp: formatted(key.split('-')[1]),
+      timestamp: secondToFormat(key.split('-')[1], 'mm:ss'),
       fillers: value.hes_count
     });
   }

@@ -27,14 +27,15 @@ const Dashboard = () => {
     videoName: ''
   });
   const [soundDetailData, setSoundDetailData] = useState();
-  // const [averagePaceData, setAveragePaceData] = useState();
+  const [averagePaceData, setAveragePaceData] = useState();
   const [paceData, setPaceData] = useState();
-  // const [filterData, setFilterData] = useState();
-  const [filterChartData, setFilterChartData] = useState();
+  const [fillerData, setFillerData] = useState();
+  const [fillerChartData, setFillerChartData] = useState();
   const [repetitionWordData, setRepetitionWordData] = useState();
   const [vocabularyData, setVocabularyData] = useState();
   const [keywordData, setKeywordData] = useState();
   const [transcriptData, setTranscriptData] = useState();
+
   useEffect(() => {
     const fetchDetailData = async () => {
       let userId = '0000';
@@ -43,7 +44,6 @@ const Dashboard = () => {
         const response = await axios.get(
           `http://10.4.56.44:81/api/v1/records/${userId}/${videoUUID}`
         );
-        setIsLoading(false);
         const responseData = response.data[0];
         console.log('Response', responseData);
         setVideoData({
@@ -51,13 +51,16 @@ const Dashboard = () => {
           videoName: responseData.videoName,
           status: responseData.status
         });
-        setFilterChartData(responseData.postProcessing.hestiation_.marker);
+        setAveragePaceData(responseData.postProcessing.wpm);
+        setFillerData(responseData.postProcessing.hestiation_.total_count);
+        setFillerChartData(responseData.postProcessing.hestiation_.marker);
         setPaceData(responseData.postProcessing.avg_wpm);
         setSoundDetailData(responseData.postProcessing);
         setRepetitionWordData(responseData.postProcessing.word_frequency);
         setVocabularyData(responseData.postProcessing.vocab);
         setKeywordData(responseData.postProcessing.keyword);
         setTranscriptData(responseData.results);
+        setIsLoading(false);
       } catch (e) {
         if (e.response) {
           console.log(e.response.data);
@@ -83,15 +86,21 @@ const Dashboard = () => {
       <Box
         sx={{
           backgroundColor: 'background.default',
-          minHeight: '100%',
-          py: 3,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
+          height: '100%',
+          py: 3
         }}
       >
         {isLoading ? (
-          <CircularProgress />
+          <Box
+            sx={{
+              height: 'inherit',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <CircularProgress />
+          </Box>
         ) : (
           <Container maxWidth={false}>
             <Typography variant="h3" style={{ paddingBottom: '1rem' }}>
@@ -99,22 +108,22 @@ const Dashboard = () => {
             </Typography>
             <Grid container spacing={3}>
               <Grid item lg={9} md={12} xl={9} xs={12}>
-                <Soundwave uuid={videoUUID} />
+                <Soundwave hesitation={fillerChartData} uuid={videoUUID} />
               </Grid>
               <Grid item lg={3} md={12} xl={3} xs={12}>
                 <SoundDetail sound={soundDetailData} sx={{ height: '100%' }} />
               </Grid>
               <Grid item lg={8} md={12} xl={8} xs={12}>
-                <AveragePace />
+                <AveragePace average={averagePaceData} />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
                 <Pace pace={paceData} sx={{ height: '100%' }} />
               </Grid>
               <Grid item lg={6} md={12} xl={6} xs={12}>
-                <Fillers sx={{ height: '100%' }} />
+                <Fillers filler={fillerData} sx={{ height: '100%' }} />
               </Grid>
               <Grid item lg={6} md={12} xl={6} xs={12}>
-                <FillersChart fillerchart={filterChartData} />
+                <FillersChart fillerchart={fillerChartData} />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
                 <RepetitionWords repetition={repetitionWordData} />
