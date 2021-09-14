@@ -83,15 +83,21 @@ const Dashboard = () => {
       <Box
         sx={{
           backgroundColor: 'background.default',
-          minHeight: '100%',
-          py: 3,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
+          height: '100%',
+          py: 3
         }}
       >
         {isLoading ? (
-          <CircularProgress />
+          <Box
+            sx={{
+              height: 'inherit',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <CircularProgress />
+          </Box>
         ) : (
           <Container maxWidth={false}>
             <Typography variant="h3" style={{ paddingBottom: '1rem' }}>

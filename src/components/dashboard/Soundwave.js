@@ -25,12 +25,9 @@ import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 
 const Soundwave = (props) => {
   const videoUUID = props.uuid;
-
   const wavesurferRef = useRef();
-
   const initialZoom = 0;
   const [zoom, setZoom] = useState(initialZoom);
-
   const [isPlaying, setIsPlaying] = useState(false);
 
   const zoomIn = () => {
@@ -74,6 +71,8 @@ const Soundwave = (props) => {
     }
     return chunkInterval;
   }, []);
+
+  const url = `http://10.4.56.44:81/api/v1/video/${videoUUID}`;
 
   const [regions, setRegions] = useState([
     //Malcomm
@@ -175,9 +174,7 @@ const Soundwave = (props) => {
     (waveSurfer) => {
       wavesurferRef.current = waveSurfer;
       if (wavesurferRef.current) {
-        wavesurferRef.current.load(
-          `http://10.4.56.44:81/api/v1/video/${videoUUID}`
-        );
+        wavesurferRef.current.load(url);
 
         wavesurferRef.current.on('region-created', regionCreatedHandler);
 
@@ -186,7 +183,7 @@ const Soundwave = (props) => {
         }
       }
     },
-    [regionCreatedHandler, videoUUID]
+    [regionCreatedHandler, url]
   );
 
   const togglePlayPause = useCallback(() => {

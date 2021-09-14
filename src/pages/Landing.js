@@ -35,6 +35,7 @@ const Landing = () => {
     };
     fetchUserData();
   }, []);
+
   return (
     <>
       <Helmet>
@@ -43,7 +44,7 @@ const Landing = () => {
       <Box
         sx={{
           backgroundColor: 'background.default',
-          minHeight: '100%',
+          height: '100%',
           py: 3
         }}
       >
