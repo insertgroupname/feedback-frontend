@@ -27,7 +27,7 @@ const Dashboard = () => {
     videoName: ''
   });
   const [soundDetailData, setSoundDetailData] = useState();
-  // const [averagePaceData, setAveragePaceData] = useState();
+  const [averagePaceData, setAveragePaceData] = useState();
   const [paceData, setPaceData] = useState();
   // const [filterData, setFilterData] = useState();
   const [filterChartData, setFilterChartData] = useState();
@@ -51,6 +51,7 @@ const Dashboard = () => {
           videoName: responseData.videoName,
           status: responseData.status
         });
+        setAveragePaceData(responseData.postProcessing.wpm);
         setFilterChartData(responseData.postProcessing.hestiation_.marker);
         setPaceData(responseData.postProcessing.avg_wpm);
         setSoundDetailData(responseData.postProcessing);
@@ -111,7 +112,7 @@ const Dashboard = () => {
                 <SoundDetail sound={soundDetailData} sx={{ height: '100%' }} />
               </Grid>
               <Grid item lg={8} md={12} xl={8} xs={12}>
-                <AveragePace />
+                <AveragePace average={averagePaceData} />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
                 <Pace pace={paceData} sx={{ height: '100%' }} />
