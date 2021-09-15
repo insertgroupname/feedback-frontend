@@ -10,11 +10,14 @@ import {
   TableRow
 } from '@material-ui/core';
 
+import shortid from 'shortid';
+
 const RepetitionWords = (props) => {
   const repetition = props.repetition || {
     bigram: [],
     word: []
   };
+
   return (
     <Card>
       <CardHeader
@@ -35,8 +38,8 @@ const RepetitionWords = (props) => {
           </TableHead>
           <TableBody>
             {repetition.word
-              .map((word, index) => (
-                <TableRow hover key={index}>
+              .map((word) => (
+                <TableRow hover key={shortid.generate()}>
                   <TableCell>{word[0]}</TableCell>
                   <TableCell align="right">{word[1]}</TableCell>
                 </TableRow>

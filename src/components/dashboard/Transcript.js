@@ -23,6 +23,8 @@ import {
   useTheme
 } from '@material-ui/core';
 
+import shortid from 'shortid';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexShrink: 0,
@@ -106,7 +108,7 @@ const Transcript = (props) => {
     return secondToFormat;
   };
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (_, newPage) => {
     setPage(newPage);
   };
 
@@ -135,8 +137,8 @@ const Transcript = (props) => {
                       page * rowsPerPage + rowsPerPage
                     )
                   : transcript
-                ).map((sentence, index) => (
-                  <TableRow hover key={index}>
+                ).map((sentence) => (
+                  <TableRow hover key={shortid.generate()}>
                     <TableCell component="th" scope="row">
                       {reactStringReplace(
                         sentence.transcript,

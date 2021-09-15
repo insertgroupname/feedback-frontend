@@ -8,11 +8,26 @@ import {
 } from '@material-ui/core';
 
 const phrasesData = [
-  'I think that',
-  'you know',
-  'or something',
-  'stuff like that',
-  'kind of'
+  {
+    id: 1,
+    phrase: 'I think that'
+  },
+  {
+    id: 2,
+    phrase: 'you know'
+  },
+  {
+    id: 3,
+    phrase: 'or something'
+  },
+  {
+    id: 4,
+    phrase: 'stuff like that'
+  },
+  {
+    id: 5,
+    phrase: 'kind of'
+  }
 ];
 
 const Fillers = (props) => {
@@ -37,10 +52,10 @@ const Fillers = (props) => {
         <Box sx={{ padding: '2.25rem 0' }}>
           <Typography>
             Frequency:
-            {phrasesData.map((phrase, index) => {
+            {phrasesData.map((phrase) => {
               return (
                 <span
-                  key={index}
+                  key={phrase.id}
                   style={{
                     backgroundColor: '#FDFD96',
                     padding: '.55rem',
@@ -48,7 +63,7 @@ const Fillers = (props) => {
                     borderRadius: '50px'
                   }}
                 >
-                  {phrase}
+                  {phrase.phrase}
                 </span>
               );
             })}

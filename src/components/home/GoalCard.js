@@ -6,6 +6,8 @@ import {
   makeStyles
 } from '@material-ui/core';
 
+import shortid from 'shortid';
+
 const useStyles = makeStyles((theme) => ({
   card: {
     padding: '2rem 2rem 0 2rem',
@@ -38,14 +40,17 @@ const useStyles = makeStyles((theme) => ({
 
 const goals = [
   {
+    id: 1,
     image: 'static/images/undraw_Recording_re_5xyq.svg',
     detail: 'To transform your presentation video into the sound'
   },
   {
+    id: 2,
     image: 'static/images/undraw_Analytics_re_dkf8.svg',
     detail: 'To analyst your rehearsal into the dashboard'
   },
   {
+    id: 3,
     image: 'static/images/undraw_Growth_curve_re_t5s7.svg',
     detail: 'To guilde your to achieve a good presentation performance'
   }
@@ -55,9 +60,9 @@ const GoalCard = (props) => {
   const classes = useStyles();
   return (
     <Grid container spacing={3}>
-      {goals.map((item, index) => {
+      {goals.map((item) => {
         return (
-          <Grid item lg={4} md={12} xl={4} xs={12} key={index}>
+          <Grid item lg={4} md={12} xl={4} xs={12} key={shortid.generate()}>
             <Card {...props} className={classes.card}>
               <img
                 src={item.image}
