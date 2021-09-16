@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Home</title>
+        <title>Feedback | Home</title>
       </Helmet>
       <Container maxWidth="xl" style={{ padding: 0 }}>
         <HeroSection />

@@ -16,11 +16,11 @@ import {
 } from 'recharts';
 
 const data = [
-  { name: 'very slow', value: 50 },
-  { name: 'slow', value: 50 },
-  { name: 'normal', value: 50 },
-  { name: 'fast', value: 50 },
-  { name: 'very fast', value: 50 }
+  { id: 1, name: 'very slow', value: 50 },
+  { id: 2, name: 'slow', value: 50 },
+  { id: 3, name: 'normal', value: 50 },
+  { id: 4, name: 'fast', value: 50 },
+  { id: 5, name: 'very fast', value: 50 }
 ];
 
 const COLORS = ['#FF0D0D', '#FF8E15', '#69B34C', '#FF8E15', '#FF0D0D'];
@@ -54,7 +54,7 @@ const Pace = (props) => {
             >
               {data.map((_, index) => (
                 <Cell
-                  key={`cell-${index}`}
+                  key={`cell-${_.id}`}
                   fill={COLORS[index % COLORS.length]}
                 />
               ))}

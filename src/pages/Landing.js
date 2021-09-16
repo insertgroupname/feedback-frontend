@@ -39,7 +39,7 @@ const Landing = () => {
   return (
     <>
       <Helmet>
-        <title>Landing</title>
+        <title>Feedback | Landing</title>
       </Helmet>
       <Box
         sx={{
@@ -64,8 +64,8 @@ const Landing = () => {
             <LandingToolbar />
             <Box sx={{ pt: 3 }}>
               <Grid container spacing={3}>
-                {userData.map((user, index) => (
-                  <Grid item key={index} lg={4} md={6} xs={12}>
+                {userData.map((user) => (
+                  <Grid item key={user.videoUUID} lg={4} md={6} xs={12}>
                     <LandingCard user={user} />
                   </Grid>
                 ))}

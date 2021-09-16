@@ -80,7 +80,7 @@ const Dashboard = () => {
   return (
     <>
       <Helmet>
-        <title>Dashboard</title>
+        <title>Feedback | Dashboard</title>
       </Helmet>
 
       <Box

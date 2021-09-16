@@ -32,25 +32,26 @@ const Soundwave = (props) => {
   const [zoom, setZoom] = useState(initialZoom);
 
   const [isPlaying, setIsPlaying] = useState(false);
-  const zoomIn = () => {
-    setZoom((prevZoom) => prevZoom + 5);
-  };
 
-  const zoomOut = () => {
+  const zoomIn = useCallback(() => {
+    setZoom((prevZoom) => prevZoom + 5);
+  }, []);
+
+  const zoomOut = useCallback(() => {
     setZoom((prevZoom) => prevZoom - 5);
-  };
+  }, []);
 
   useEffect(() => {
     wavesurferRef.current.zoom(zoom);
   });
 
-  const skipForward = () => {
+  const skipForward = useCallback(() => {
     wavesurferRef.current.skipForward(5);
-  };
+  }, []);
 
-  const skipBackward = () => {
+  const skipBackward = useCallback(() => {
     wavesurferRef.current.skipBackward(5);
-  };
+  }, []);
 
   const timeIntervalHandler = useCallback((pxPerSec) => {
     let chunkInterval;
@@ -75,20 +76,15 @@ const Soundwave = (props) => {
   }, []);
 
   let formatHesitation = [];
-  Object.entries(hesitation).forEach(([key, value], index) => {
+  for (const [key, value] of Object.entries(hesitation)) {
     formatHesitation.push({
-      id: index,
       start: key.split('-')[0],
       end: key.split('-')[1],
       fillers: value.hes_count,
-
       drag: false,
-      resize: false,
-      data: {
-        systemRegionId: index
-      }
+      resize: false
     });
-  });
+  }
 
   const url = `http://10.4.56.44:81/api/v1/video/${videoUUID}`;
 
@@ -129,14 +125,7 @@ const Soundwave = (props) => {
 
   const regionCreatedHandler = useCallback(
     (region) => {
-      console.log('region-created --> region:', region);
-
-      if (region.data.systemRegionId) return;
-
-      setRegions([
-        ...regionsRef.current,
-        { ...region, data: { ...region.data, systemRegionId: -1 } }
-      ]);
+      setRegions([...regionsRef.current, { ...region }]);
     },
     [regionsRef]
   );
@@ -210,8 +199,8 @@ const Soundwave = (props) => {
               waveColor="#c6c6c6"
               progressColor="#3f51b5"
             >
-              {regions.map((regionProps) => (
-                <Region key={regionProps.id} {...regionProps} />
+              {regions.map((regionProps, index) => (
+                <Region key={index} {...regionProps} />
               ))}
             </WaveForm>
             <Box id="timeline" />

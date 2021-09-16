@@ -10,6 +10,8 @@ import {
   Button
 } from '@material-ui/core';
 
+import shortid from 'shortid';
+
 const Keyword = (props) => {
   const keyword = props.keyword || [];
   return (
@@ -31,8 +33,8 @@ const Keyword = (props) => {
           </TableHead>
           <TableBody>
             {keyword
-              .map((word, index) => (
-                <TableRow hover key={index}>
+              .map((word) => (
+                <TableRow hover key={shortid.generate()}>
                   <TableCell>{word}</TableCell>
                 </TableRow>
               ))

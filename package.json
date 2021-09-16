@@ -43,11 +43,13 @@
     "react-feather": "^2.0.9",
     "react-helmet": "^6.1.0",
     "react-perfect-scrollbar": "^1.5.8",
+    "react-player": "^2.9.0",
     "react-router": "^6.0.0-beta.0",
     "react-router-dom": "^6.0.0-beta.0",
     "react-scripts": "^4.0.0",
     "react-string-replace": "^0.4.4",
     "recharts": "^2.1.1",
+    "shortid": "^2.2.16",
     "wavesurfer-react": "^2.0.7",
     "wavesurfer.js": "^4.6.0",
     "yup": "^0.29.3"
