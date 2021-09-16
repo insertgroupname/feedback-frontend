@@ -39,7 +39,7 @@ const Landing = () => {
   return (
     <>
       <Helmet>
-        <title>Landing</title>
+        <title>Feedback | Landing</title>
       </Helmet>
       <Box
         sx={{

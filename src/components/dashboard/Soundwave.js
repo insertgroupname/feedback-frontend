@@ -32,25 +32,26 @@ const Soundwave = (props) => {
   const [zoom, setZoom] = useState(initialZoom);
 
   const [isPlaying, setIsPlaying] = useState(false);
-  const zoomIn = () => {
-    setZoom((prevZoom) => prevZoom + 5);
-  };
 
-  const zoomOut = () => {
+  const zoomIn = useCallback(() => {
+    setZoom((prevZoom) => prevZoom + 5);
+  }, []);
+
+  const zoomOut = useCallback(() => {
     setZoom((prevZoom) => prevZoom - 5);
-  };
+  }, []);
 
   useEffect(() => {
     wavesurferRef.current.zoom(zoom);
   });
 
-  const skipForward = () => {
+  const skipForward = useCallback(() => {
     wavesurferRef.current.skipForward(5);
-  };
+  }, []);
 
-  const skipBackward = () => {
+  const skipBackward = useCallback(() => {
     wavesurferRef.current.skipBackward(5);
-  };
+  }, []);
 
   const timeIntervalHandler = useCallback((pxPerSec) => {
     let chunkInterval;
