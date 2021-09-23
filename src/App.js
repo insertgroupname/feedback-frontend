@@ -19,7 +19,8 @@ const App = () => {
   useEffect(() => {
     const token = Cookies.get('jwt');
     if (token) {
-      let verifyTokenUrl = 'http://localhost:3331/verifyToken?token=' + token;
+      let verifyTokenUrl =
+        'http://10.4.56.44:81/api/v1/verifyToken?token=' + token;
       axios
         .get(verifyTokenUrl)
         .then((res) => {

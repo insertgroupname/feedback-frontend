@@ -22,7 +22,7 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
   const [notifications] = useState([]);
   const handleLogout = () => {
     axios
-      .get('http://10.4.56.44/logout')
+      .get('http://10.4.56.44:81/api/v1/logout')
       .then(() => {
         Cookies.remove('jwt');
         setIsLoggedIn(false);
