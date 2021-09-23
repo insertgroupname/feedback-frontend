@@ -16,16 +16,19 @@ import InputIcon from '@material-ui/icons/Input';
 import Logo from './Logo';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { url } from 'src/utils/globalVariable';
 
 const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
-  const { setIsLoggedIn } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const [notifications] = useState([]);
   const handleLogout = () => {
     axios
-      .get('http://10.4.56.44:81/api/v1/logout')
+      .get(`${url}/logout`)
       .then(() => {
         Cookies.remove('jwt');
-        setIsLoggedIn(false);
+        setUser((prevUser) => {
+          return { ...prevUser, userId: '', isAuthentication: false };
+        });
       })
       .catch((err) => {
         if (err.response) {

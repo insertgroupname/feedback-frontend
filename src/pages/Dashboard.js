@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import {
   Box,
@@ -19,6 +19,8 @@ import Transcript from 'src/components/dashboard/Transcript';
 import SoundDetail from 'src/components/dashboard/SoundDetail';
 import Soundwave from 'src/components/dashboard/Soundwave';
 import axios from 'axios';
+import { url } from 'src/utils/globalVariable';
+import { UserContext } from 'src/contexts/UserContext';
 
 const Dashboard = () => {
   let { videoUUID } = useParams();
@@ -35,14 +37,14 @@ const Dashboard = () => {
   const [vocabularyData, setVocabularyData] = useState();
   const [keywordData, setKeywordData] = useState();
   const [transcriptData, setTranscriptData] = useState();
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     const fetchDetailData = async () => {
-      let userId = '0000';
       setIsLoading(true);
       try {
         const response = await axios.get(
-          `http://10.4.56.44:81/api/v1/records/${userId}/${videoUUID}`
+          `${url}/records/${user.userId}/${videoUUID}`
         );
         const responseData = response.data[0];
         console.log('Response', responseData);
@@ -75,7 +77,7 @@ const Dashboard = () => {
       }
     };
     fetchDetailData();
-  }, [videoUUID]);
+  }, [user, videoUUID]);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -8,11 +8,14 @@ import Typography from '@material-ui/core/Typography';
 import ReactPlayer from 'react-player';
 import SuccessModal from './SuccessModal';
 import axios from 'axios';
+import { url } from 'src/utils/globalVariable';
+import { UserContext } from 'src/contexts/UserContext';
 
 const UploadModal = (props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showFailModal, setShowFailModal] = useState(false);
+  const { user } = useContext(UserContext);
 
   const handleModalClose = () => {
     setShowSuccessModal(false);
@@ -20,23 +23,18 @@ const UploadModal = (props) => {
     window.location.reload();
   };
 
-  const userId = '0000';
   const handleSubmit = async () => {
     let formData = new FormData();
-    formData.append('userId', userId);
+    formData.append('userId', user.userId);
     formData.append('file', props.file);
     try {
       if (!props.file) {
         console.log('choosing file');
       } else {
         setIsSubmitting(true);
-        const res = await axios.post(
-          'http://10.4.56.44:81/api/v1/upload',
-          formData,
-          {
-            headers: { 'Content-Type': 'multipart/form-data' }
-          }
-        );
+        const res = await axios.post(`${url}/upload`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
         console.log(res.data);
         setIsSubmitting(false);
         setShowSuccessModal(true);

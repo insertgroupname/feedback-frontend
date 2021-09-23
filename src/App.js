@@ -8,24 +8,29 @@ import routes from 'src/routes';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { UserContext } from './contexts/UserContext';
+import { url } from './utils/globalVariable';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const providerValue = useMemo(
-    () => ({ isLoggedIn, setIsLoggedIn }),
-    [isLoggedIn, setIsLoggedIn]
-  );
+  const [user, setUser] = useState({
+    userId: '',
+    isAuthentication: false
+  });
+  const providerValue = useMemo(() => ({ user, setUser }), [user, setUser]);
+  console.log('From App.js', user);
 
   useEffect(() => {
     const token = Cookies.get('jwt');
     if (token) {
-      let verifyTokenUrl =
-        'http://10.4.56.44:81/api/v1/verifyToken?token=' + token;
+      let verifyTokenUrl = `${url}/verifyToken?token=${token}`;
       axios
         .get(verifyTokenUrl)
         .then((res) => {
-          console.log(res);
-          setIsLoggedIn(true);
+          setUser((prevUser) => {
+            return {
+              ...prevUser,
+              ...res.data
+            };
+          });
         })
         .catch((error) => {
           if (error.response) {
@@ -35,12 +40,11 @@ const App = () => {
           } else if (error.message) {
             console.log(error.message);
           }
-          setIsLoggedIn(false);
         });
     }
   }, []);
 
-  const routing = useRoutes(routes(isLoggedIn));
+  const routing = useRoutes(routes(user));
 
   return (
     <ThemeProvider theme={theme}>
