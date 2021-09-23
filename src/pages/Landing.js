@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { Box, Container, Grid, CircularProgress } from '@material-ui/core';
 import LandingToolbar from '../components/landing/LandingToolbar';
 import LandingCard from 'src/components/landing/LandingCard';
+import { url } from 'src/utils/globalVariable';
+import { UserContext } from 'src/contexts/UserContext';
 const Landing = () => {
   const [userData, setUserData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      let userId = '0000';
       setIsLoading(true);
       try {
-        const response = await axios.get(
-          `http://10.4.56.44:81/api/v1/records/${userId}`
-        );
+        const response = await axios.get(`${url}/records/${user.userId}`);
         setIsLoading(false);
         const responseData = response.data;
         console.log('Response', responseData);
@@ -34,7 +34,7 @@ const Landing = () => {
       }
     };
     fetchUserData();
-  }, []);
+  }, [user]);
 
   return (
     <>

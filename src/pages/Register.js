@@ -1,8 +1,11 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import axios from 'axios';
+import { UserContext } from 'src/contexts/UserContext';
+import { url } from 'src/utils/globalVariable';
 import {
   Box,
   Button,
@@ -13,8 +16,7 @@ import {
 } from '@material-ui/core';
 
 const Register = () => {
-  const navigate = useNavigate();
-
+  const { setUser } = useContext(UserContext);
   return (
     <>
       <Helmet>
@@ -52,7 +54,7 @@ const Register = () => {
               setSubmitting(true);
               axios
                 .post(
-                  'http://10.4.56.44:81/api/v1/register',
+                  `${url}/register`,
                   {
                     email: values.email,
                     password: values.password,
@@ -64,9 +66,15 @@ const Register = () => {
                   }
                 )
                 .then((res) => {
-                  console.log(res);
+                  console.log(res.data);
+                  setUser((prevUser) => {
+                    return {
+                      ...prevUser,
+                      userId: res.data._id,
+                      isAuthentication: true
+                    };
+                  });
                   setSubmitting(false);
-                  navigate('/app/landing', { replace: true });
                 })
                 .catch((err) => {
                   if (err.response) {

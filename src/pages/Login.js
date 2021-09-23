@@ -13,9 +13,10 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
+import { url } from 'src/utils/globalVariable';
 
 const Login = () => {
-  const { setIsLoggedIn } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   return (
     <>
       <Helmet>
@@ -47,7 +48,7 @@ const Login = () => {
               setSubmitting(true);
               axios
                 .post(
-                  'http://10.4.56.44:81/api/v1/signin',
+                  `${url}/signin`,
                   {
                     email: values.email,
                     password: values.password
@@ -57,9 +58,15 @@ const Login = () => {
                   }
                 )
                 .then((res) => {
-                  console.log(res);
+                  console.log(res.data);
+                  setUser((prevUser) => {
+                    return {
+                      ...prevUser,
+                      userId: res.data.userId,
+                      isAuthentication: true
+                    };
+                  });
                   setSubmitting(false);
-                  setIsLoggedIn(true);
                 })
                 .catch((err) => {
                   if (err.response) {
@@ -70,7 +77,6 @@ const Login = () => {
                     console.log(err.message);
                   }
                   setSubmitting(false);
-                  setIsLoggedIn(false);
                 });
             }}
           >
