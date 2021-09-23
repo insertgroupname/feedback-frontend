@@ -1,7 +1,10 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from 'src/contexts/UserContext';
+import { Link as RouterLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import axios from 'axios';
 import {
   Box,
   Button,
@@ -12,8 +15,7 @@ import {
 } from '@material-ui/core';
 
 const Login = () => {
-  const navigate = useNavigate();
-
+  const { setIsLoggedIn } = useContext(UserContext);
   return (
     <>
       <Helmet>
@@ -41,8 +43,35 @@ const Login = () => {
                 .required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={() => {
-              navigate('/app/landing', { replace: true });
+            onSubmit={async (values, { setSubmitting }) => {
+              setSubmitting(true);
+              axios
+                .post(
+                  'http://10.4.56.44/signin',
+                  {
+                    email: values.email,
+                    password: values.password
+                  },
+                  {
+                    withCredentials: true
+                  }
+                )
+                .then((res) => {
+                  console.log(res);
+                  setSubmitting(false);
+                  setIsLoggedIn(true);
+                })
+                .catch((err) => {
+                  if (err.response) {
+                    console.log(err.response);
+                  } else if (err.request) {
+                    console.log(err.request);
+                  } else if (err.message) {
+                    console.log(err.message);
+                  }
+                  setSubmitting(false);
+                  setIsLoggedIn(false);
+                });
             }}
           >
             {({

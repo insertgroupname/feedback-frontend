@@ -2,6 +2,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import axios from 'axios';
 import {
   Box,
   Button,
@@ -47,8 +48,36 @@ const Register = () => {
               lastName: Yup.string().max(255).required('Last name is required'),
               password: Yup.string().max(255).required('password is required')
             })}
-            onSubmit={() => {
-              navigate('/app/landing', { replace: true });
+            onSubmit={async (values, { setSubmitting }) => {
+              setSubmitting(true);
+              axios
+                .post(
+                  'http://10.4.56.44/register',
+                  {
+                    email: values.email,
+                    password: values.password,
+                    firstName: values.firstName,
+                    lastName: values.lastName
+                  },
+                  {
+                    withCredentials: true
+                  }
+                )
+                .then((res) => {
+                  console.log(res);
+                  setSubmitting(false);
+                  navigate('/app/landing', { replace: true });
+                })
+                .catch((err) => {
+                  if (err.response) {
+                    console.log(err.response);
+                  } else if (err.request) {
+                    console.log(err.request);
+                  } else if (err.message) {
+                    console.log(err.message);
+                  }
+                  setSubmitting(false);
+                });
             }}
           >
             {({

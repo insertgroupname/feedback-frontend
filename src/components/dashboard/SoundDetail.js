@@ -72,14 +72,14 @@ const SoundDetail = (props) => {
           }}
         >
           <Typography variant="body1" color="primary">
-            Filler per Minute
+            Disfluency per minute
           </Typography>
           <Typography variant="h3">
             {(
               (60 * soundDetail.hestiation_.total_count) /
               soundDetail.video_len
             ).toFixed(2)}{' '}
-            fillers per minute
+            per minute
           </Typography>
         </Box>
         <Divider flexItem />

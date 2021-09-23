@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { UserContext } from 'src/contexts/UserContext';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -13,15 +14,31 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import Logo from './Logo';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
+  const { setIsLoggedIn } = useContext(UserContext);
   const [notifications] = useState([]);
-
+  const handleLogout = () => {
+    axios
+      .get('http://10.4.56.44/logout')
+      .then(() => {
+        Cookies.remove('jwt');
+        setIsLoggedIn(false);
+      })
+      .catch((err) => {
+        if (err.response) {
+          console.log(err.response);
+        } else if (err.request) {
+          console.log(err.request);
+        } else if (err.message) {
+          console.log(err.message);
+        }
+      });
+  };
   return (
-    <AppBar
-      elevation={0}
-      {...rest}
-    >
+    <AppBar elevation={0} {...rest}>
       <Toolbar>
         <RouterLink to="/">
           <Logo />
@@ -37,15 +54,12 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton color="inherit">
+          <IconButton color="inherit" onClick={handleLogout}>
             <InputIcon />
           </IconButton>
         </Hidden>
         <Hidden lgUp>
-          <IconButton
-            color="inherit"
-            onClick={onMobileNavOpen}
-          >
+          <IconButton color="inherit" onClick={onMobileNavOpen}>
             <MenuIcon />
           </IconButton>
         </Hidden>
