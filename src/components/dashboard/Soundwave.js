@@ -76,14 +76,16 @@ const Soundwave = (props) => {
   }, []);
 
   let formatHesitation = [];
-  for (const [key, value] of Object.entries(hesitation)) {
-    formatHesitation.push({
-      start: key.split('-')[0],
-      end: key.split('-')[1],
-      fillers: value.hes_count,
-      drag: false,
-      resize: false
-    });
+  for (const [, value] of Object.entries(hesitation)) {
+    for (let i of value.words) {
+      formatHesitation.push({
+        start: i[1],
+        end: i[2],
+        color: 'red',
+        drag: false,
+        resize: false
+      });
+    }
   }
 
   const url = `http://10.4.56.44:81/api/v1/video/${videoUUID}`;
@@ -91,31 +93,31 @@ const Soundwave = (props) => {
   // if hes_count > 0 && <= 3 -> Yellow
   // if hes_count > 3  -> Red
 
-  const filterRegionYellow = formatHesitation.filter((ele) => {
-    return ele.fillers > 0 && ele.fillers <= 3;
-  });
+  // const filterRegionYellow = formatHesitation.filter((ele) => {
+  //   return ele.fillers > 0 && ele.fillers <= 3;
+  // });
 
-  const fillRegionYellow = filterRegionYellow.map((ele) => {
-    return {
-      ...ele,
-      color: 'rgba(255, 187, 51, .5)'
-    };
-  });
+  // const fillRegionYellow = filterRegionYellow.map((ele) => {
+  //   return {
+  //     ...ele,
+  //     color: 'rgba(255, 187, 51, .5)'
+  //   };
+  // });
 
-  const filterRegionRed = formatHesitation.filter((ele) => {
-    return ele.fillers > 3;
-  });
+  // const filterRegionRed = formatHesitation.filter((ele) => {
+  //   return ele.fillers > 3;
+  // });
 
-  const fillRegionRed = filterRegionRed.map((ele) => {
-    return {
-      ...ele,
-      color: 'rgba(255, 87, 51, .5)'
-    };
-  });
+  // const fillRegionRed = filterRegionRed.map((ele) => {
+  //   return {
+  //     ...ele,
+  //     color: 'rgba(255, 87, 51, .5)'
+  //   };
+  // });
 
-  const filterRegion = [...fillRegionYellow, ...fillRegionRed];
+  // const filterRegion = [...fillRegionYellow, ...fillRegionRed];
 
-  const [regions, setRegions] = useState(filterRegion);
+  const [regions, setRegions] = useState(formatHesitation);
 
   const regionsRef = useRef(regions);
 

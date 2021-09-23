@@ -11,7 +11,6 @@ import moment from 'moment';
 
 const LandingCard = ({ user, ...rest }) => {
   const navigate = useNavigate();
-
   return (
     <Card
       sx={{
@@ -23,18 +22,21 @@ const LandingCard = ({ user, ...rest }) => {
     >
       <CardContent>
         <Typography color="textPrimary" gutterBottom variant="h4">
-          VideoUUID: {user.videoName}
+          Video Name: {user.videoName}
         </Typography>
         <Typography color="textPrimary" variant="body1">
-          VideoUUID: {user.videoUUID}
+          Video UUID: {user.videoUUID}
         </Typography>
         <Typography color="textPrimary" variant="body1">
           Status: {user.status}
         </Typography>
-        <Typography color="textPrimary" gutterBottom variant="body1">
+        <Typography color="textPrimary" variant="body1">
           Created at:{' '}
           {moment(user.createDate).format('MMMM Do YYYY, h:mm:ss a')}
         </Typography>
+        {/* <Typography color="textPrimary" gutterBottom variant="body1">
+          Updated at: {moment().format('MMMM Do YYYY, h:mm:ss a')}
+        </Typography> */}
       </CardContent>
       {user.status === 'Done' && (
         <CardActions>
