@@ -52,7 +52,7 @@ const Register = () => {
               setSubmitting(true);
               axios
                 .post(
-                  'http://localhost:3331/register',
+                  'http://10.4.56.44/register',
                   {
                     email: values.email,
                     password: values.password,
