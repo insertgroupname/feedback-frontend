@@ -35,8 +35,8 @@ const Fillers = (props) => {
   return (
     <Card {...props}>
       <CardHeader
-        title="Fillers"
-        subheader="Try to reduce your fillers contain hesitation frequency, 
+        title="Disfluency"
+        subheader="Try to reduce your disfluency contain hesitation frequency, 
         fillers word, and frequency phrases to imporve your performance."
       />
       <Divider />

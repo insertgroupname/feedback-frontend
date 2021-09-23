@@ -6,7 +6,8 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  // Legend,
+  ReferenceLine,
+  Legend,
   ResponsiveContainer,
   Label
 } from 'recharts';
@@ -19,14 +20,14 @@ const FillersChart = (props) => {
   for (const [key, value] of Object.entries(fillerChartData)) {
     formatData.push({
       timestamp: secondToFormat(key.split('-')[1], 'mm:ss'),
-      fillers: value.hes_count
+      disfluency: value.hes_count
     });
   }
 
   return (
     <Card {...props}>
       <CardHeader
-        title="Fillers Chart"
+        title="Disfluency Chart"
         subheader="Tips: Take a couple of seconds to think about what you want to say. 
         These short pauses of complete silence can serve two purposes: they will help you begin powerfully, 
         and it will help you avoid using a filler word."
@@ -57,7 +58,7 @@ const FillersChart = (props) => {
               scale="band"
               xAxisId="quarter"
             >
-              <Label value="Time (min)" position="bottom" />
+              <Label value="Time (min:sec)" />
             </XAxis>
             <YAxis>
               <Label
@@ -68,8 +69,14 @@ const FillersChart = (props) => {
               />
             </YAxis>
             <Tooltip />
-            {/* <Legend /> */}
-            <Bar dataKey="fillers" fill="#F05311" />
+            <Legend verticalAlign="top" height={36} />
+            <Bar dataKey="disfluency" fill="#F05311" />
+            <ReferenceLine
+              y={2}
+              stroke="blue"
+              strokeWidth={2}
+              strokeDasharray="3 3"
+            />
           </BarChart>
         </ResponsiveContainer>
       </CardContent>
