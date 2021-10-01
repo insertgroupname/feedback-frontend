@@ -10,31 +10,16 @@ import {
   TableRow
 } from '@material-ui/core';
 
-const words = [
-  {
-    id: '1',
-    word: 'Capitalization',
-    partOfSpeech: 'Noun'
-  },
-  {
-    id: '2',
-    word: 'Research',
-    partOfSpeech: 'Noun'
-  },
-  {
-    id: '3',
-    word: 'Potential',
-    partOfSpeech: 'Noun'
-  },
-  {
-    id: '4',
-    word: 'Percentage',
-    partOfSpeech: 'Noun'
-  }
-];
-
 const Vocabulary = (props) => {
-  // const vocabulary = props.vocabulary;
+  const vocabulary = props.vocabulary || {};
+  let words = [];
+  for (const [key] of Object.entries(vocabulary)) {
+    words.push({
+      id: key,
+      word: key,
+      partOfSpeech: 'Noun'
+    });
+  }
   return (
     <Card>
       <CardHeader
@@ -54,12 +39,14 @@ const Vocabulary = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {words.map((word) => (
-              <TableRow hover key={word.id}>
-                <TableCell>{word.word}</TableCell>
-                <TableCell align="right">{word.partOfSpeech}</TableCell>
-              </TableRow>
-            ))}
+            {words
+              .map((word) => (
+                <TableRow hover key={word.id}>
+                  <TableCell>{word.word}</TableCell>
+                  <TableCell align="right">{word.partOfSpeech}</TableCell>
+                </TableRow>
+              ))
+              .slice(0, 4)}
           </TableBody>
         </Table>
       </Box>

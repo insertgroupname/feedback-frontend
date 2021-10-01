@@ -22,6 +22,7 @@ import PauseIcon from '@material-ui/icons/Pause';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
 import ZoomOutIcon from '@material-ui/icons/ZoomOut';
+import { url } from 'src/utils/globalVariable';
 
 const Soundwave = (props) => {
   const videoUUID = props.uuid;
@@ -76,6 +77,8 @@ const Soundwave = (props) => {
   }, []);
 
   let formatHesitation = [];
+
+  // very small less than 1 sec not show
   for (const [, value] of Object.entries(hesitation)) {
     for (let i of value.words) {
       formatHesitation.push({
@@ -88,7 +91,7 @@ const Soundwave = (props) => {
     }
   }
 
-  const url = `http://10.4.56.44:81/api/v1/video/${videoUUID}`;
+  const videoUrl = `${url}/video/${videoUUID}`;
 
   // if hes_count > 0 && <= 3 -> Yellow
   // if hes_count > 3  -> Red
@@ -153,7 +156,7 @@ const Soundwave = (props) => {
     (waveSurfer) => {
       wavesurferRef.current = waveSurfer;
       if (wavesurferRef.current) {
-        wavesurferRef.current.load(url);
+        wavesurferRef.current.load(videoUrl);
 
         wavesurferRef.current.on('region-created', regionCreatedHandler);
 
@@ -162,7 +165,7 @@ const Soundwave = (props) => {
         }
       }
     },
-    [regionCreatedHandler, url]
+    [regionCreatedHandler, videoUrl]
   );
 
   const togglePlayPause = useCallback(() => {
