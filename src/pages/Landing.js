@@ -61,7 +61,7 @@ const Landing = () => {
           </Box>
         ) : (
           <Container maxWidth={false}>
-            <LandingToolbar setUserData={setUserData} />
+            <LandingToolbar />
             <Box sx={{ pt: 3 }}>
               <Grid container spacing={3}>
                 {userData.map((user) => (

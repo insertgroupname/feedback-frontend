@@ -42,7 +42,6 @@ const LandingToolbar = (props) => {
         open={open}
         handleClose={handleClose}
         handleFile={handleFile}
-        setUserData={props.setUserData}
         file={file}
       />
     </Box>

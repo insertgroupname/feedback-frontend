@@ -38,7 +38,6 @@ const UploadModal = (props) => {
         console.log(res.data);
         setIsSubmitting(false);
         setShowSuccessModal(true);
-        // props.setUserData()
       }
     } catch (e) {
       if (e.response) {
