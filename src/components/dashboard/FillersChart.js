@@ -47,22 +47,16 @@ const FillersChart = (props) => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="timestamp" tick={false} />
-            <XAxis
-              dataKey="timestamp"
-              axisLine={false}
-              tickLine={false}
-              interval={0}
-              tick={false}
-              height={1}
-              scale="band"
-              xAxisId="quarter"
-            >
-              <Label value="Time (min:sec)" />
+            <XAxis dataKey="timestamp">
+              <Label
+                value="Time (min:sec)"
+                offset={-20}
+                position="insideBottom"
+              />
             </XAxis>
             <YAxis>
               <Label
-                value="Count"
+                value="Frequency"
                 angle={-90}
                 position="left"
                 style={{ textAnchor: 'middle' }}

@@ -58,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     padding: '1.5rem 2rem',
     display: 'flex',
-    alignItems: 'center',
     justifyContent: 'center'
   }
 }));

@@ -14,7 +14,8 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  IconButton
+  IconButton,
+  Typography
 } from '@material-ui/core';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -190,6 +191,16 @@ const Soundwave = (props) => {
         </Box>
       </Box>
       <Divider />
+      <Box display="flex" justifyContent="center" p={2}>
+        <hr
+          style={{
+            transform: 'rotate(90deg)',
+            borderColor: 'red',
+            margin: '0 1rem'
+          }}
+        />
+        <Typography color="red">disfluency</Typography>
+      </Box>
       <CardContent>
         <Box
           sx={{
