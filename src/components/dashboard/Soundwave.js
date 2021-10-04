@@ -85,7 +85,7 @@ const Soundwave = (props) => {
       formatHesitation.push({
         start: i[1],
         end: i[2],
-        color: 'red',
+        color: 'rgba(255,0,0,0.4)',
         drag: false,
         resize: false
       });
