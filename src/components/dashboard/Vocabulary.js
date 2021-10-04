@@ -71,7 +71,7 @@ const Vocabulary = (props) => {
           <TableFooter>
             <TableRow>
               <TablePagination
-                rowsPerPageOptions={false}
+                rowsPerPageOptions={[]}
                 colSpan={3}
                 count={words.length}
                 rowsPerPage={rowsPerPage}

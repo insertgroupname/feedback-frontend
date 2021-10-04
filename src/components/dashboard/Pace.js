@@ -28,8 +28,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     [theme.breakpoints.down('lg')]: {
       marginLeft: 'auto',
-      marginRight: 'auto',
-      width: '100%'
+      marginRight: 'auto'
     }
   },
   gauge: {
@@ -40,19 +39,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   paceContainer: {
-    padding: '3.5rem 0'
-  },
-  pace: {
-    textAlign: 'center',
-    padding: 0,
-    margin: 0,
-    fontSize: '3.2rem',
-    fontWeight: 'bold'
-  },
-  unit: {
-    textAlign: 'center',
-    padding: 0,
-    margin: 0
+    padding: '2.75rem 0'
   },
   tooltipContainer: {
     position: 'relative',
@@ -151,8 +138,18 @@ const Pace = (props) => {
           </svg>
         </Box>
         <Box className={classes.paceContainer}>
-          <p className={classes.pace}>{format(',')(value)}</p>
-          <p className={classes.unit}>words/min</p>
+          <Typography fontSize="3rem" fontWeight="bold" align="center">
+            {format(',')(value)}
+          </Typography>
+          <Typography align="center">words/min</Typography>
+          <Typography
+            fontSize="2rem"
+            fontWeight="bold"
+            align="center"
+            color="#4dff4d"
+          >
+            Good
+          </Typography>
         </Box>
         <Typography variant="body1" align="center" padding="1rem">
           Your pace is conversational. Keep it up!

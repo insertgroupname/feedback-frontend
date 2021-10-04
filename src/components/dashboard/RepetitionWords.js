@@ -69,7 +69,7 @@ const RepetitionWords = (props) => {
           <TableFooter>
             <TableRow>
               <TablePagination
-                rowsPerPageOptions={false}
+                rowsPerPageOptions={[]}
                 colSpan={3}
                 count={repetition.word.length}
                 rowsPerPage={rowsPerPage}
