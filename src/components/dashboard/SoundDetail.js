@@ -39,7 +39,7 @@ const SoundDetail = (props) => {
             Silences
           </Typography>
           <Typography variant="h3">
-            {Math.floor(soundDetail.silence.total_silence)} s
+            {Math.floor(soundDetail.silence.total_silence)} sec
           </Typography>
         </Box>
         <Divider flexItem />

@@ -1,4 +1,11 @@
-import { Card, CardHeader, CardContent, Divider } from '@material-ui/core';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Divider,
+  Box,
+  Typography
+} from '@material-ui/core';
 import {
   BarChart,
   Bar,
@@ -12,6 +19,35 @@ import {
   Label
 } from 'recharts';
 import { secondToFormat } from '../../utils/secondTomin';
+
+const renderLegend = (props) => {
+  const { payload } = props;
+
+  return (
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        gap: '.5rem'
+      }}
+    >
+      <Box sx={{ height: 15, width: 15, background: '#F05311' }} />
+      {payload.map((entry, index) => (
+        <Typography color="#F05311" key={index}>
+          {entry.value}
+        </Typography>
+      ))}
+      <hr
+        style={{
+          borderTop: '2px dotted blue',
+          width: '15px'
+        }}
+      />
+      <Typography color="blue">acceptable disfluency</Typography>
+    </Box>
+  );
+};
 
 const FillersChart = (props) => {
   const fillerChartData = props.fillerchart || {};
@@ -47,29 +83,23 @@ const FillersChart = (props) => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="timestamp" tick={false} />
-            <XAxis
-              dataKey="timestamp"
-              axisLine={false}
-              tickLine={false}
-              interval={0}
-              tick={false}
-              height={1}
-              scale="band"
-              xAxisId="quarter"
-            >
-              <Label value="Time (min:sec)" />
+            <XAxis dataKey="timestamp">
+              <Label
+                value="Time (min:sec)"
+                offset={-20}
+                position="insideBottom"
+              />
             </XAxis>
             <YAxis>
               <Label
-                value="Count"
+                value="Frequency"
                 angle={-90}
                 position="left"
                 style={{ textAnchor: 'middle' }}
               />
             </YAxis>
             <Tooltip />
-            <Legend verticalAlign="top" height={36} />
+            <Legend verticalAlign="top" height={36} content={renderLegend} />
             <Bar dataKey="disfluency" fill="#F05311" />
             <ReferenceLine
               y={2}

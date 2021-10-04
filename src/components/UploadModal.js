@@ -7,6 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import ReactPlayer from 'react-player';
 import SuccessModal from './SuccessModal';
+import FailModal from 'src/components/FailModal';
 import axios from 'axios';
 import { url } from 'src/utils/globalVariable';
 import { UserContext } from 'src/contexts/UserContext';
@@ -20,7 +21,6 @@ const UploadModal = (props) => {
   const handleModalClose = () => {
     setShowSuccessModal(false);
     props.handleClose();
-    window.location.reload();
   };
 
   const handleSubmit = async () => {
@@ -50,74 +50,74 @@ const UploadModal = (props) => {
         console.log('e', e.message);
       }
       setIsSubmitting(false);
-      setShowFailModal(false);
+      setShowFailModal(true);
     }
   };
   return (
     <>
-      {showSuccessModal ? (
+      {showSuccessModal && (
         <SuccessModal
           showSuccessModal={showSuccessModal}
           handleModalClose={handleModalClose}
         />
-      ) : (
-        <>
-          <Dialog
-            open={props.open}
-            onClose={props.handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title" disableTypography>
-              <Typography variant="h3">Select your video or sound</Typography>
-            </DialogTitle>
-            <DialogContent>
-              <input
-                accept=".mkv,.mp4,.flv,.flac,.mp3"
-                type="file"
-                onChange={(e) => {
-                  props.handleFile(e);
-                }}
-              />
-              {props.file && props.file.type.match('video.*') && (
-                <div style={{ paddingTop: '1rem' }}>
-                  <ReactPlayer
-                    url={URL.createObjectURL(props.file)}
-                    width="100%"
-                    height="100%"
-                    controls={true}
-                  />
-                </div>
-              )}
-              {props.file && props.file.type.match('audio.*') && (
-                <audio
-                  controls
-                  style={{
-                    width: '100%',
-                    paddingTop: '1rem'
-                  }}
-                >
-                  <source
-                    src={URL.createObjectURL(props.file)}
-                    type="audio/mp4"
-                  />
-                </audio>
-              )}
-            </DialogContent>
-            <DialogActions style={{ padding: '16px 24px' }}>
-              <Button
-                disabled={isSubmitting}
-                onClick={handleSubmit}
-                variant="contained"
-                color="primary"
-                autoFocus
-              >
-                {isSubmitting ? 'Uploading' : 'Upload'}
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </>
       )}
+      {showFailModal && (
+        <FailModal
+          showFailModal={showFailModal}
+          handleModalClose={handleModalClose}
+        />
+      )}
+      <Dialog
+        open={props.open}
+        onClose={props.handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title" disableTypography>
+          <Typography variant="h3">Select your video or sound</Typography>
+        </DialogTitle>
+        <DialogContent>
+          <input
+            accept=".mkv,.mp4,.flv,.flac,.mp3"
+            type="file"
+            onChange={(e) => {
+              props.handleFile(e);
+            }}
+          />
+          {props.file && props.file.type.match('video.*') && (
+            <div style={{ paddingTop: '1rem' }}>
+              <ReactPlayer
+                url={URL.createObjectURL(props.file)}
+                width="100%"
+                height="100%"
+                controls={true}
+              />
+            </div>
+          )}
+          {props.file && props.file.type.match('audio.*') && (
+            <audio
+              controls
+              style={{
+                width: '100%',
+                paddingTop: '1rem'
+              }}
+            >
+              <source src={URL.createObjectURL(props.file)} type="audio/mp4" />
+            </audio>
+          )}
+        </DialogContent>
+        <DialogActions style={{ padding: '16px 24px' }}>
+          <Button
+            disabled={isSubmitting}
+            onClick={handleSubmit}
+            variant="contained"
+            color="primary"
+            autoFocus
+          >
+            {isSubmitting ? 'Uploading' : 'Upload'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

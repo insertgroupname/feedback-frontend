@@ -1,4 +1,11 @@
-import { Card, CardHeader, CardContent, Divider } from '@material-ui/core';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Divider,
+  Box,
+  Typography
+} from '@material-ui/core';
 import {
   AreaChart,
   Area,
@@ -18,17 +25,29 @@ const AveragePace = (props) => {
     formatData.push({
       timestamp: secondToFormat(key.split('-')[1], 'mm:ss'),
       pace: value.wpm,
-      range: [130, 160]
+      range: [140, 170]
     });
   }
   return (
     <Card {...props}>
       <CardHeader
         title="Average Pace"
-        subheader="Average pace for good speaking is around 130 to 160 WPM"
+        subheader="Average pace for good speaking is around 140 to 170 WPM"
       />
       <Divider />
       <CardContent sx={{ height: '420px' }}>
+        <Box display="flex" justifyContent="center" alignItems="center" p={1}>
+          <Box
+            sx={{
+              height: '15px',
+              width: '15px',
+              background: '#EDFFB9',
+              border: '1px solid',
+              borderColor: '#8884d8'
+            }}
+          />
+          <Typography px={1}>good average pace</Typography>
+        </Box>
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={formatData}
@@ -36,7 +55,7 @@ const AveragePace = (props) => {
               top: 25,
               right: 40,
               left: 40,
-              bottom: 40
+              bottom: 60
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />

@@ -1,17 +1,9 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { UserContext } from 'src/contexts/UserContext';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {
-  AppBar,
-  Badge,
-  Box,
-  Hidden,
-  IconButton,
-  Toolbar
-} from '@material-ui/core';
+import { AppBar, Box, Hidden, IconButton, Toolbar } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import Logo from './Logo';
 import Cookies from 'js-cookie';
@@ -20,7 +12,6 @@ import { url } from 'src/utils/globalVariable';
 
 const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
   const { setUser } = useContext(UserContext);
-  const [notifications] = useState([]);
   const handleLogout = () => {
     axios
       .get(`${url}/logout`)
@@ -48,15 +39,6 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
         </RouterLink>
         <Box sx={{ flexGrow: 1 }} />
         <Hidden lgDown>
-          <IconButton color="inherit">
-            <Badge
-              badgeContent={notifications.length}
-              color="primary"
-              variant="dot"
-            >
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
           <IconButton color="inherit" onClick={handleLogout}>
             <InputIcon />
           </IconButton>

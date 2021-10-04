@@ -16,7 +16,6 @@ const App = () => {
     isAuthentication: false
   });
   const providerValue = useMemo(() => ({ user, setUser }), [user, setUser]);
-  console.log('From App.js', user);
 
   useEffect(() => {
     const token = Cookies.get('jwt');

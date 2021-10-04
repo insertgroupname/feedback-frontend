@@ -7,28 +7,28 @@ import {
   Box
 } from '@material-ui/core';
 
-const phrasesData = [
-  {
-    id: 1,
-    phrase: 'I think that'
-  },
-  {
-    id: 2,
-    phrase: 'you know'
-  },
-  {
-    id: 3,
-    phrase: 'or something'
-  },
-  {
-    id: 4,
-    phrase: 'stuff like that'
-  },
-  {
-    id: 5,
-    phrase: 'kind of'
-  }
-];
+// const phrasesData = [
+//   {
+//     id: 1,
+//     phrase: 'I think that'
+//   },
+//   {
+//     id: 2,
+//     phrase: 'you know'
+//   },
+//   {
+//     id: 3,
+//     phrase: 'or something'
+//   },
+//   {
+//     id: 4,
+//     phrase: 'stuff like that'
+//   },
+//   {
+//     id: 5,
+//     phrase: 'kind of'
+//   }
+// ];
 
 const Fillers = (props) => {
   const fillerCount = props.filler || 0;
@@ -36,23 +36,23 @@ const Fillers = (props) => {
     <Card {...props}>
       <CardHeader
         title="Disfluency"
-        subheader="Try to reduce your disfluency contain hesitation frequency, 
+        subheader="Tips: Try to reduce your disfluency contain hesitation frequency, 
         fillers word, and frequency phrases to imporve your performance."
       />
       <Divider />
       <CardContent>
         <Box sx={{ padding: '1.25rem 0 2.25rem 0' }}>
-          <Typography>Hesitation Count: {fillerCount} times</Typography>
+          <Typography>Hesitation frequency: {fillerCount} times</Typography>
         </Box>
         <Divider />
         <Box sx={{ padding: '2.25rem 0' }}>
-          <Typography>Filler Words: </Typography>
+          <Typography>Filler words: </Typography>
         </Box>
         <Divider />
         <Box sx={{ padding: '2.25rem 0' }}>
           <Typography>
-            Frequency:
-            {phrasesData.map((phrase) => {
+            Frequency phrases:
+            {/* {phrasesData.map((phrase) => {
               return (
                 <span
                   key={phrase.id}
@@ -66,7 +66,7 @@ const Fillers = (props) => {
                   {phrase.phrase}
                 </span>
               );
-            })}
+            })} */}
           </Typography>
         </Box>
         <Divider />
