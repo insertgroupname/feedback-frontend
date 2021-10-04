@@ -116,7 +116,10 @@ const Dashboard = () => {
                 <SoundDetail sound={soundDetailData} sx={{ height: '100%' }} />
               </Grid>
               <Grid item lg={8} md={12} xl={8} xs={12}>
-                <AveragePace average={averagePaceData} />
+                <AveragePace
+                  average={averagePaceData}
+                  sx={{ height: '100%' }}
+                />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
                 <Pace pace={paceData} sx={{ height: '100%' }} />

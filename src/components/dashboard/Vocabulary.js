@@ -1,14 +1,17 @@
+import { useState } from 'react';
 import {
   Box,
-  Button,
   Card,
   CardHeader,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
+  TableFooter,
+  TablePagination
 } from '@material-ui/core';
+import { TablePaginationActions } from './TablePaginationActions';
 
 const Vocabulary = (props) => {
   const vocabulary = props.vocabulary || {};
@@ -20,16 +23,24 @@ const Vocabulary = (props) => {
       partOfSpeech: 'Noun'
     });
   }
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(4);
+
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, words.length - page * rowsPerPage);
+
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
   return (
     <Card>
-      <CardHeader
-        title="Vocabulary"
-        action={
-          <Button color="primary" size="small" variant="text">
-            Show more
-          </Button>
-        }
-      />
+      <CardHeader title="Vocabulary" />
       <Box>
         <Table>
           <TableHead>
@@ -39,15 +50,42 @@ const Vocabulary = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {words
-              .map((word) => (
-                <TableRow hover key={word.id}>
-                  <TableCell>{word.word}</TableCell>
-                  <TableCell align="right">{word.partOfSpeech}</TableCell>
-                </TableRow>
-              ))
-              .slice(0, 4)}
+            {(rowsPerPage > 0
+              ? words.slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+              : words
+            ).map((word) => (
+              <TableRow hover key={word.id}>
+                <TableCell>{word.word}</TableCell>
+                <TableCell align="right">{word.partOfSpeech}</TableCell>
+              </TableRow>
+            ))}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
           </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={false}
+                colSpan={3}
+                count={words.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: { 'aria-label': 'rows per page' },
+                  native: true
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
         </Table>
       </Box>
     </Card>

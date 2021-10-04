@@ -179,7 +179,7 @@ const Soundwave = (props) => {
       <Box display="flex" justifyContent="space-between">
         <CardHeader
           title="Soundwave Visualization"
-          subheader="Tone of voice from your rehearsal"
+          subheader="Tone of voice and disfluency from your presentation"
         />
         <Box p={1}>
           <IconButton onClick={zoomIn}>
