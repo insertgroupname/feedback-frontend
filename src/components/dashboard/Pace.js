@@ -33,17 +33,18 @@ const useStyles = makeStyles((theme) => ({
   },
   gauge: {
     overflow: 'visible',
-    padding: '2rem 4rem 0 4rem',
-    [theme.breakpoints.down('xl')]: {
-      padding: '2rem 2rem 0 2rem'
-    }
+    padding: '2rem 4rem 0 4rem'
+    // [theme.breakpoints.down('xl')]: {
+    //   padding: '2rem 2rem 0 2rem'
+    // }
   },
   paceContainer: {
-    padding: '2.75rem 0'
+    paddingTop: '3rem'
   },
   tooltipContainer: {
     position: 'relative',
-    padding: '1.5rem 2rem',
+    padding: '1rem 2rem',
+    flexDirection: 'column',
     display: 'flex',
     justifyContent: 'center'
   }
@@ -51,6 +52,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Pace = (props) => {
   const [coordinate, setCoordinate] = useState([]);
+  const [attributes, setAttributes] = useState({
+    text: '',
+    color: '',
+    recommend: ''
+  });
   const classes = useStyles();
   const value = Math.round(props.pace);
   useEffect(() => {
@@ -115,6 +121,42 @@ const Pace = (props) => {
     if (value > 200) return '#e81246';
   };
 
+  useEffect(() => {
+    const getTextAndColor = (value) => {
+      if (value >= 0 && value < 60)
+        setAttributes({
+          text: 'Very Slow',
+          color: '#e81246',
+          recommend: 'Your pace is very slow, try to speed up your speech!'
+        });
+      if (value >= 60 && value < 140)
+        setAttributes({
+          text: 'Slow',
+          color: '#ee8d41',
+          recommend: 'Your pace is slow, try to speed up your speech a bit'
+        });
+      if (value >= 140 && value <= 170)
+        setAttributes({
+          text: 'Good',
+          color: '#4dff4d',
+          recommend: 'Your pace is conversational. Keep it up!'
+        });
+      if (value > 170 && value <= 200)
+        setAttributes({
+          text: 'Fast',
+          color: '#ee8d41',
+          recommend: 'Your pace is fast, try to speed down your speech a bit'
+        });
+      if (value > 200)
+        setAttributes({
+          text: 'Very Fast',
+          color: '#e81246',
+          recommend: 'Your pace is very fast, try to speed down your speech!'
+        });
+    };
+    getTextAndColor(value);
+  }, [value]);
+
   return (
     <Card {...props}>
       <CardHeader title="Pace" />
@@ -146,17 +188,18 @@ const Pace = (props) => {
             fontSize="2rem"
             fontWeight="bold"
             align="center"
-            color="#4dff4d"
+            color={attributes.color}
           >
-            Good
+            {attributes.text}
           </Typography>
         </Box>
-        <Typography variant="body1" align="center" padding="1rem">
-          Your pace is conversational. Keep it up!
-        </Typography>
-        <Divider />
+
         <Box className={classes.tooltipContainer}>
-          <Typography variant="body1">
+          <Typography variant="body1" align="center" padding="1rem">
+            {attributes.recommend}
+          </Typography>
+          <Divider />
+          <Typography variant="body1" padding="1rem">
             Tips: Make sure you’re practicing diaphragmatic or “belly”
             breathing, including breathing more deeply and slowly.
           </Typography>

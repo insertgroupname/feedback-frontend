@@ -158,12 +158,7 @@ const Soundwave = (props) => {
       wavesurferRef.current = waveSurfer;
       if (wavesurferRef.current) {
         wavesurferRef.current.load(videoUrl);
-
         wavesurferRef.current.on('region-created', regionCreatedHandler);
-
-        if (window) {
-          window.surferidze = wavesurferRef.current;
-        }
       }
     },
     [regionCreatedHandler, videoUrl]
