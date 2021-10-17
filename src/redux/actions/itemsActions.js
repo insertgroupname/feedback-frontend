@@ -68,3 +68,9 @@ export const getItemDetail = (userId, videoUUID) => async (dispatch) => {
     });
   }
 };
+
+export const resetItem = () => async (dispatch) => {
+  dispatch({
+    type: actionTypes.ITEM_DETAIL_RESET
+  });
+};

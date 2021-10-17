@@ -19,7 +19,7 @@ import Keyword from 'src/components/dashboard/Keyword';
 import Transcript from 'src/components/dashboard/Transcript';
 import SoundDetail from 'src/components/dashboard/SoundDetail';
 import Soundwave from 'src/components/dashboard/Soundwave';
-import { getItemDetail } from 'src/redux/actions/itemsActions';
+import { getItemDetail, resetItem } from 'src/redux/actions/itemsActions';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -35,6 +35,9 @@ const Dashboard = () => {
     if (userId) {
       dispatch(getItemDetail(userId, videoUUID));
     }
+    return () => {
+      dispatch(resetItem());
+    };
   }, [dispatch, userId, videoUUID]);
 
   return (

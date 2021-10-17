@@ -1,11 +1,14 @@
 import * as actionTypes from '../constants/itemsConstants';
 
 const initialItemState = {
-  items: []
+  items: [],
+  isLoading: false
 };
 
 const initialItemDetailState = {
-  item: {}
+  item: {},
+  videoRequired: false,
+  isLoading: false
 };
 
 export const itemReducer = (state = initialItemState, action) => {
@@ -50,18 +53,28 @@ export const itemDetailReducer = (state = initialItemDetailState, action) => {
     case actionTypes.GET_ITEM_DETAIL_REQUEST:
       return {
         isLoading: true,
+        videoRequired: false,
         item: {}
       };
     case actionTypes.GET_ITEM_DETAIL_SUCCESS:
       return {
         item: action.payload,
+        videoRequired: true,
         isLoading: false
       };
 
     case actionTypes.GET_ITEM_DETAIL_FAILURE:
       return {
         isLoading: false,
+        videoRequired: false,
         error: action.payload
+      };
+
+    case actionTypes.ITEM_DETAIL_RESET:
+      return {
+        item: {},
+        videoRequired: false,
+        isLoading: false
       };
 
     default:

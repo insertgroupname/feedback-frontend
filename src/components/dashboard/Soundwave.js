@@ -28,9 +28,9 @@ import { url } from 'src/utils/globalVariable';
 
 const Soundwave = (props) => {
   const itemDetailState = useSelector((state) => state.itemDetail);
-  const { item } = itemDetailState;
+  const { item, videoRequired } = itemDetailState;
 
-  const videoUUID = item && item.videoUUID;
+  const videoUUID = item.videoUUID && item.videoUUID;
   const hesitation =
     (item.postProcessing && item.postProcessing.hestiation_.marker) || {};
 
@@ -97,7 +97,13 @@ const Soundwave = (props) => {
     }
   }
 
-  const videoUrl = `${url}/video/${videoUUID}`;
+  let videoUrl;
+
+  if (videoRequired) {
+    videoUrl = `${url}/video/${videoUUID}`;
+  } else {
+    videoUrl = 'Must not reach here';
+  }
 
   // if hes_count > 0 && <= 3 -> Yellow
   // if hes_count > 3  -> Red

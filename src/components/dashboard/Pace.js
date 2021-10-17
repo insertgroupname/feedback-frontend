@@ -61,8 +61,10 @@ const Pace = (props) => {
     color: '',
     recommend: ''
   });
+
   const classes = useStyles();
-  const value = Math.round(item.postProcessing && item.postProcessing.avg_wpm);
+  const value =
+    Math.round(item.postProcessing && item.postProcessing.avg_wpm) || 0;
   useEffect(() => {
     const percentScale = scaleLinear().domain([0, 250]).range([0, 1]);
     const percent = percentScale(value);
