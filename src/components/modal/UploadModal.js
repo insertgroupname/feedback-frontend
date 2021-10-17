@@ -1,4 +1,5 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -7,52 +8,43 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import ReactPlayer from 'react-player';
 import SuccessModal from './SuccessModal';
-import FailModal from 'src/components/FailModal';
-import axios from 'axios';
-import { url } from 'src/utils/globalVariable';
-import { UserContext } from 'src/contexts/UserContext';
+import FailModal from './FailModal';
+import { addItems } from 'src/redux/actions/itemsActions';
 
 const UploadModal = (props) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const dispatch = useDispatch();
+  const itemsState = useSelector((state) => state.items);
+  const { isLoading } = itemsState;
+
+  const authState = useSelector((state) => state.authentication);
+  const { userId } = authState;
+
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showFailModal, setShowFailModal] = useState(false);
-  const { user } = useContext(UserContext);
 
   const handleModalClose = () => {
     setShowSuccessModal(false);
+    setShowFailModal(false);
     props.handleClose();
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     let formData = new FormData();
-    formData.append('userId', user.userId);
+    formData.append('userId', userId);
     formData.append('file', props.file);
     try {
       if (!props.file) {
         console.log('choosing file');
       } else {
-        setIsSubmitting(true);
-        const res = await axios.post(`${url}/upload`, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' }
-        });
-        console.log(res.data);
-        setIsSubmitting(false);
+        dispatch(addItems(formData));
         setShowSuccessModal(true);
       }
-    } catch (e) {
-      if (e.response) {
-        console.log(e.response.data);
-        console.log(e.response.status);
-        console.log(e.response.headers);
-      } else if (e.request) {
-        console.log(e.request);
-      } else {
-        console.log('e', e.message);
-      }
-      setIsSubmitting(false);
+    } catch (error) {
       setShowFailModal(true);
     }
   };
+
   return (
     <>
       {showSuccessModal && (
@@ -108,13 +100,13 @@ const UploadModal = (props) => {
         </DialogContent>
         <DialogActions style={{ padding: '16px 24px' }}>
           <Button
-            disabled={isSubmitting}
+            disabled={isLoading}
             onClick={handleSubmit}
             variant="contained"
             color="primary"
             autoFocus
           >
-            {isSubmitting ? 'Uploading' : 'Upload'}
+            {isLoading ? 'Uploading' : 'Upload'}
           </Button>
         </DialogActions>
       </Dialog>

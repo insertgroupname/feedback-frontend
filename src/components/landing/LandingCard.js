@@ -34,9 +34,6 @@ const LandingCard = ({ user, ...rest }) => {
           Created at:{' '}
           {moment(user.createDate).format('MMMM Do YYYY, h:mm:ss a')}
         </Typography>
-        {/* <Typography color="textPrimary" gutterBottom variant="body1">
-          Updated at: {moment().format('MMMM Do YYYY, h:mm:ss a')}
-        </Typography> */}
       </CardContent>
       {user.status === 'Done' && (
         <CardActions>

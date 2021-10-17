@@ -5,6 +5,7 @@ import React, {
   useState,
   useEffect
 } from 'react';
+import { useSelector } from 'react-redux';
 import { WaveSurfer, WaveForm, Region } from 'wavesurfer-react';
 import TimelinePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.min';
 import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min';
@@ -26,8 +27,12 @@ import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 import { url } from 'src/utils/globalVariable';
 
 const Soundwave = (props) => {
-  const videoUUID = props.uuid;
-  const hesitation = props.hesitation || {};
+  const itemDetailState = useSelector((state) => state.itemDetail);
+  const { item } = itemDetailState;
+
+  const videoUUID = item && item.videoUUID;
+  const hesitation =
+    (item.postProcessing && item.postProcessing.hestiation_.marker) || {};
 
   const wavesurferRef = useRef();
   const initialZoom = 0;

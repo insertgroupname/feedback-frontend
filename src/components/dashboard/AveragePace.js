@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import {
   Card,
   CardHeader,
@@ -19,7 +20,10 @@ import {
 import { secondToFormat } from '../../utils/secondTomin';
 
 const AveragePace = (props) => {
-  const averagePace = props.average || {};
+  const itemDetailState = useSelector((state) => state.itemDetail);
+  const { item } = itemDetailState;
+
+  const averagePace = (item.postProcessing && item.postProcessing.wpm) || {};
   let formatData = [];
   for (const [key, value] of Object.entries(averagePace)) {
     formatData.push({

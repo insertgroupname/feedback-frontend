@@ -1,8 +1,12 @@
+import { useSelector } from 'react-redux';
 import { Card, Divider, Box, Typography } from '@material-ui/core';
 import moment from 'moment';
 
 const SoundDetail = (props) => {
-  const soundDetail = props.sound || {
+  const itemDetailState = useSelector((state) => state.itemDetail);
+  const { item } = itemDetailState;
+
+  const soundDetail = item.postProcessing || {
     video_len: 0,
     total_words: 0,
     hestiation_: {

@@ -1,4 +1,5 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import {
   Box,
@@ -18,66 +19,23 @@ import Keyword from 'src/components/dashboard/Keyword';
 import Transcript from 'src/components/dashboard/Transcript';
 import SoundDetail from 'src/components/dashboard/SoundDetail';
 import Soundwave from 'src/components/dashboard/Soundwave';
-import axios from 'axios';
-import { url } from 'src/utils/globalVariable';
-import { UserContext } from 'src/contexts/UserContext';
+import { getItemDetail } from 'src/redux/actions/itemsActions';
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
   let { videoUUID } = useParams();
-  const [isLoading, setIsLoading] = useState(false);
-  const [videoData, setVideoData] = useState({
-    videoName: ''
-  });
-  const [soundDetailData, setSoundDetailData] = useState();
-  const [averagePaceData, setAveragePaceData] = useState();
-  const [paceData, setPaceData] = useState();
-  const [fillerData, setFillerData] = useState();
-  const [fillerChartData, setFillerChartData] = useState();
-  const [repetitionWordData, setRepetitionWordData] = useState();
-  const [vocabularyData, setVocabularyData] = useState();
-  const [keywordData, setKeywordData] = useState();
-  const [transcriptData, setTranscriptData] = useState();
-  const { user } = useContext(UserContext);
+
+  const authState = useSelector((state) => state.authentication);
+  const { userId } = authState;
+
+  const itemDetailState = useSelector((state) => state.itemDetail);
+  const { isLoading, item } = itemDetailState;
 
   useEffect(() => {
-    const fetchDetailData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.get(
-          `${url}/records/${user.userId}/${videoUUID}`
-        );
-        const responseData = response.data[0];
-        console.log('Response', responseData);
-        setVideoData({
-          videoUUID: responseData.videoUUID,
-          videoName: responseData.videoName,
-          status: responseData.status
-        });
-        setAveragePaceData(responseData.postProcessing.wpm);
-        setFillerData(responseData.postProcessing.hestiation_.total_count);
-        setFillerChartData(responseData.postProcessing.hestiation_.marker);
-        setPaceData(responseData.postProcessing.avg_wpm);
-        setSoundDetailData(responseData.postProcessing);
-        setRepetitionWordData(responseData.postProcessing.word_frequency);
-        setVocabularyData(responseData.postProcessing.vocab);
-        setKeywordData(responseData.postProcessing.keyword);
-        setTranscriptData(responseData.results);
-        setIsLoading(false);
-      } catch (e) {
-        if (e.response) {
-          console.log(e.response.data);
-          console.log(e.response.status);
-          console.log(e.response.headers);
-        } else if (e.request) {
-          console.log(e.request);
-        } else {
-          console.log('e', e.message);
-        }
-        setIsLoading(false);
-      }
-    };
-    fetchDetailData();
-  }, [user, videoUUID]);
+    if (userId) {
+      dispatch(getItemDetail(userId, videoUUID));
+    }
+  }, [dispatch, userId, videoUUID]);
 
   return (
     <>
@@ -106,41 +64,38 @@ const Dashboard = () => {
         ) : (
           <Container maxWidth={false}>
             <Typography variant="h3" style={{ paddingBottom: '1rem' }}>
-              {videoData.videoName}
+              {item.videoName}
             </Typography>
             <Grid container spacing={3}>
               <Grid item lg={9} md={12} xl={9} xs={12}>
-                <Soundwave hesitation={fillerChartData} uuid={videoUUID} />
+                <Soundwave />
               </Grid>
               <Grid item lg={3} md={12} xl={3} xs={12}>
-                <SoundDetail sound={soundDetailData} sx={{ height: '100%' }} />
+                <SoundDetail sx={{ height: '100%' }} />
               </Grid>
               <Grid item lg={8} md={12} xl={8} xs={12}>
-                <AveragePace
-                  average={averagePaceData}
-                  sx={{ height: '100%' }}
-                />
+                <AveragePace sx={{ height: '100%' }} />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
-                <Pace pace={paceData} sx={{ height: '100%' }} />
+                <Pace sx={{ height: '100%' }} />
               </Grid>
               <Grid item lg={6} md={12} xl={6} xs={12}>
-                <Fillers filler={fillerData} sx={{ height: '100%' }} />
+                <Fillers sx={{ height: '100%' }} />
               </Grid>
               <Grid item lg={6} md={12} xl={6} xs={12}>
-                <FillersChart fillerchart={fillerChartData} />
+                <FillersChart />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
-                <RepetitionWords repetition={repetitionWordData} />
+                <RepetitionWords />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
-                <Vocabulary vocabulary={vocabularyData} />
+                <Vocabulary />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
-                <Keyword keyword={keywordData} />
+                <Keyword />
               </Grid>
               <Grid item lg={12} md={12} xl={12} xs={12}>
-                <Transcript transcript={transcriptData} />
+                <Transcript />
               </Grid>
             </Grid>
           </Container>

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Box, Button, Typography } from '@material-ui/core';
-import UploadModal from '../UploadModal';
+import UploadModal from '../modal/UploadModal';
 
-const LandingToolbar = (props) => {
+const LandingToolbar = ({ setUser }) => {
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState();
 
@@ -21,7 +21,7 @@ const LandingToolbar = (props) => {
   };
 
   return (
-    <Box {...props}>
+    <Box>
       <Box
         sx={{
           display: 'flex',
@@ -39,6 +39,7 @@ const LandingToolbar = (props) => {
         </Button>
       </Box>
       <UploadModal
+        setUser={setUser}
         open={open}
         handleClose={handleClose}
         handleFile={handleFile}

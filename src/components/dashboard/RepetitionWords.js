@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   Box,
   Card,
@@ -14,8 +15,12 @@ import {
 import { TablePaginationActions } from './TablePaginationActions';
 import shortid from 'shortid';
 
-const RepetitionWords = (props) => {
-  const repetition = props.repetition || {
+const RepetitionWords = () => {
+  const itemDetailState = useSelector((state) => state.itemDetail);
+  const { item } = itemDetailState;
+
+  const repetition = (item.postProcessing &&
+    item.postProcessing.word_frequency) || {
     bigram: [],
     word: []
   };

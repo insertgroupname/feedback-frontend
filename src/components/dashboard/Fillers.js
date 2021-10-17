@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import {
   Card,
   CardHeader,
@@ -31,7 +32,11 @@ import {
 // ];
 
 const Fillers = (props) => {
-  const fillerCount = props.filler || 0;
+  const itemDetailState = useSelector((state) => state.itemDetail);
+  const { item } = itemDetailState;
+
+  const fillerCount =
+    (item.postProcessing && item.postProcessing.hestiation_.total_count) || 0;
   return (
     <Card {...props}>
       <CardHeader

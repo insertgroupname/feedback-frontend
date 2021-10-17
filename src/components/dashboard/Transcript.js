@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import reactStringReplace from 'react-string-replace';
 import moment from 'moment';
@@ -20,7 +21,10 @@ import {
 import shortid from 'shortid';
 
 const Transcript = (props) => {
-  const transcript = props.transcript || [];
+  const itemDetailState = useSelector((state) => state.itemDetail);
+  const { item } = itemDetailState;
+
+  const transcript = item.results || [];
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 

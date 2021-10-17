@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   Box,
   Card,
@@ -14,8 +15,11 @@ import {
 import { TablePaginationActions } from './TablePaginationActions';
 import shortid from 'shortid';
 
-const Keyword = (props) => {
-  const keyword = props.keyword || [];
+const Keyword = () => {
+  const itemDetailState = useSelector((state) => state.itemDetail);
+  const { item } = itemDetailState;
+
+  const keyword = (item.postProcessing && item.postProcessing.keyword) || [];
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(4);
 

@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import {
   Card,
   CardHeader,
@@ -22,7 +23,6 @@ import { secondToFormat } from '../../utils/secondTomin';
 
 const renderLegend = (props) => {
   const { payload } = props;
-
   return (
     <Box
       display="flex"
@@ -50,7 +50,11 @@ const renderLegend = (props) => {
 };
 
 const FillersChart = (props) => {
-  const fillerChartData = props.fillerchart || {};
+  const itemDetailState = useSelector((state) => state.itemDetail);
+  const { item } = itemDetailState;
+
+  const fillerChartData =
+    (item.postProcessing && item.postProcessing.hestiation_.marker) || {};
 
   let formatData = [];
   for (const [key, value] of Object.entries(fillerChartData)) {

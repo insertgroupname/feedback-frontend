@@ -9,10 +9,10 @@ import Register from 'src/pages/Register';
 import Settings from 'src/pages/Settings';
 import Landing from './pages/Landing';
 
-const routes = (user) => [
+const routes = (isLoggedIn) => [
   {
     path: 'app',
-    element: user.isAuthentication ? <DashboardLayout /> : <Navigate to="/" />,
+    element: isLoggedIn ? <DashboardLayout /> : <Navigate to="/" />,
     children: [
       { path: 'landing', element: <Landing /> },
       { path: 'dashboard/:videoUUID', element: <Dashboard /> },
@@ -22,11 +22,7 @@ const routes = (user) => [
   },
   {
     path: '/',
-    element: !user.isAuthentication ? (
-      <MainLayout />
-    ) : (
-      <Navigate to="/app/landing" />
-    ),
+    element: !isLoggedIn ? <MainLayout /> : <Navigate to="/app/landing" />,
     children: [
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> },

@@ -1,12 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import axios from 'axios';
-import { UserContext } from 'src/contexts/UserContext';
-import { url } from 'src/utils/globalVariable';
 import {
+  Alert,
   Box,
   Button,
   Container,
@@ -14,9 +13,12 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
+import { register, resetRegister } from 'src/redux/actions/authActions';
 
 const Register = () => {
-  const { setUser } = useContext(UserContext);
+  const dispatch = useDispatch();
+  const authState = useSelector((state) => state.authentication);
+  const { isLoading, error } = authState;
   return (
     <>
       <Helmet>
@@ -37,7 +39,8 @@ const Register = () => {
               email: '',
               firstName: '',
               lastName: '',
-              password: ''
+              password: '',
+              confirmPassword: ''
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
@@ -48,44 +51,24 @@ const Register = () => {
                 .max(255)
                 .required('First name is required'),
               lastName: Yup.string().max(255).required('Last name is required'),
-              password: Yup.string().max(255).required('password is required')
-            })}
-            onSubmit={async (values, { setSubmitting }) => {
-              setSubmitting(true);
-              axios
-                .post(
-                  `${url}/register`,
-                  {
-                    email: values.email,
-                    password: values.password,
-                    firstName: values.firstName,
-                    lastName: values.lastName
-                  },
-                  {
-                    withCredentials: true
-                  }
+              password: Yup.string().max(255).required('password is required'),
+              confirmPassword: Yup.string().when('password', {
+                is: (val) => (val && val.length > 0 ? true : false),
+                then: Yup.string().oneOf(
+                  [Yup.ref('password')],
+                  'Password and Confirm Password does not match'
                 )
-                .then((res) => {
-                  console.log(res.data);
-                  setUser((prevUser) => {
-                    return {
-                      ...prevUser,
-                      userId: res.data._id,
-                      isAuthentication: true
-                    };
-                  });
-                  setSubmitting(false);
-                })
-                .catch((err) => {
-                  if (err.response) {
-                    console.log(err.response);
-                  } else if (err.request) {
-                    console.log(err.request);
-                  } else if (err.message) {
-                    console.log(err.message);
-                  }
-                  setSubmitting(false);
-                });
+              })
+            })}
+            onSubmit={async (values) => {
+              dispatch(
+                register(
+                  values.email,
+                  values.password,
+                  values.firstName,
+                  values.lastName
+                )
+              );
             }}
           >
             {({
@@ -93,7 +76,6 @@ const Register = () => {
               handleBlur,
               handleChange,
               handleSubmit,
-              isSubmitting,
               touched,
               values
             }) => (
@@ -110,6 +92,14 @@ const Register = () => {
                     Use your email to create new account
                   </Typography>
                 </Box>
+                {error && (
+                  <Alert
+                    severity="error"
+                    onClose={() => dispatch(resetRegister())}
+                  >
+                    {error}
+                  </Alert>
+                )}
                 <TextField
                   error={Boolean(touched.firstName && errors.firstName)}
                   fullWidth
@@ -160,10 +150,26 @@ const Register = () => {
                   value={values.password}
                   variant="outlined"
                 />
+
+                <TextField
+                  error={Boolean(
+                    touched.confirmPassword && errors.confirmPassword
+                  )}
+                  fullWidth
+                  helperText={touched.confirmPassword && errors.confirmPassword}
+                  label="Confirm Password"
+                  margin="normal"
+                  name="confirmPassword"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="password"
+                  value={values.confirmPassword}
+                  variant="outlined"
+                />
                 <Box sx={{ py: 2 }}>
                   <Button
                     color="primary"
-                    disabled={isSubmitting}
+                    disabled={isLoading}
                     fullWidth
                     size="large"
                     type="submit"

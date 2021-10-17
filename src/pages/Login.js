@@ -1,22 +1,23 @@
-import { useContext } from 'react';
-import { UserContext } from 'src/contexts/UserContext';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import axios from 'axios';
+import { login, resetLogin } from 'src/redux/actions/authActions';
 import {
   Box,
   Button,
   Container,
   Link,
   TextField,
-  Typography
+  Typography,
+  Alert
 } from '@material-ui/core';
-import { url } from 'src/utils/globalVariable';
 
 const Login = () => {
-  const { setUser } = useContext(UserContext);
+  const dispatch = useDispatch();
+  const authState = useSelector((state) => state.authentication);
+  const { isLoading, error } = authState;
   return (
     <>
       <Helmet>
@@ -44,40 +45,8 @@ const Login = () => {
                 .required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={async (values, { setSubmitting }) => {
-              setSubmitting(true);
-              axios
-                .post(
-                  `${url}/signin`,
-                  {
-                    email: values.email,
-                    password: values.password
-                  },
-                  {
-                    withCredentials: true
-                  }
-                )
-                .then((res) => {
-                  console.log(res.data);
-                  setUser((prevUser) => {
-                    return {
-                      ...prevUser,
-                      userId: res.data.userId,
-                      isAuthentication: true
-                    };
-                  });
-                  setSubmitting(false);
-                })
-                .catch((err) => {
-                  if (err.response) {
-                    console.log(err.response);
-                  } else if (err.request) {
-                    console.log(err.request);
-                  } else if (err.message) {
-                    console.log(err.message);
-                  }
-                  setSubmitting(false);
-                });
+            onSubmit={async (values) => {
+              dispatch(login(values.email, values.password));
             }}
           >
             {({
@@ -85,7 +54,6 @@ const Login = () => {
               handleBlur,
               handleChange,
               handleSubmit,
-              isSubmitting,
               touched,
               values
             }) => (
@@ -102,6 +70,14 @@ const Login = () => {
                     To build your dashboard with your rehearsal
                   </Typography>
                 </Box>
+                {error && (
+                  <Alert
+                    severity="error"
+                    onClose={() => dispatch(resetLogin())}
+                  >
+                    {error}
+                  </Alert>
+                )}
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
@@ -131,7 +107,7 @@ const Login = () => {
                 <Box sx={{ py: 2 }}>
                   <Button
                     color="primary"
-                    disabled={isSubmitting}
+                    disabled={isLoading}
                     fullWidth
                     size="large"
                     type="submit"

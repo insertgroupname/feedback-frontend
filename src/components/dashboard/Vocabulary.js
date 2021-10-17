@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   Box,
   Card,
@@ -13,8 +14,11 @@ import {
 } from '@material-ui/core';
 import { TablePaginationActions } from './TablePaginationActions';
 
-const Vocabulary = (props) => {
-  const vocabulary = props.vocabulary || {};
+const Vocabulary = () => {
+  const itemDetailState = useSelector((state) => state.itemDetail);
+  const { item } = itemDetailState;
+
+  const vocabulary = (item.postProcessing && item.postProcessing.vocab) || {};
   let words = [];
   for (const [key] of Object.entries(vocabulary)) {
     words.push({

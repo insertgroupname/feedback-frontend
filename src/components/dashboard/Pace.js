@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { arc } from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
 import { format } from 'd3-format';
@@ -51,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Pace = (props) => {
+  const itemDetailState = useSelector((state) => state.itemDetail);
+  const { item } = itemDetailState;
+
   const [coordinate, setCoordinate] = useState([]);
   const [attributes, setAttributes] = useState({
     text: '',
@@ -58,7 +62,7 @@ const Pace = (props) => {
     recommend: ''
   });
   const classes = useStyles();
-  const value = Math.round(props.pace);
+  const value = Math.round(item.postProcessing && item.postProcessing.avg_wpm);
   useEffect(() => {
     const percentScale = scaleLinear().domain([0, 250]).range([0, 1]);
     const percent = percentScale(value);

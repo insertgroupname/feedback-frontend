@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 const SuccessModal = (props) => {
   return (
-    <div>
+    <>
       <Dialog
         open={props.showSuccessModal}
         onClose={props.handleModalClose}
@@ -29,7 +29,7 @@ const SuccessModal = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 };
 

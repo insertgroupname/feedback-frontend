@@ -1,35 +1,16 @@
-import { useContext } from 'react';
-import { UserContext } from 'src/contexts/UserContext';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { AppBar, Box, Hidden, IconButton, Toolbar } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import InputIcon from '@material-ui/icons/Input';
 import Logo from './Logo';
-import Cookies from 'js-cookie';
-import axios from 'axios';
-import { url } from 'src/utils/globalVariable';
+import { useDispatch } from 'react-redux';
+import { logout } from 'src/redux/actions/authActions';
 
 const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
-  const { setUser } = useContext(UserContext);
+  const dispatch = useDispatch();
   const handleLogout = () => {
-    axios
-      .get(`${url}/logout`)
-      .then(() => {
-        Cookies.remove('jwt');
-        setUser((prevUser) => {
-          return { ...prevUser, userId: '', isAuthentication: false };
-        });
-      })
-      .catch((err) => {
-        if (err.response) {
-          console.log(err.response);
-        } else if (err.request) {
-          console.log(err.request);
-        } else if (err.message) {
-          console.log(err.message);
-        }
-      });
+    dispatch(logout());
   };
   return (
     <AppBar elevation={0} {...rest}>
