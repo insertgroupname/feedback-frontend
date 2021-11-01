@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import moment from 'moment';
 
-const LandingCard = ({ user, ...rest }) => {
+const LandingCard = ({ item, ...rest }) => {
   const navigate = useNavigate();
   return (
     <Card
@@ -22,26 +22,26 @@ const LandingCard = ({ user, ...rest }) => {
     >
       <CardContent>
         <Typography color="textPrimary" gutterBottom variant="h4">
-          Video Name: {user.videoName}
+          Video Name: {item.videoName}
         </Typography>
         <Typography color="textPrimary" variant="body1">
-          Video UUID: {user.videoUUID}
+          Video UUID: {item.videoUUID}
         </Typography>
         <Typography color="textPrimary" variant="body1">
-          Status: {user.status}
+          Status: {item.status}
         </Typography>
         <Typography color="textPrimary" variant="body1">
           Created at:{' '}
-          {moment(user.createDate).format('MMMM Do YYYY, h:mm:ss a')}
+          {moment(item.createDate).format('MMMM Do YYYY, h:mm:ss a')}
         </Typography>
       </CardContent>
-      {user.status === 'Done' && (
+      {item.status === 'Done' && (
         <CardActions>
           <Button
             size="small"
             color="primary"
             onClick={() => {
-              navigate(`/app/dashboard/${user.videoUUID}`, { replace: true });
+              navigate(`/app/dashboard/${item.videoUUID}`, { replace: true });
             }}
           >
             SHOW DETAIL
@@ -53,7 +53,7 @@ const LandingCard = ({ user, ...rest }) => {
 };
 
 LandingCard.propTypes = {
-  user: PropTypes.object.isRequired
+  item: PropTypes.object.isRequired
 };
 
 export default LandingCard;

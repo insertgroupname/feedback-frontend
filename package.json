@@ -57,7 +57,7 @@
     "redux-thunk": "^2.3.0",
     "shortid": "^2.2.16",
     "wavesurfer-react": "^2.0.7",
-    "wavesurfer.js": "^4.6.0",
+    "wavesurfer.js": "^5.2.0",
     "yup": "^0.29.3"
   },
   "devDependencies": {

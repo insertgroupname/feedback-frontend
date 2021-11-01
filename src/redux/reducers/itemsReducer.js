@@ -15,8 +15,8 @@ export const itemReducer = (state = initialItemState, action) => {
   switch (action.type) {
     case actionTypes.GET_ITEM_REQUEST:
       return {
-        isLoading: true,
-        items: []
+        items: state.items,
+        isLoading: true
       };
 
     case actionTypes.GET_ITEM_SUCCESS:
@@ -27,6 +27,7 @@ export const itemReducer = (state = initialItemState, action) => {
 
     case actionTypes.GET_ITEM_FAILURE:
       return {
+        items: state.items,
         isLoading: false,
         error: action.payload
       };
@@ -34,8 +35,7 @@ export const itemReducer = (state = initialItemState, action) => {
     case actionTypes.ADD_ITEM_SUCCESS:
       const item = action.payload;
       return {
-        ...state,
-        items: [item, ...state.items]
+        items: item
       };
 
     case actionTypes.ADD_ITEM_FAILURE:

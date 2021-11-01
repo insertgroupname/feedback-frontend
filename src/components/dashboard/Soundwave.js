@@ -24,7 +24,6 @@ import PauseIcon from '@material-ui/icons/Pause';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
 import ZoomOutIcon from '@material-ui/icons/ZoomOut';
-import { url } from 'src/utils/globalVariable';
 
 const Soundwave = (props) => {
   const itemDetailState = useSelector((state) => state.itemDetail);
@@ -100,7 +99,8 @@ const Soundwave = (props) => {
   let videoUrl;
 
   if (videoRequired) {
-    videoUrl = `${url}/video/${videoUUID}`;
+    // videoUrl = `http://10.4.56.44:81/api/v1/video/${videoUUID}`;
+    videoUrl = `http://localhost:3331/video/${videoUUID}`;
   } else {
     videoUrl = 'Must not reach here';
   }

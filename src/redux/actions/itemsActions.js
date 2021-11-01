@@ -1,15 +1,12 @@
 import * as actionTypes from '../constants/itemsConstants';
-import axios from 'axios';
-import { url } from 'src/utils/globalVariable';
+import { axiosInstance } from 'src/utils/axiosInstance';
 
 export const getItems = (userId) => async (dispatch) => {
   try {
     dispatch({
       type: actionTypes.GET_ITEM_REQUEST
     });
-
-    const { data } = await axios.get(`${url}/records/${userId}`);
-
+    const { data } = await axiosInstance.get(`records/${userId}`);
     dispatch({
       type: actionTypes.GET_ITEM_SUCCESS,
       payload: data
@@ -27,7 +24,7 @@ export const getItems = (userId) => async (dispatch) => {
 
 export const addItems = (item) => async (dispatch) => {
   try {
-    const { data } = await axios.post(`${url}/upload`, item, {
+    const { data } = await axiosInstance.post(`upload`, item, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
 
@@ -53,7 +50,7 @@ export const getItemDetail = (userId, videoUUID) => async (dispatch) => {
     dispatch({
       type: actionTypes.GET_ITEM_DETAIL_REQUEST
     });
-    const { data } = await axios.get(`${url}/records/${userId}/${videoUUID}`);
+    const { data } = await axiosInstance.get(`records/${userId}/${videoUUID}`);
     dispatch({
       type: actionTypes.GET_ITEM_DETAIL_SUCCESS,
       payload: data[0]

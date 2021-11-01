@@ -1,6 +1,5 @@
 import * as actionTypes from '../constants/authConstants';
-import axios from 'axios';
-import { url } from 'src/utils/globalVariable';
+import { axiosInstance } from 'src/utils/axiosInstance';
 import Cookies from 'js-cookie';
 
 export const login = (email, password) => async (dispatch) => {
@@ -9,8 +8,8 @@ export const login = (email, password) => async (dispatch) => {
       type: actionTypes.LOGIN_REQUEST
     });
 
-    const { data } = await axios.post(
-      `${url}/signin`,
+    const { data } = await axiosInstance.post(
+      `signin`,
       {
         email: email,
         password: password
@@ -55,8 +54,8 @@ export const register =
         type: actionTypes.REGISTER_REQUEST
       });
 
-      const { data } = await axios.post(
-        `${url}/register`,
+      const { data } = await axiosInstance.post(
+        `register`,
         {
           email: email,
           password: password,
@@ -94,8 +93,8 @@ export const verifyToken = (token) => async (dispatch) => {
     dispatch({
       type: actionTypes.VERIFY_TOKEN_REQUEST
     });
-    const verifyTokenUrl = `${url}/verifyToken?token=${token}`;
-    const { data } = await axios.get(verifyTokenUrl);
+    const verifyTokenUrl = `verifyToken?token=${token}`;
+    const { data } = await axiosInstance.get(verifyTokenUrl);
     dispatch({
       type: actionTypes.VERIFY_TOKEN_SUCCESS,
       payload: data
