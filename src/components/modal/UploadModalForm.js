@@ -79,7 +79,7 @@ const UploadModalForm = (props) => {
                 paddingTop: '1rem'
               }}
             >
-              <source src={URL.createObjectURL(props.file)} type="audio/mp4" />
+              <source src={values.blob} type="audio/mp4" />
             </audio>
           )}
           {values.file && (

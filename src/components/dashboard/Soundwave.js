@@ -99,38 +99,11 @@ const Soundwave = (props) => {
   let videoUrl;
 
   if (videoRequired) {
-    // videoUrl = `http://10.4.56.44:81/api/v1/video/${videoUUID}`;
-    videoUrl = `http://localhost:3331/video/${videoUUID}`;
+    videoUrl = `http://10.4.56.44:81/api/v1/video/${videoUUID}`;
+    // videoUrl = `http://localhost:3331/video/${videoUUID}`;
   } else {
     videoUrl = 'Must not reach here';
   }
-
-  // if hes_count > 0 && <= 3 -> Yellow
-  // if hes_count > 3  -> Red
-
-  // const filterRegionYellow = formatHesitation.filter((ele) => {
-  //   return ele.fillers > 0 && ele.fillers <= 3;
-  // });
-
-  // const fillRegionYellow = filterRegionYellow.map((ele) => {
-  //   return {
-  //     ...ele,
-  //     color: 'rgba(255, 187, 51, .5)'
-  //   };
-  // });
-
-  // const filterRegionRed = formatHesitation.filter((ele) => {
-  //   return ele.fillers > 3;
-  // });
-
-  // const fillRegionRed = filterRegionRed.map((ele) => {
-  //   return {
-  //     ...ele,
-  //     color: 'rgba(255, 87, 51, .5)'
-  //   };
-  // });
-
-  // const filterRegion = [...fillRegionYellow, ...fillRegionRed];
 
   const [regions, setRegions] = useState(formatHesitation);
 
