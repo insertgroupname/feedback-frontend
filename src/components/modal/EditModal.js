@@ -4,8 +4,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import SuccessFailModal from './SuccessFailModal';
-import UploadForm from '../form/UploadForm';
-const UploadModal = (props) => {
+import EditForm from '../form/EditForm';
+const EditModal = (props) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showFailModal, setShowFailModal] = useState(false);
 
@@ -31,16 +31,16 @@ const UploadModal = (props) => {
     <>
       {showSuccessModal && (
         <SuccessFailModal
-          title="Upload Successful"
-          description="The system is processing your file, please wait for a few minutes"
+          title="Update Successful"
+          description="Click Argee button to check the result"
           open={showSuccessModal}
           handleModalClose={handleModalClose}
         />
       )}
       {showFailModal && (
         <SuccessFailModal
-          title="Upload Failure"
-          description="Upload file error, please try again"
+          title="Update Failure"
+          description="Update error, please try again"
           open={showFailModal}
           handleModalClose={handleModalClose}
         />
@@ -52,10 +52,11 @@ const UploadModal = (props) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title" disableTypography>
-          <Typography variant="h3">Upload a Video / Sound</Typography>
+          <Typography variant="h3">Edit</Typography>
         </DialogTitle>
         <DialogContent sx={{ paddingBottom: '16px' }}>
-          <UploadForm
+          <EditForm
+            videoUUID={props.videoUUID}
             handleSuccessModal={handleSuccessModal}
             handleFailModal={handleFailModal}
           />
@@ -65,4 +66,4 @@ const UploadModal = (props) => {
   );
 };
 
-export default UploadModal;
+export default EditModal;

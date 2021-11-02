@@ -1,7 +1,7 @@
 import { TextField, MenuItem, Box, Chip } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
 
-const UploadModalFormSelect = (props) => {
+const FormSelect = (props) => {
   return (
     <TextField
       fullWidth
@@ -40,4 +40,4 @@ const UploadModalFormSelect = (props) => {
     </TextField>
   );
 };
-export default UploadModalFormSelect;
+export default FormSelect;

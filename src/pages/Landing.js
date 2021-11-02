@@ -5,19 +5,29 @@ import LandingToolbar from '../components/landing/LandingToolbar';
 import LandingCard from 'src/components/landing/LandingCard';
 import { useSelector } from 'react-redux';
 import LandingInitial from 'src/components/landing/LandingInitial';
+import EditModal from '../components/modal/EditModal';
 
 const Landing = () => {
   const itemsState = useSelector((state) => state.items);
   const { isLoading, items } = itemsState;
 
-  const [open, setOpen] = useState(false);
+  const [openUploadModal, setOpenUploadModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleClickOpenUploadModal = () => {
+    setOpenUploadModal(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseUploadModal = () => {
+    setOpenUploadModal(false);
+  };
+
+  const handleClickOpenEditModal = () => {
+    setOpenEditModal(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setOpenEditModal(false);
   };
 
   return (
@@ -47,23 +57,26 @@ const Landing = () => {
           <Container maxWidth={false}>
             <LandingToolbar
               itemLength={items.length}
-              handleClickOpen={handleClickOpen}
-              handleClose={handleClose}
-              open={open}
+              handleClickOpen={handleClickOpenUploadModal}
+              handleClose={handleCloseUploadModal}
+              open={openUploadModal}
             />
             <Box sx={{ pt: 3 }}>
               <Grid container spacing={3}>
                 {items.length > 0 ? (
                   items.map((item) => (
                     <Grid item key={item.videoUUID} lg={4} md={6} xs={12}>
-                      <LandingCard item={item} />
+                      <LandingCard
+                        item={item}
+                        handleClickOpen={handleClickOpenEditModal}
+                      />
                     </Grid>
                   ))
                 ) : (
                   <LandingInitial
-                    handleClickOpen={handleClickOpen}
-                    handleClose={handleClose}
-                    open={open}
+                    handleClickOpen={handleClickOpenUploadModal}
+                    handleClose={handleCloseUploadModal}
+                    open={openUploadModal}
                   />
                 )}
               </Grid>
@@ -71,6 +84,7 @@ const Landing = () => {
           </Container>
         )}
       </Box>
+      <EditModal open={openEditModal} handleClose={handleCloseEditModal} />
     </>
   );
 };

@@ -3,10 +3,10 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { TextField, Button, Box } from '@material-ui/core';
 import UploadIcon from '@material-ui/icons/Upload';
-import UploadModalFormSelect from './UploadModalFormSelect';
+import FormSelect from './FormSelect';
 import ReactPlayer from 'react-player';
 
-const UploadModalForm = (props) => {
+const UploadForm = (props) => {
   const itemsState = useSelector((state) => state.items);
   const { isLoading } = itemsState;
 
@@ -68,7 +68,7 @@ const UploadModalForm = (props) => {
             }}
           />
           <label
-            for="file"
+            htmlFor="file"
             style={{
               background: '#5664d2',
               color: 'white',
@@ -131,7 +131,7 @@ const UploadModalForm = (props) => {
                 value={values.description}
                 variant="outlined"
               />
-              <UploadModalFormSelect
+              <FormSelect
                 error={Boolean(touched.tags && errors.tags)}
                 tags={values.tags}
                 handleFieldChange={(event) =>
@@ -172,4 +172,4 @@ const UploadModalForm = (props) => {
   );
 };
 
-export default UploadModalForm;
+export default UploadForm;
