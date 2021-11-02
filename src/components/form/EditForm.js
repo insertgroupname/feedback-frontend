@@ -7,16 +7,17 @@ import FormSelect from './FormSelect';
 
 const EditForm = (props) => {
   const itemsState = useSelector((state) => state.items);
-  const { isLoading } = itemsState;
+  const { items, isLoading } = itemsState;
 
-  // console.log(items);
-  // console.log(props.videoUUID);
+  const matchItem = items.filter((item) => {
+    return item.videoUUID === props.videoUUID;
+  });
 
   return (
     <Formik
       enableReinitialize
       initialValues={{
-        name: '',
+        name: matchItem[0].videoName,
         description: '',
         tags: []
       }}

@@ -13,6 +13,7 @@ const Landing = () => {
 
   const [openUploadModal, setOpenUploadModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
+  const [videoUUID, setVideoUUID] = useState('');
 
   const handleClickOpenUploadModal = () => {
     setOpenUploadModal(true);
@@ -22,8 +23,9 @@ const Landing = () => {
     setOpenUploadModal(false);
   };
 
-  const handleClickOpenEditModal = () => {
+  const handleClickOpenEditModal = (videoUUID) => {
     setOpenEditModal(true);
+    setVideoUUID(videoUUID);
   };
 
   const handleCloseEditModal = () => {
@@ -68,7 +70,9 @@ const Landing = () => {
                     <Grid item key={item.videoUUID} lg={4} md={6} xs={12}>
                       <LandingCard
                         item={item}
-                        handleClickOpen={handleClickOpenEditModal}
+                        handleClickOpen={() =>
+                          handleClickOpenEditModal(item.videoUUID)
+                        }
                       />
                     </Grid>
                   ))
@@ -84,7 +88,11 @@ const Landing = () => {
           </Container>
         )}
       </Box>
-      <EditModal open={openEditModal} handleClose={handleCloseEditModal} />
+      <EditModal
+        videoUUID={videoUUID}
+        open={openEditModal}
+        handleClose={handleCloseEditModal}
+      />
     </>
   );
 };
