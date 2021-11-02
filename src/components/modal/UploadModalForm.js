@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, Box } from '@material-ui/core';
+import UploadIcon from '@material-ui/icons/Upload';
 import UploadModalFormSelect from './UploadModalFormSelect';
 import ReactPlayer from 'react-player';
 
@@ -24,17 +25,12 @@ const UploadModalForm = (props) => {
         file: Yup.mixed().required()
       })}
       onSubmit={async (values) => {
-        console.log(values);
         let formData = new FormData();
         formData.append('file', values.file);
         try {
-          if (!values.file) {
-            console.log('choosing file');
-          } else {
-            console.log('submitted values:', values);
-            // dispatch(addItems(formData));
-            props.handleSuccessModal();
-          }
+          console.log('submitted values:', values);
+          // dispatch(addItems(formData));
+          props.handleSuccessModal();
         } catch (error) {
           props.handleFailModal();
         }
@@ -55,12 +51,37 @@ const UploadModalForm = (props) => {
             id="file"
             name="file"
             type="file"
+            hidden
             onChange={(event) => {
-              setFieldValue('blob', URL.createObjectURL(event.target.files[0]));
-              setFieldValue('file', event.target.files[0]);
-              setFieldValue('name', event.target.files[0].name);
+              if (event.target.files.length > 0) {
+                setFieldValue(
+                  'blob',
+                  URL.createObjectURL(event.target.files[0])
+                );
+                setFieldValue('file', event.target.files[0]);
+                setFieldValue('name', event.target.files[0].name);
+              } else {
+                setFieldValue('blob', null);
+                setFieldValue('file', null);
+                setFieldValue('name', '');
+              }
             }}
           />
+          <label
+            for="file"
+            style={{
+              background: '#5664d2',
+              color: 'white',
+              padding: '0.5rem',
+              fontFamily: 'sans-serif',
+              borderRadius: '0.3rem',
+              cursor: 'pointer',
+              margin: '1rem 0.5rem 0 0'
+            }}
+          >
+            Choose File
+          </label>
+          {values.file && <span>{values.file.name}</span>}
           {values.file && values.file.type.match('video.*') && (
             <div style={{ paddingTop: '1rem' }}>
               <ReactPlayer
@@ -126,15 +147,23 @@ const UploadModalForm = (props) => {
                   );
                 }}
               />
-              <Button
-                type="submit"
-                disabled={isLoading}
-                variant="contained"
-                color="primary"
-                autoFocus
+              <Box
+                sx={{
+                  py: '1rem',
+                  float: 'right'
+                }}
               >
-                {isLoading ? 'Uploading' : 'Upload'}
-              </Button>
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  variant="contained"
+                  color="primary"
+                  autoFocus
+                  startIcon={<UploadIcon />}
+                >
+                  {isLoading ? 'Uploading' : 'Upload'}
+                </Button>
+              </Box>
             </>
           )}
         </form>

@@ -1,5 +1,6 @@
 import { Box, Typography, Button, Paper } from '@material-ui/core';
 import UploadModal from '../modal/UploadModal';
+import UploadIcon from '@material-ui/icons/Upload';
 
 const LandingInitial = (props) => {
   return (
@@ -31,6 +32,7 @@ const LandingInitial = (props) => {
           color="primary"
           component="span"
           onClick={props.handleClickOpen}
+          startIcon={<UploadIcon />}
         >
           Upload a video
         </Button>

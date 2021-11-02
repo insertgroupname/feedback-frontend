@@ -51,7 +51,7 @@ const UploadModal = (props) => {
         <DialogTitle id="alert-dialog-title" disableTypography>
           <Typography variant="h3">Upload a Video / Sound</Typography>
         </DialogTitle>
-        <DialogContent>
+        <DialogContent sx={{ paddingBottom: '16px' }}>
           <UploadModalForm
             handleSuccessModal={handleSuccessModal}
             handleFailModal={handleFailModal}
