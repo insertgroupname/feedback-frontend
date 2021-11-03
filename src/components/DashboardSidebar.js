@@ -9,7 +9,10 @@ import {
   List,
   Typography
 } from '@material-ui/core';
-import { BarChart as BarChartIcon } from 'react-feather';
+import {
+  BarChart as BarChartIcon,
+  Settings as SettingsIcon
+} from 'react-feather';
 import NavItem from './NavItem';
 
 const items = [
@@ -17,6 +20,11 @@ const items = [
     href: '/app/landing',
     icon: BarChartIcon,
     title: 'Landing'
+  },
+  {
+    href: '/app/settings',
+    icon: SettingsIcon,
+    title: 'Settings'
   }
 ];
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
