@@ -22,7 +22,7 @@ export const getItems = (userId) => async (dispatch) => {
   }
 };
 
-export const addItems = (item) => async (dispatch) => {
+export const addItem = (item) => async (dispatch) => {
   try {
     const { data } = await axiosInstance.post(`upload`, item, {
       headers: { 'Content-Type': 'multipart/form-data' }
@@ -37,6 +37,42 @@ export const addItems = (item) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: actionTypes.ADD_ITEM_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+    });
+  }
+};
+
+export const updateItem = (data) => async (dispatch) => {
+  try {
+    console.log(data);
+    dispatch({
+      type: actionTypes.UPDATE_ITEM_SUCCESS,
+      payload: data
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.UPDATE_ITEM_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+    });
+  }
+};
+
+export const deleteItem = (videoUUID) => async (dispatch) => {
+  try {
+    console.log('deleted video', videoUUID);
+    dispatch({
+      type: actionTypes.DELETE_ITEM_SUCCESS,
+      payload: videoUUID
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.DELETE_ITEM_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

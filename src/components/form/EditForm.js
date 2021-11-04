@@ -2,7 +2,8 @@ import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { TextField, Button, Box } from '@material-ui/core';
-import UploadIcon from '@material-ui/icons/Upload';
+import UpdateIcon from '@material-ui/icons/Update';
+import DeleteIcon from '@material-ui/icons/Delete';
 import FormSelect from './FormSelect';
 
 const EditForm = (props) => {
@@ -15,9 +16,8 @@ const EditForm = (props) => {
 
   return (
     <Formik
-      enableReinitialize
       initialValues={{
-        name: matchItem[0].videoName,
+        name: matchItem[0] ? matchItem[0].videoName : '',
         description: '',
         tags: []
       }}
@@ -27,11 +27,14 @@ const EditForm = (props) => {
       })}
       onSubmit={async (values) => {
         try {
-          console.log('submitted values:', values);
+          console.log('updated values:', {
+            videoUUID: props.videoUUID,
+            ...values
+          });
           // dispatch(addItems(formData));
-          props.handleSuccessModal();
+          props.handleUpdateSuccessModal();
         } catch (error) {
-          props.handleFailModal();
+          props.handleUpdateFailModal();
         }
       }}
     >
@@ -89,8 +92,10 @@ const EditForm = (props) => {
           />
           <Box
             sx={{
-              py: '1rem',
-              float: 'right'
+              display: 'flex',
+              gap: '0.5rem',
+              justifyContent: 'flex-end',
+              py: '1rem'
             }}
           >
             <Button
@@ -99,9 +104,19 @@ const EditForm = (props) => {
               variant="contained"
               color="primary"
               autoFocus
-              startIcon={<UploadIcon />}
+              startIcon={<UpdateIcon />}
             >
-              {isLoading ? 'Uploading' : 'Upload'}
+              {isLoading ? 'Updating' : 'Update'}
+            </Button>
+            <Button
+              onClick={() => props.handleOpenConfirmModal()}
+              disabled={isLoading}
+              variant="contained"
+              color="error"
+              autoFocus
+              startIcon={<DeleteIcon />}
+            >
+              {isLoading ? 'Deleting' : 'Delete'}
             </Button>
           </Box>
         </form>

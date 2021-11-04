@@ -5,8 +5,10 @@ import { TextField, Button, Box } from '@material-ui/core';
 import UploadIcon from '@material-ui/icons/Upload';
 import FormSelect from './FormSelect';
 import ReactPlayer from 'react-player';
+// import { addItem } from 'src/redux/actions/itemsActions';
 
 const UploadForm = (props) => {
+  // const dispatch = useDispatch();
   const itemsState = useSelector((state) => state.items);
   const { isLoading } = itemsState;
 
@@ -26,10 +28,14 @@ const UploadForm = (props) => {
       })}
       onSubmit={async (values) => {
         let formData = new FormData();
+        formData.append('name', values.name);
+        formData.append('description', values.description);
+        formData.append('tags', values.tags);
         formData.append('file', values.file);
+
         try {
           console.log('submitted values:', values);
-          // dispatch(addItems(formData));
+          // dispatch(addItem(formData));
           props.handleSuccessModal();
         } catch (error) {
           props.handleFailModal();

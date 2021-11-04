@@ -32,13 +32,38 @@ export const itemReducer = (state = initialItemState, action) => {
         error: action.payload
       };
 
-    case actionTypes.ADD_ITEM_SUCCESS:
+    case actionTypes.ADD_ITEM_SUCCESS: {
       const item = action.payload;
       return {
         items: item
       };
+    }
 
     case actionTypes.ADD_ITEM_FAILURE:
+      return {
+        error: action.payload
+      };
+
+    case actionTypes.UPDATE_ITEM_SUCCESS: {
+      const item = action.payload;
+      return {
+        items: item
+      };
+    }
+
+    case actionTypes.UPDATE_ITEM_FAILURE:
+      return {
+        error: action.payload
+      };
+
+    case actionTypes.DELETE_ITEM_SUCCESS: {
+      const videoUUID = action.payload;
+      return {
+        items: state.items.filter((item) => item.videoUUID !== videoUUID)
+      };
+    }
+
+    case actionTypes.DELETE_ITEM_FAILURE:
       return {
         error: action.payload
       };
