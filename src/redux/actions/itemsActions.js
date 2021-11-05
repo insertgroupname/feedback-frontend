@@ -1,12 +1,12 @@
 import * as actionTypes from '../constants/itemsConstants';
 import { axiosInstance } from 'src/utils/axiosInstance';
 
-export const getItems = (userId) => async (dispatch) => {
+export const getItems = () => async (dispatch) => {
   try {
     dispatch({
       type: actionTypes.GET_ITEM_REQUEST
     });
-    const { data } = await axiosInstance.get(`records/${userId}`);
+    const { data } = await axiosInstance.get(`record/landing/`);
     dispatch({
       type: actionTypes.GET_ITEM_SUCCESS,
       payload: data
@@ -30,9 +30,7 @@ export const addItem = (item) => async (dispatch) => {
 
     dispatch({
       type: actionTypes.ADD_ITEM_SUCCESS,
-      payload: {
-        ...data
-      }
+      payload: data
     });
   } catch (error) {
     dispatch({

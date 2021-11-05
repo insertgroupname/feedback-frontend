@@ -35,7 +35,7 @@ export const itemReducer = (state = initialItemState, action) => {
     case actionTypes.ADD_ITEM_SUCCESS: {
       const item = action.payload;
       return {
-        items: item
+        items: state.items.concat(item)
       };
     }
 

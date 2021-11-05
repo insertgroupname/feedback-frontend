@@ -7,29 +7,19 @@ import theme from 'src/theme';
 import routes from 'src/routes';
 import { getItems } from './redux/actions/itemsActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { verifyToken } from './redux/actions/authActions';
 
 const App = () => {
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.authentication);
-  const { token, userId } = authState;
+  const { isAuthenticated } = authState;
 
   useEffect(() => {
-    if (!token) {
-      return;
+    if (isAuthenticated) {
+      dispatch(getItems());
     }
-    if (token) {
-      dispatch(verifyToken(token));
-    }
-  }, [token, dispatch]);
+  }, [dispatch, isAuthenticated]);
 
-  useEffect(() => {
-    if (userId) {
-      dispatch(getItems(userId));
-    }
-  }, [dispatch, userId]);
-
-  const routing = useRoutes(routes(!!token));
+  const routing = useRoutes(routes(isAuthenticated));
 
   return (
     <ThemeProvider theme={theme}>

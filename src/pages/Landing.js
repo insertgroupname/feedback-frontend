@@ -6,10 +6,11 @@ import LandingCard from 'src/components/landing/LandingCard';
 import { useSelector } from 'react-redux';
 import LandingInitial from 'src/components/landing/LandingInitial';
 import EditModal from '../components/modal/EditModal';
+import ServerDown from './ServerDown';
 
 const Landing = () => {
   const itemsState = useSelector((state) => state.items);
-  const { isLoading, items } = itemsState;
+  const { isLoading, items, error } = itemsState;
 
   const [openUploadModal, setOpenUploadModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -55,6 +56,8 @@ const Landing = () => {
           >
             <CircularProgress />
           </Box>
+        ) : error ? (
+          <ServerDown />
         ) : (
           <Container maxWidth={false}>
             <LandingToolbar

@@ -8,16 +8,10 @@ export const login = (email, password) => async (dispatch) => {
       type: actionTypes.LOGIN_REQUEST
     });
 
-    const { data } = await axiosInstance.post(
-      `signin`,
-      {
-        email: email,
-        password: password
-      },
-      {
-        withCredentials: true
-      }
-    );
+    const { data } = await axiosInstance.post(`login`, {
+      email: email,
+      password: password
+    });
 
     dispatch({
       type: actionTypes.LOGIN_SUCCESS,
@@ -27,9 +21,9 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({
       type: actionTypes.LOGIN_FAILURE,
       payload:
-        error.response && error.response.data
-          ? error.response.data
-          : error.status
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
     });
   }
 };
@@ -47,65 +41,35 @@ export const resetLogin = () => async (dispatch) => {
   });
 };
 
-export const register =
-  (email, password, firstName, lastName) => async (dispatch) => {
-    try {
-      dispatch({
-        type: actionTypes.REGISTER_REQUEST
-      });
+export const register = (email, password, username) => async (dispatch) => {
+  try {
+    dispatch({
+      type: actionTypes.REGISTER_REQUEST
+    });
 
-      const { data } = await axiosInstance.post(
-        `register`,
-        {
-          email: email,
-          password: password,
-          firstName: firstName,
-          lastName: lastName
-        },
-        {
-          withCredentials: true
-        }
-      );
+    const { data } = await axiosInstance.post(`register`, {
+      email: email,
+      password: password,
+      username: username
+    });
 
-      dispatch({
-        type: actionTypes.REGISTER_SUCCESS,
-        payload: data
-      });
-    } catch (error) {
-      dispatch({
-        type: actionTypes.REGISTER_FAILURE,
-        payload:
-          error.response && error.response.data
-            ? error.response.data
-            : error.status
-      });
-    }
-  };
+    dispatch({
+      type: actionTypes.REGISTER_SUCCESS,
+      payload: data
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.REGISTER_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+    });
+  }
+};
 
 export const resetRegister = () => async (dispatch) => {
   dispatch({
     type: actionTypes.REGISTER_RESET
   });
-};
-
-export const verifyToken = (token) => async (dispatch) => {
-  try {
-    dispatch({
-      type: actionTypes.VERIFY_TOKEN_REQUEST
-    });
-    const verifyTokenUrl = `verifyToken?token=${token}`;
-    const { data } = await axiosInstance.get(verifyTokenUrl);
-    dispatch({
-      type: actionTypes.VERIFY_TOKEN_SUCCESS,
-      payload: data
-    });
-  } catch (error) {
-    dispatch({
-      type: actionTypes.VERIFY_TOKEN_FAILURE,
-      payload:
-        error.response && error.response.data
-          ? error.response.data
-          : error.status
-    });
-  }
 };
