@@ -23,7 +23,10 @@ const AveragePace = (props) => {
   const itemDetailState = useSelector((state) => state.itemDetail);
   const { item } = itemDetailState;
 
-  const averagePace = (item.postProcessing && item.postProcessing.wpm) || {};
+  const averagePace =
+    item.report && item.report.postProcessing
+      ? item.report.postProcessing.wpm
+      : {};
   let formatData = [];
   for (const [key, value] of Object.entries(averagePace)) {
     formatData.push({

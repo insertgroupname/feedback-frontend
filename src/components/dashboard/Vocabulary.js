@@ -18,7 +18,10 @@ const Vocabulary = () => {
   const itemDetailState = useSelector((state) => state.itemDetail);
   const { item } = itemDetailState;
 
-  const vocabulary = (item.postProcessing && item.postProcessing.vocab) || {};
+  const vocabulary =
+    item.report && item.report.postProcessing
+      ? item.report.postProcessing.vocab
+      : {};
   let words = [];
   for (const [key] of Object.entries(vocabulary)) {
     words.push({

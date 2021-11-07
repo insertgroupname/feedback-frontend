@@ -35,9 +35,6 @@ const useStyles = makeStyles((theme) => ({
   gauge: {
     overflow: 'visible',
     padding: '2rem 4rem 0 4rem'
-    // [theme.breakpoints.down('xl')]: {
-    //   padding: '2rem 2rem 0 2rem'
-    // }
   },
   paceContainer: {
     paddingTop: '3rem'
@@ -63,8 +60,11 @@ const Pace = (props) => {
   });
 
   const classes = useStyles();
-  const value =
-    Math.round(item.postProcessing && item.postProcessing.avg_wpm) || 0;
+  const value = Math.round(
+    item.report && item.report.postProcessing
+      ? item.report.postProcessing.avg_wpm
+      : 0
+  );
   useEffect(() => {
     const percentScale = scaleLinear().domain([0, 250]).range([0, 1]);
     const percent = percentScale(value);

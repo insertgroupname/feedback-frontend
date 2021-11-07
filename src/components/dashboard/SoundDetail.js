@@ -6,16 +6,18 @@ const SoundDetail = (props) => {
   const itemDetailState = useSelector((state) => state.itemDetail);
   const { item } = itemDetailState;
 
-  const soundDetail = item.postProcessing || {
-    video_len: 0,
-    total_words: 0,
-    hestiation_: {
-      total_count: 0
-    },
-    silence: {
-      total_silence: 0
-    }
-  };
+  const soundDetail = item.report
+    ? item.report.postProcessing
+    : {
+        video_len: 0,
+        total_words: 0,
+        hestiation_: {
+          total_count: 0
+        },
+        silence: {
+          total_silence: 0
+        }
+      };
   const formatted = (secs) => {
     let secondToFormat = moment.utc(secs * 1000).format('mm:ss');
     return secondToFormat;

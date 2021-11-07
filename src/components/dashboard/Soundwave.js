@@ -30,8 +30,9 @@ const Soundwave = (props) => {
   const { item, videoRequired, streaming } = itemDetailState;
 
   const hesitation =
-    (item.postProcessing && item.postProcessing.hestiation_.marker) || {};
-
+    item.report && item.report.postProcessing
+      ? item.report.postProcessing.hestiation_.marker
+      : {};
   const wavesurferRef = useRef();
   const initialZoom = 0;
   const [zoom, setZoom] = useState(initialZoom);

@@ -54,7 +54,9 @@ const FillersChart = (props) => {
   const { item } = itemDetailState;
 
   const fillerChartData =
-    (item.postProcessing && item.postProcessing.hestiation_.marker) || {};
+    item.report && item.report.postProcessing
+      ? item.report.postProcessing.hestiation_.marker
+      : {};
 
   let formatData = [];
   for (const [key, value] of Object.entries(fillerChartData)) {

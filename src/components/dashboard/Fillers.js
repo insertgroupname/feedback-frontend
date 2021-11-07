@@ -36,7 +36,9 @@ const Fillers = (props) => {
   const { item } = itemDetailState;
 
   const fillerCount =
-    (item.postProcessing && item.postProcessing.hestiation_.total_count) || 0;
+    item.report && item.report.postProcessing
+      ? item.report.postProcessing.hestiation_.total_count
+      : 0;
   return (
     <Card {...props}>
       <CardHeader

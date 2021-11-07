@@ -24,7 +24,7 @@ const Transcript = (props) => {
   const itemDetailState = useSelector((state) => state.itemDetail);
   const { item } = itemDetailState;
 
-  const transcript = item.results || [];
+  const transcript = item.report ? item.report.transcript : [];
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 

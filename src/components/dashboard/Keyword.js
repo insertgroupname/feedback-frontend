@@ -19,7 +19,10 @@ const Keyword = () => {
   const itemDetailState = useSelector((state) => state.itemDetail);
   const { item } = itemDetailState;
 
-  const keyword = (item.postProcessing && item.postProcessing.keyword) || [];
+  const keyword =
+    item.report && item.report.postProcessing
+      ? item.report.postProcessing.keyword
+      : [];
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(4);
 

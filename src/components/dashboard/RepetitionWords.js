@@ -19,11 +19,13 @@ const RepetitionWords = () => {
   const itemDetailState = useSelector((state) => state.itemDetail);
   const { item } = itemDetailState;
 
-  const repetition = (item.postProcessing &&
-    item.postProcessing.word_frequency) || {
-    bigram: [],
-    word: []
-  };
+  const repetition =
+    item.report && item.report.postProcessing
+      ? item.report.postProcessing.word_frequency
+      : {
+          bigram: [],
+          word: []
+        };
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(4);
