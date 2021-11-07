@@ -25,20 +25,15 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   let { videoUUID } = useParams();
 
-  const authState = useSelector((state) => state.authentication);
-  const { userId } = authState;
-
   const itemDetailState = useSelector((state) => state.itemDetail);
   const { isLoading, item } = itemDetailState;
 
   useEffect(() => {
-    if (userId) {
-      dispatch(getItemDetail(userId, videoUUID));
-    }
+    dispatch(getItemDetail(videoUUID));
     return () => {
       dispatch(resetItem());
     };
-  }, [dispatch, userId, videoUUID]);
+  }, [dispatch, videoUUID]);
 
   return (
     <>

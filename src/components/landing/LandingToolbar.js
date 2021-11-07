@@ -1,8 +1,13 @@
 import { Box, Button, Typography } from '@material-ui/core';
-import UploadModal from '../modal/UploadModal';
+import { useDispatch } from 'react-redux';
 import UploadIcon from '@material-ui/icons/Upload';
+import { openUploadModal } from 'src/redux/actions/modalActions';
 
 const LandingToolbar = (props) => {
+  const dispatch = useDispatch();
+  const openUploadModalHandler = () => {
+    dispatch(openUploadModal());
+  };
   return (
     <Box>
       <Box
@@ -17,16 +22,13 @@ const LandingToolbar = (props) => {
             variant="contained"
             color="primary"
             component="span"
-            onClick={props.handleClickOpen}
+            onClick={openUploadModalHandler}
             startIcon={<UploadIcon />}
           >
             Upload More Video
           </Button>
         )}
       </Box>
-      {props.itemLength > 0 && (
-        <UploadModal open={props.open} handleClose={props.handleClose} />
-      )}
     </Box>
   );
 };

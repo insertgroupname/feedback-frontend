@@ -7,6 +7,7 @@ const initialItemState = {
 
 const initialItemDetailState = {
   item: {},
+  streaming: null,
   videoRequired: false,
   isLoading: false
 };
@@ -46,8 +47,16 @@ export const itemReducer = (state = initialItemState, action) => {
 
     case actionTypes.UPDATE_ITEM_SUCCESS: {
       const item = action.payload;
+      const index = state.items.findIndex(
+        (prevItem) => prevItem.videoUUID === item.videoUUID
+      );
+      const updatedItem = state.items;
+      updatedItem[index].videoName = item.videoName;
+      updatedItem[index].description = item.description;
+      updatedItem[index].tags = item.tags;
+      updatedItem[index].lastUpdate = new Date();
       return {
-        items: item
+        items: updatedItem
       };
     }
 
@@ -78,12 +87,14 @@ export const itemDetailReducer = (state = initialItemDetailState, action) => {
     case actionTypes.GET_ITEM_DETAIL_REQUEST:
       return {
         isLoading: true,
+        streaming: null,
         videoRequired: false,
         item: {}
       };
     case actionTypes.GET_ITEM_DETAIL_SUCCESS:
       return {
-        item: action.payload,
+        item: action.payload.videoDetailData,
+        streaming: action.payload.streamData,
         videoRequired: true,
         isLoading: false
       };
@@ -92,6 +103,7 @@ export const itemDetailReducer = (state = initialItemDetailState, action) => {
       return {
         isLoading: false,
         videoRequired: false,
+        streaming: null,
         error: action.payload
       };
 
@@ -99,6 +111,7 @@ export const itemDetailReducer = (state = initialItemDetailState, action) => {
       return {
         item: {},
         videoRequired: false,
+        streaming: null,
         isLoading: false
       };
 

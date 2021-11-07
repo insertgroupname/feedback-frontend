@@ -4,7 +4,9 @@ import {
   Card,
   CardContent,
   CardActions,
+  Chip,
   Button,
+  Box,
   Typography
 } from '@material-ui/core';
 import moment from 'moment';
@@ -22,10 +24,10 @@ const LandingCard = (props) => {
       >
         <CardContent>
           <Typography color="textPrimary" gutterBottom variant="h4">
-            Video Name: {props.item.videoName}
+            {props.item.videoName}
           </Typography>
           <Typography color="textPrimary" variant="body1">
-            Video UUID: {props.item.videoUUID}
+            Description: {props.item.description}
           </Typography>
           <Typography color="textPrimary" variant="body1">
             Status: {props.item.status}
@@ -34,6 +36,23 @@ const LandingCard = (props) => {
             Created at:{' '}
             {moment(props.item.createDate).format('MMMM Do YYYY, h:mm:ss a')}
           </Typography>
+          <Typography color="textPrimary" variant="body1">
+            Updated at:{' '}
+            {moment(props.item.lastUpdate).format('MMMM Do YYYY, h:mm:ss a')}
+          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
+            <Typography color="textPrimary" variant="body1">
+              Tags:
+            </Typography>
+            {props.item.tags.map((tag) => (
+              <Chip key={tag} color="primary" sx={{ m: 0.5 }} label={tag} />
+            ))}
+          </Box>
         </CardContent>
         {props.item.status === 'Done' && (
           <CardActions
@@ -46,7 +65,7 @@ const LandingCard = (props) => {
             <Button
               size="small"
               color="primary"
-              onClick={props.handleClickOpen}
+              onClick={props.openEditModalHandler}
             >
               EDIT
             </Button>

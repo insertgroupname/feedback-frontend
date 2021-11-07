@@ -1,4 +1,5 @@
-import { useState } from 'react';
+// import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -6,93 +7,59 @@ import Typography from '@material-ui/core/Typography';
 import SuccessFailModal from './SuccessFailModal';
 import EditForm from '../form/EditForm';
 import ConfirmModal from './ConfirmModal';
-const EditModal = (props) => {
-  const [showUpdateSuccessModal, setShowUpdateSuccessModal] = useState(false);
-  const [showUpdateFailModal, setShowUpdateFailModal] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
-  const [showDeleteFailModal, setShowDeleteFailModal] = useState(false);
+import { closeEditModal } from 'src/redux/actions/modalActions';
 
-  const handleModalClose = () => {
-    setShowUpdateSuccessModal(false);
-    setShowUpdateFailModal(false);
-    setShowDeleteSuccessModal(false);
-    setShowDeleteFailModal(false);
-  };
+const EditModal = () => {
+  const dispatch = useDispatch();
+  const modalState = useSelector((state) => state.modal);
+  const {
+    showEditModal,
+    showEditSuccessModal,
+    showEditFailModal,
+    showConfirmModal,
+    showDeleteSuccessModal,
+    showDeleteFailModal
+  } = modalState;
 
-  const handleUpdateSuccessModal = () => {
-    setShowUpdateSuccessModal(true);
-  };
-
-  const handleUpdateFailModal = () => {
-    setShowUpdateFailModal(true);
-  };
-
-  const handleOpenConfirmModal = () => {
-    setShowConfirmModal(true);
-  };
-
-  const handleCloseConfirmModal = () => {
-    setShowConfirmModal(false);
-  };
-
-  const handleDeleteSuccessModal = () => {
-    setShowDeleteSuccessModal(true);
-  };
-
-  const handleDeleteFailModal = () => {
-    setShowDeleteFailModal(true);
+  const closeEditModalHandler = () => {
+    dispatch(closeEditModal());
   };
 
   return (
     <>
-      {showUpdateSuccessModal && (
+      {showEditSuccessModal && (
         <SuccessFailModal
           title="Update Successful"
           description="Click Argee button to check the result"
-          open={showUpdateSuccessModal}
-          handleModalClose={handleModalClose}
         />
       )}
-      {showUpdateFailModal && (
+      {showEditFailModal && (
         <SuccessFailModal
           title="Update Failure"
           description="Update error, please try again"
-          open={showUpdateFailModal}
-          handleModalClose={handleModalClose}
         />
       )}
       {showConfirmModal && (
         <ConfirmModal
-          videoUUID={props.videoUUID}
           title="Are you sure?"
           description="Do you really want to delete these records? This process cannot be undone"
-          open={showConfirmModal}
-          handleCloseConfirmModal={handleCloseConfirmModal}
-          handleDeleteSuccessModal={handleDeleteSuccessModal}
-          handleDeleteFailModal={handleDeleteFailModal}
-          handleClose={() => props.handleClose()}
         />
       )}
       {showDeleteSuccessModal && (
         <SuccessFailModal
           title="Delete Successful"
           description="The video has been deleted"
-          open={showDeleteSuccessModal}
-          handleModalClose={handleModalClose}
         />
       )}
       {showDeleteFailModal && (
         <SuccessFailModal
           title="Delete Failure"
           description="Delete error, please try again"
-          open={showDeleteFailModal}
-          handleModalClose={handleModalClose}
         />
       )}
       <Dialog
-        open={props.open}
-        onClose={() => props.handleClose()}
+        open={showEditModal}
+        onClose={() => closeEditModalHandler()}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -100,12 +67,7 @@ const EditModal = (props) => {
           <Typography variant="h3">Edit</Typography>
         </DialogTitle>
         <DialogContent sx={{ paddingBottom: '16px' }}>
-          <EditForm
-            videoUUID={props.videoUUID}
-            handleUpdateSuccessModal={handleUpdateSuccessModal}
-            handleUpdateFailModal={handleUpdateFailModal}
-            handleOpenConfirmModal={handleOpenConfirmModal}
-          />
+          <EditForm />
         </DialogContent>
       </Dialog>
     </>

@@ -27,9 +27,8 @@ import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 
 const Soundwave = (props) => {
   const itemDetailState = useSelector((state) => state.itemDetail);
-  const { item, videoRequired } = itemDetailState;
+  const { item, videoRequired, streaming } = itemDetailState;
 
-  const videoUUID = item.videoUUID && item.videoUUID;
   const hesitation =
     (item.postProcessing && item.postProcessing.hestiation_.marker) || {};
 
@@ -96,15 +95,6 @@ const Soundwave = (props) => {
     }
   }
 
-  let videoUrl;
-
-  if (videoRequired) {
-    videoUrl = `http://10.4.56.44:81/api/v1/video/${videoUUID}`;
-    // videoUrl = `http://localhost:3331/video/${videoUUID}`;
-  } else {
-    videoUrl = 'Must not reach here';
-  }
-
   const [regions, setRegions] = useState(formatHesitation);
 
   const regionsRef = useRef(regions);
@@ -141,11 +131,13 @@ const Soundwave = (props) => {
     (waveSurfer) => {
       wavesurferRef.current = waveSurfer;
       if (wavesurferRef.current) {
-        wavesurferRef.current.load(videoUrl);
-        wavesurferRef.current.on('region-created', regionCreatedHandler);
+        if (videoRequired) {
+          wavesurferRef.current.load(streaming);
+          wavesurferRef.current.on('region-created', regionCreatedHandler);
+        }
       }
     },
-    [regionCreatedHandler, videoUrl]
+    [regionCreatedHandler, streaming, videoRequired]
   );
 
   const togglePlayPause = useCallback(() => {

@@ -1,37 +1,23 @@
-import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Box, Container, Grid, CircularProgress } from '@material-ui/core';
 import LandingToolbar from '../components/landing/LandingToolbar';
 import LandingCard from 'src/components/landing/LandingCard';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LandingInitial from 'src/components/landing/LandingInitial';
 import EditModal from '../components/modal/EditModal';
 import ServerDown from './ServerDown';
+import UploadModal from '../components/modal/UploadModal';
+import { openEditModal } from 'src/redux/actions/modalActions';
 
 const Landing = () => {
+  const dispatch = useDispatch();
+
+  const openEditModalHandler = (videoUUID) => {
+    dispatch(openEditModal(videoUUID));
+  };
+
   const itemsState = useSelector((state) => state.items);
   const { isLoading, items, error } = itemsState;
-
-  const [openUploadModal, setOpenUploadModal] = useState(false);
-  const [openEditModal, setOpenEditModal] = useState(false);
-  const [videoUUID, setVideoUUID] = useState('');
-
-  const handleClickOpenUploadModal = () => {
-    setOpenUploadModal(true);
-  };
-
-  const handleCloseUploadModal = () => {
-    setOpenUploadModal(false);
-  };
-
-  const handleClickOpenEditModal = (videoUUID) => {
-    setOpenEditModal(true);
-    setVideoUUID(videoUUID);
-  };
-
-  const handleCloseEditModal = () => {
-    setOpenEditModal(false);
-  };
 
   return (
     <>
@@ -60,12 +46,7 @@ const Landing = () => {
           <ServerDown />
         ) : (
           <Container maxWidth={false}>
-            <LandingToolbar
-              itemLength={items.length}
-              handleClickOpen={handleClickOpenUploadModal}
-              handleClose={handleCloseUploadModal}
-              open={openUploadModal}
-            />
+            <LandingToolbar itemLength={items.length} />
             <Box sx={{ pt: 3 }}>
               <Grid container spacing={3}>
                 {items.length > 0 ? (
@@ -73,29 +54,22 @@ const Landing = () => {
                     <Grid item key={item.videoUUID} lg={4} md={6} xs={12}>
                       <LandingCard
                         item={item}
-                        handleClickOpen={() =>
-                          handleClickOpenEditModal(item.videoUUID)
+                        openEditModalHandler={() =>
+                          openEditModalHandler(item.videoUUID)
                         }
                       />
                     </Grid>
                   ))
                 ) : (
-                  <LandingInitial
-                    handleClickOpen={handleClickOpenUploadModal}
-                    handleClose={handleCloseUploadModal}
-                    open={openUploadModal}
-                  />
+                  <LandingInitial />
                 )}
               </Grid>
             </Box>
           </Container>
         )}
       </Box>
-      <EditModal
-        videoUUID={videoUUID}
-        open={openEditModal}
-        handleClose={handleCloseEditModal}
-      />
+      <UploadModal />
+      <EditModal />
     </>
   );
 };

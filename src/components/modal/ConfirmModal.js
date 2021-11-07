@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -7,27 +7,40 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Typography from '@material-ui/core/Typography';
 import { deleteItem } from 'src/redux/actions/itemsActions';
+import {
+  closeConfirmModal,
+  closeEditModal,
+  openDeleteFailModal,
+  openDeleteSuccessModal
+} from 'src/redux/actions/modalActions';
 
 const ConfirmModal = (props) => {
   const dispatch = useDispatch();
 
-  const handleDelete = (videoUUID) => {
+  const modalState = useSelector((state) => state.modal);
+  const { videoUUID, showConfirmModal } = modalState;
+
+  const closeConfirmModalHandler = () => {
+    dispatch(closeConfirmModal());
+  };
+
+  const deleteItemHandler = (videoUUID) => {
     try {
       dispatch(deleteItem(videoUUID));
-      props.handleCloseConfirmModal();
-      props.handleClose();
-      props.handleDeleteSuccessModal();
+      closeConfirmModalHandler();
+      dispatch(closeEditModal());
+      dispatch(openDeleteSuccessModal());
     } catch (error) {
-      props.handleCloseConfirmModal();
-      props.handleClose();
-      props.handleDeleteFailModal();
+      closeConfirmModalHandler();
+      dispatch(closeEditModal());
+      dispatch(openDeleteFailModal());
     }
   };
   return (
     <>
       <Dialog
-        open={props.open}
-        onClose={props.handleCloseConfirmModal}
+        open={showConfirmModal}
+        onClose={closeConfirmModalHandler}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -38,15 +51,11 @@ const ConfirmModal = (props) => {
           <DialogContentText>{props.description}</DialogContentText>
         </DialogContent>
         <DialogActions style={{ padding: '16px 24px' }}>
-          <Button
-            onClick={props.handleCloseConfirmModal}
-            color="primary"
-            autoFocus
-          >
+          <Button onClick={closeConfirmModalHandler} color="primary" autoFocus>
             Cancel
           </Button>
           <Button
-            onClick={() => handleDelete(props.videoUUID)}
+            onClick={() => deleteItemHandler(videoUUID)}
             color="error"
             autoFocus
           >

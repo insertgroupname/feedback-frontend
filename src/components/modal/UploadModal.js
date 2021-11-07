@@ -1,53 +1,39 @@
-import { useState } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import SuccessFailModal from './SuccessFailModal';
 import UploadForm from '../form/UploadForm';
-const UploadModal = (props) => {
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [showFailModal, setShowFailModal] = useState(false);
+import { useSelector, useDispatch } from 'react-redux';
+import { closeUploadModal } from 'src/redux/actions/modalActions';
+const UploadModal = () => {
+  const dispatch = useDispatch();
 
-  const handleCloseUpload = () => {
-    props.handleClose();
-  };
+  const modalState = useSelector((state) => state.modal);
+  const { showUploadModal, showUploadSuccessModal, showUploadFailModal } =
+    modalState;
 
-  const handleModalClose = () => {
-    setShowSuccessModal(false);
-    setShowFailModal(false);
-    handleCloseUpload();
-  };
-
-  const handleSuccessModal = () => {
-    setShowSuccessModal(true);
-  };
-
-  const handleFailModal = () => {
-    setShowFailModal(true);
+  const closeUploadModalHandler = () => {
+    dispatch(closeUploadModal());
   };
 
   return (
     <>
-      {showSuccessModal && (
+      {showUploadSuccessModal && (
         <SuccessFailModal
           title="Upload Successful"
           description="The system is processing your file, please wait for a few minutes"
-          open={showSuccessModal}
-          handleModalClose={handleModalClose}
         />
       )}
-      {showFailModal && (
+      {showUploadFailModal && (
         <SuccessFailModal
           title="Upload Failure"
           description="Upload file error, please try again"
-          open={showFailModal}
-          handleModalClose={handleModalClose}
         />
       )}
       <Dialog
-        open={props.open}
-        onClose={handleCloseUpload}
+        open={showUploadModal}
+        onClose={closeUploadModalHandler}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -55,10 +41,7 @@ const UploadModal = (props) => {
           <Typography variant="h3">Upload a Video / Sound</Typography>
         </DialogTitle>
         <DialogContent sx={{ paddingBottom: '16px' }}>
-          <UploadForm
-            handleSuccessModal={handleSuccessModal}
-            handleFailModal={handleFailModal}
-          />
+          <UploadForm />
         </DialogContent>
       </Dialog>
     </>

@@ -1,8 +1,15 @@
 import { Box, Typography, Button, Paper } from '@material-ui/core';
-import UploadModal from '../modal/UploadModal';
-import UploadIcon from '@material-ui/icons/Upload';
+import { useDispatch } from 'react-redux';
 
-const LandingInitial = (props) => {
+import UploadIcon from '@material-ui/icons/Upload';
+import { openUploadModal } from 'src/redux/actions/modalActions';
+
+const LandingInitial = () => {
+  const dispatch = useDispatch();
+  const openUploadModalHandler = () => {
+    dispatch(openUploadModal());
+  };
+
   return (
     <Box
       sx={{
@@ -31,13 +38,12 @@ const LandingInitial = (props) => {
           variant="contained"
           color="primary"
           component="span"
-          onClick={props.handleClickOpen}
+          onClick={openUploadModalHandler}
           startIcon={<UploadIcon />}
         >
           Upload a video
         </Button>
       </Paper>
-      <UploadModal open={props.open} handleClose={props.handleClose} />
     </Box>
   );
 };

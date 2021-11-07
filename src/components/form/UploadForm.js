@@ -6,9 +6,14 @@ import UploadIcon from '@material-ui/icons/Upload';
 import FormSelect from './FormSelect';
 import ReactPlayer from 'react-player';
 import { addItem } from 'src/redux/actions/itemsActions';
+import {
+  openUploadSuccessModal,
+  openUploadFailModal
+} from 'src/redux/actions/modalActions';
 
-const UploadForm = (props) => {
+const UploadForm = () => {
   const dispatch = useDispatch();
+
   const itemsState = useSelector((state) => state.items);
   const { isLoading } = itemsState;
 
@@ -34,9 +39,9 @@ const UploadForm = (props) => {
         formData.append('file', values.file);
         try {
           dispatch(addItem(formData));
-          props.handleSuccessModal();
+          dispatch(openUploadSuccessModal());
         } catch (error) {
-          props.handleFailModal();
+          dispatch(openUploadFailModal());
         }
       }}
     >

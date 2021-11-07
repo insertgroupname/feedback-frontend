@@ -1,5 +1,8 @@
 import * as actionTypes from '../constants/itemsConstants';
 import { axiosInstance } from 'src/utils/axiosInstance';
+import Cookies from 'js-cookie';
+
+const token = Cookies.get('jwt');
 
 export const getItems = () => async (dispatch) => {
   try {
@@ -43,12 +46,12 @@ export const addItem = (item) => async (dispatch) => {
   }
 };
 
-export const updateItem = (data) => async (dispatch) => {
+export const updateItem = (item) => async (dispatch) => {
   try {
-    console.log(data);
+    await axiosInstance.patch(`record/report/${item.videoUUID}`, item);
     dispatch({
       type: actionTypes.UPDATE_ITEM_SUCCESS,
-      payload: data
+      payload: item
     });
   } catch (error) {
     dispatch({
@@ -79,15 +82,31 @@ export const deleteItem = (videoUUID) => async (dispatch) => {
   }
 };
 
-export const getItemDetail = (userId, videoUUID) => async (dispatch) => {
+export const getItemDetail = (videoUUID) => async (dispatch) => {
   try {
     dispatch({
       type: actionTypes.GET_ITEM_DETAIL_REQUEST
     });
-    const { data } = await axiosInstance.get(`records/${userId}/${videoUUID}`);
+    const { data: videoDetailData } = await axiosInstance.get(
+      `record/report/${videoUUID}`
+    );
+    const result = await fetch(
+      `http://localhost:81/api/v2/record/streaming/${videoUUID}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        credentials: 'include'
+      }
+    );
+    const blob = await result.blob();
+    const streamData = URL.createObjectURL(blob);
     dispatch({
       type: actionTypes.GET_ITEM_DETAIL_SUCCESS,
-      payload: data[0]
+      payload: {
+        videoDetailData,
+        streamData
+      }
     });
   } catch (error) {
     dispatch({

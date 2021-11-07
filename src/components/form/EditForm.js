@@ -1,25 +1,42 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { TextField, Button, Box } from '@material-ui/core';
 import UpdateIcon from '@material-ui/icons/Update';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FormSelect from './FormSelect';
+import { updateItem } from 'src/redux/actions/itemsActions';
+import {
+  openConfirmModal,
+  openEditFailModal,
+  openEditSuccessModal
+} from 'src/redux/actions/modalActions';
 
-const EditForm = (props) => {
+const EditForm = () => {
+  const dispatch = useDispatch();
   const itemsState = useSelector((state) => state.items);
   const { items, isLoading } = itemsState;
 
-  const matchItem = items.filter((item) => {
-    return item.videoUUID === props.videoUUID;
-  });
+  const modalState = useSelector((state) => state.modal);
+  const { videoUUID } = modalState;
+
+  const openConfirmModalHandler = () => {
+    dispatch(openConfirmModal());
+  };
+
+  let matchItem = [];
+  if (items) {
+    matchItem = items.filter((item) => {
+      return item.videoUUID === videoUUID;
+    });
+  }
 
   return (
     <Formik
       initialValues={{
         name: matchItem[0] ? matchItem[0].videoName : '',
-        description: '',
-        tags: []
+        description: matchItem[0] ? matchItem[0].description : '',
+        tags: matchItem[0] ? matchItem[0].tags : []
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().max(255).required('Name is required'),
@@ -27,14 +44,16 @@ const EditForm = (props) => {
       })}
       onSubmit={async (values) => {
         try {
-          console.log('updated values:', {
-            videoUUID: props.videoUUID,
-            ...values
-          });
-          // dispatch(addItems(formData));
-          props.handleUpdateSuccessModal();
+          const item = {
+            videoUUID: videoUUID,
+            videoName: values.name,
+            description: values.description,
+            tags: values.tags
+          };
+          dispatch(updateItem(item));
+          dispatch(openEditSuccessModal());
         } catch (error) {
-          props.handleUpdateFailModal();
+          dispatch(openEditFailModal());
         }
       }}
     >
@@ -109,7 +128,7 @@ const EditForm = (props) => {
               {isLoading ? 'Updating' : 'Update'}
             </Button>
             <Button
-              onClick={() => props.handleOpenConfirmModal()}
+              onClick={openConfirmModalHandler}
               disabled={isLoading}
               variant="contained"
               color="error"
