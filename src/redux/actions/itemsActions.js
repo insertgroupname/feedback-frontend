@@ -66,7 +66,7 @@ export const updateItem = (item) => async (dispatch) => {
 
 export const deleteItem = (videoUUID) => async (dispatch) => {
   try {
-    // await axiosInstance.delete(`record/report/${videoUUID}`);
+    await axiosInstance.delete(`record/report/${videoUUID}`);
     dispatch({
       type: actionTypes.DELETE_ITEM_SUCCESS,
       payload: videoUUID

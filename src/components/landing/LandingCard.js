@@ -36,7 +36,7 @@ const LandingCard = (props) => {
             Created at:{' '}
             {moment(props.item.createDate).format('MMMM Do YYYY, h:mm:ss a')}
           </Typography>
-          {props.item.createDate !== props.item.lastUpdate && (
+          {props.item.status === 'Done' && (
             <Typography color="textPrimary" variant="body1">
               Updated at:{' '}
               {moment(props.item.lastUpdate).format('MMMM Do YYYY, h:mm:ss a')}

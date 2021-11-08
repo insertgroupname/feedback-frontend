@@ -16,7 +16,7 @@ const LandingToolbar = (props) => {
           justifyContent: 'space-between'
         }}
       >
-        <Typography variant="h3">Welcome, User fullname</Typography>
+        <Typography variant="h3">Welcome, {props.username}</Typography>
         {props.itemLength > 0 && (
           <Button
             variant="contained"

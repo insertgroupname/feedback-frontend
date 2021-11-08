@@ -1,20 +1,13 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { Box, Container, CircularProgress } from '@material-ui/core';
 import SettingsStopword from 'src/components/settings/SettingsStopword';
 import SettingsTags from 'src/components/settings/SettingsTag';
-import { getSettings } from 'src/redux/actions/settingsActions';
+import ServerDown from './ServerDown';
 
 const SettingsView = () => {
-  const dispatch = useDispatch();
   const settingsState = useSelector((state) => state.settings);
-
-  const { isLoading } = settingsState;
-
-  useEffect(() => {
-    dispatch(getSettings());
-  }, [dispatch]);
+  const { isLoading, error } = settingsState;
 
   return (
     <>
@@ -39,6 +32,8 @@ const SettingsView = () => {
           >
             <CircularProgress />
           </Box>
+        ) : error ? (
+          <ServerDown />
         ) : (
           <Container maxWidth="lg">
             <Box sx={{ pt: 3 }}>

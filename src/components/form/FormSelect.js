@@ -1,7 +1,11 @@
 import { TextField, MenuItem, Box, Chip } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import CancelIcon from '@material-ui/icons/Cancel';
 
 const FormSelect = (props) => {
+  const settingsState = useSelector((state) => state.settings);
+  const { tags } = settingsState;
+
   return (
     <TextField
       fullWidth
@@ -34,9 +38,11 @@ const FormSelect = (props) => {
         )
       }}
     >
-      <MenuItem value="rehearsal">Rehearsal</MenuItem>
-      <MenuItem value="presentation">Presentation</MenuItem>
-      <MenuItem value="publicSpeaking">Public Speaking</MenuItem>
+      {tags.map((tag, index) => (
+        <MenuItem key={index} value={tag}>
+          {tag}
+        </MenuItem>
+      ))}
     </TextField>
   );
 };
