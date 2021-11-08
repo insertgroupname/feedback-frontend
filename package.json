@@ -1,7 +1,7 @@
 {
   "name": "react-material-dashboard",
   "version": "1.0.0",
-  "proxy": "http://localhost:81",
+  "proxy": "http://10.4.56.44:81",
   "private": false,
   "scripts": {
     "start": "react-scripts start",

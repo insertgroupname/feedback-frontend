@@ -91,7 +91,7 @@ export const getItemDetail = (videoUUID) => async (dispatch) => {
       `record/report/${videoUUID}`
     );
     const result = await fetch(
-      `http://localhost:81/api/v2/record/streaming/${videoUUID}`,
+      `http://10.4.56.44:81/api/v2/record/streaming/${videoUUID}`,
       {
         headers: {
           Authorization: `Bearer ${token}`

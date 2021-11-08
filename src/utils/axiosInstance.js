@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 const token = Cookies.get('jwt');
 
 export const axiosInstance = axios.create({
-  baseURL: 'http://localhost:81/api/v2/',
+  baseURL: 'http://10.4.56.44:81/api/v2/',
   withCredentials: true
 });
 
