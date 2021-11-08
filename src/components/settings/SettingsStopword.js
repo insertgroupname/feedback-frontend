@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Box,
   Button,
@@ -14,9 +15,12 @@ import {
 
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
+import { addStopword, deleteStopword } from 'src/redux/actions/settingsActions';
 
 const SettingsStopword = (props) => {
-  const [stopwords, setStopwords] = useState([]);
+  const dispatch = useDispatch();
+  const settingState = useSelector((state) => state.settings);
+  const { stopwords } = settingState;
   const [showInput, setShowInput] = useState(false);
   const [inputValues, setInputValues] = useState({
     stopword: ''
@@ -41,22 +45,19 @@ const SettingsStopword = (props) => {
   };
 
   const addStopwordHandler = () => {
-    setStopwords((prev) => [
-      ...prev,
-      {
-        id: Math.random(),
-        value: inputValues.stopword
-      }
-    ]);
+    const newStopword = inputValues.stopword;
+    const newStopwords = stopwords.concat(newStopword);
+    dispatch(addStopword(newStopwords));
     setInputValues({
       stopword: ''
     });
   };
 
-  const deleteStopwordHandler = (stopwordId) => () => {
-    setStopwords((prev) =>
-      prev.filter((stopword) => stopword.id !== stopwordId)
+  const deleteStopwordHandler = (deleteStop) => () => {
+    const newStopwords = stopwords.filter(
+      (stopword) => stopword !== deleteStop
     );
+    dispatch(deleteStopword(newStopwords));
   };
 
   return (
@@ -74,14 +75,14 @@ const SettingsStopword = (props) => {
               button
             </Typography>
           )}
-          {stopwords.map((stopword) => {
+          {stopwords.map((stopword, index) => {
             return (
               <Chip
-                key={stopword.id}
+                key={index}
                 color="primary"
                 sx={{ m: 0.5 }}
-                label={stopword.value}
-                onDelete={deleteStopwordHandler(stopword.id)}
+                label={stopword}
+                onDelete={deleteStopwordHandler(stopword)}
               />
             );
           })}

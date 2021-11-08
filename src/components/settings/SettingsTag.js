@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Box,
   Button,
@@ -8,27 +9,17 @@ import {
   Divider,
   IconButton,
   TextField,
+  Typography,
   Chip
 } from '@material-ui/core';
-
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
+import { addTag, deleteTag } from 'src/redux/actions/settingsActions';
 
 const SettingsTag = (props) => {
-  const [tags, setTags] = useState([
-    {
-      id: 1,
-      value: 'Rehearsal'
-    },
-    {
-      id: 2,
-      value: 'Presentation'
-    },
-    {
-      id: 3,
-      value: 'Public Speaking'
-    }
-  ]);
+  const dispatch = useDispatch();
+  const settingState = useSelector((state) => state.settings);
+  const { tags } = settingState;
   const [showInput, setShowInput] = useState(false);
   const [inputValues, setInputValues] = useState({
     tag: ''
@@ -53,20 +44,17 @@ const SettingsTag = (props) => {
   };
 
   const addTagHandler = () => {
-    setTags((prev) => [
-      ...prev,
-      {
-        id: Math.random(),
-        value: inputValues.tag
-      }
-    ]);
+    const newTag = inputValues.tag;
+    const newTags = tags.concat(newTag);
+    dispatch(addTag(newTags));
     setInputValues({
       tag: ''
     });
   };
 
-  const deleteTagHandler = (tagId) => () => {
-    setTags((prev) => prev.filter((tag) => tag.id !== tagId));
+  const deleteTagHandler = (deleteTagValue) => () => {
+    const newTags = tags.filter((tag) => tag !== deleteTagValue);
+    dispatch(deleteTag(newTags));
   };
 
   return (
@@ -78,14 +66,19 @@ const SettingsTag = (props) => {
         />
         <Divider />
         <CardContent>
-          {tags.map((tag) => {
+          {tags.length === 0 && (
+            <Typography sx={{ display: 'inline' }} variant="body1">
+              You don't have any tag yet. You can add it by clicked add button
+            </Typography>
+          )}
+          {tags.map((tag, index) => {
             return (
               <Chip
-                key={tag.id}
+                key={index}
                 color="primary"
                 sx={{ m: 0.5 }}
-                label={tag.value}
-                onDelete={deleteTagHandler(tag.id)}
+                label={tag}
+                onDelete={deleteTagHandler(tag)}
               />
             );
           })}

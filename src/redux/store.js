@@ -7,6 +7,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { authReducer } from './reducers/authReducer';
 import { itemReducer, itemDetailReducer } from './reducers/itemsReducer';
 import { modalReducer } from './reducers/modalReducer';
+import { settingsReducer } from './reducers/settingsReducer';
 
 const loggerMiddleware = createLogger();
 
@@ -14,7 +15,8 @@ const reducer = combineReducers({
   authentication: authReducer,
   items: itemReducer,
   itemDetail: itemDetailReducer,
-  modal: modalReducer
+  modal: modalReducer,
+  settings: settingsReducer
 });
 
 const middleware = [thunk, loggerMiddleware];
