@@ -15,7 +15,7 @@ import {
 const EditForm = () => {
   const dispatch = useDispatch();
   const itemsState = useSelector((state) => state.items);
-  const { items, isLoading } = itemsState;
+  const { items, isUpdating, isDeleting } = itemsState;
 
   const modalState = useSelector((state) => state.modal);
   const { videoUUID } = modalState;
@@ -119,23 +119,23 @@ const EditForm = () => {
           >
             <Button
               type="submit"
-              disabled={isLoading}
+              disabled={isUpdating}
               variant="contained"
               color="primary"
               autoFocus
               startIcon={<UpdateIcon />}
             >
-              {isLoading ? 'Updating' : 'Update'}
+              {isUpdating ? 'Updating' : 'Update'}
             </Button>
             <Button
               onClick={openConfirmModalHandler}
-              disabled={isLoading}
+              disabled={isDeleting}
               variant="contained"
               color="error"
               autoFocus
               startIcon={<DeleteIcon />}
             >
-              {isLoading ? 'Deleting' : 'Delete'}
+              {isDeleting ? 'Deleting' : 'Delete'}
             </Button>
           </Box>
         </form>

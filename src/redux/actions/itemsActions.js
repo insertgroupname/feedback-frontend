@@ -27,6 +27,10 @@ export const getItems = () => async (dispatch) => {
 
 export const addItem = (item) => async (dispatch) => {
   try {
+    dispatch({
+      type: actionTypes.ADD_ITEM_REQUEST
+    });
+
     const { data } = await axiosInstance.post(`upload`, item, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
@@ -48,6 +52,9 @@ export const addItem = (item) => async (dispatch) => {
 
 export const updateItem = (item) => async (dispatch) => {
   try {
+    dispatch({
+      type: actionTypes.UPDATE_ITEM_REQUEST
+    });
     await axiosInstance.patch(`record/report/${item.videoUUID}`, item);
     dispatch({
       type: actionTypes.UPDATE_ITEM_SUCCESS,
@@ -66,6 +73,9 @@ export const updateItem = (item) => async (dispatch) => {
 
 export const deleteItem = (videoUUID) => async (dispatch) => {
   try {
+    dispatch({
+      type: actionTypes.DELETE_ITEM_REQUEST
+    });
     await axiosInstance.delete(`record/report/${videoUUID}`);
     dispatch({
       type: actionTypes.DELETE_ITEM_SUCCESS,

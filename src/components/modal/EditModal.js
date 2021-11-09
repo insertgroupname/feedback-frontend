@@ -21,19 +21,22 @@ const EditModal = () => {
     showDeleteFailModal
   } = modalState;
 
+  const itemsState = useSelector((state) => state.items);
+  const { isUpdating, isDeleting } = itemsState;
+
   const closeEditModalHandler = () => {
     dispatch(closeEditModal());
   };
 
   return (
     <>
-      {showEditSuccessModal && (
+      {showEditSuccessModal && !isUpdating && (
         <SuccessFailModal
           title="Update Successful"
           description="Click Argee button to check the result"
         />
       )}
-      {showEditFailModal && (
+      {showEditFailModal && !isUpdating && (
         <SuccessFailModal
           title="Update Failure"
           description="Update error, please try again"
@@ -45,13 +48,13 @@ const EditModal = () => {
           description="Do you really want to delete these records? This process cannot be undone"
         />
       )}
-      {showDeleteSuccessModal && (
+      {showDeleteSuccessModal && !isDeleting && (
         <SuccessFailModal
           title="Delete Successful"
           description="The video has been deleted"
         />
       )}
-      {showDeleteFailModal && (
+      {showDeleteFailModal && !isDeleting && (
         <SuccessFailModal
           title="Delete Failure"
           description="Delete error, please try again"

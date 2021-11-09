@@ -13,19 +13,22 @@ const UploadModal = () => {
   const { showUploadModal, showUploadSuccessModal, showUploadFailModal } =
     modalState;
 
+  const itemsState = useSelector((state) => state.items);
+  const { isAdding } = itemsState;
+
   const closeUploadModalHandler = () => {
     dispatch(closeUploadModal());
   };
 
   return (
     <>
-      {showUploadSuccessModal && (
+      {showUploadSuccessModal && !isAdding && (
         <SuccessFailModal
           title="Upload Successful"
           description="The system is processing your file, please wait for a few minutes"
         />
       )}
-      {showUploadFailModal && (
+      {showUploadFailModal && !isAdding && (
         <SuccessFailModal
           title="Upload Failure"
           description="Upload file error, please try again"

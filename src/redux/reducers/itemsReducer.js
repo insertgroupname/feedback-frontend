@@ -2,7 +2,10 @@ import * as actionTypes from '../constants/itemsConstants';
 
 const initialItemState = {
   items: [],
-  isLoading: false
+  isLoading: false,
+  isAdding: false,
+  isUpdating: false,
+  isDeleting: false
 };
 
 const initialItemDetailState = {
@@ -33,16 +36,29 @@ export const itemReducer = (state = initialItemState, action) => {
         error: action.payload
       };
 
+    case actionTypes.ADD_ITEM_REQUEST:
+      return {
+        items: state.items,
+        isAdding: true
+      };
+
     case actionTypes.ADD_ITEM_SUCCESS: {
       const item = action.payload;
       return {
-        items: state.items.concat(item)
+        items: state.items.concat(item),
+        isAdding: false
       };
     }
 
     case actionTypes.ADD_ITEM_FAILURE:
       return {
         error: action.payload
+      };
+
+    case actionTypes.UPDATE_ITEM_REQUEST:
+      return {
+        items: state.items,
+        isUpdating: true
       };
 
     case actionTypes.UPDATE_ITEM_SUCCESS: {
@@ -56,7 +72,8 @@ export const itemReducer = (state = initialItemState, action) => {
       updatedItem[index].tags = item.tags;
       updatedItem[index].lastUpdate = new Date();
       return {
-        items: updatedItem
+        items: updatedItem,
+        isUpdating: false
       };
     }
 
@@ -65,10 +82,17 @@ export const itemReducer = (state = initialItemState, action) => {
         error: action.payload
       };
 
+    case actionTypes.DELETE_ITEM_REQUEST:
+      return {
+        items: state.items,
+        isDeleting: true
+      };
+
     case actionTypes.DELETE_ITEM_SUCCESS: {
       const videoUUID = action.payload;
       return {
-        items: state.items.filter((item) => item.videoUUID !== videoUUID)
+        items: state.items.filter((item) => item.videoUUID !== videoUUID),
+        isDeleting: false
       };
     }
 

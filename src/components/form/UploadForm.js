@@ -15,7 +15,7 @@ const UploadForm = () => {
   const dispatch = useDispatch();
 
   const itemsState = useSelector((state) => state.items);
-  const { isLoading } = itemsState;
+  const { isAdding } = itemsState;
 
   return (
     <Formik
@@ -164,13 +164,13 @@ const UploadForm = () => {
               >
                 <Button
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isAdding}
                   variant="contained"
                   color="primary"
                   autoFocus
                   startIcon={<UploadIcon />}
                 >
-                  {isLoading ? 'Uploading' : 'Upload'}
+                  {isAdding ? 'Uploading' : 'Upload'}
                 </Button>
               </Box>
             </>
