@@ -8,29 +8,6 @@ import {
   Box
 } from '@material-ui/core';
 
-// const phrasesData = [
-//   {
-//     id: 1,
-//     phrase: 'I think that'
-//   },
-//   {
-//     id: 2,
-//     phrase: 'you know'
-//   },
-//   {
-//     id: 3,
-//     phrase: 'or something'
-//   },
-//   {
-//     id: 4,
-//     phrase: 'stuff like that'
-//   },
-//   {
-//     id: 5,
-//     phrase: 'kind of'
-//   }
-// ];
-
 const Fillers = (props) => {
   const itemDetailState = useSelector((state) => state.itemDetail);
   const { item } = itemDetailState;
@@ -39,6 +16,7 @@ const Fillers = (props) => {
     item.report && item.report.postProcessing
       ? item.report.postProcessing.hestiation_.total_count
       : 0;
+
   return (
     <Card {...props}>
       <CardHeader
@@ -47,36 +25,27 @@ const Fillers = (props) => {
         fillers word, and frequency phrases to imporve your performance."
       />
       <Divider />
-      <CardContent>
-        <Box sx={{ padding: '1.25rem 0 2.25rem 0' }}>
+      <CardContent
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: 'calc(100% - 101px)'
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            height: '25%',
+            alignItems: 'center',
+            pb: '1rem'
+          }}
+        >
           <Typography>Hesitation frequency: {fillerCount} times</Typography>
         </Box>
         <Divider />
-        <Box sx={{ padding: '2.25rem 0' }}>
-          <Typography>Filler words: </Typography>
+        <Box sx={{ height: '75%', py: '2rem' }}>
+          <Typography>Frequency phrases:</Typography>
         </Box>
-        <Divider />
-        <Box sx={{ padding: '2.25rem 0' }}>
-          <Typography>
-            Frequency phrases:
-            {/* {phrasesData.map((phrase) => {
-              return (
-                <span
-                  key={phrase.id}
-                  style={{
-                    backgroundColor: '#FDFD96',
-                    padding: '.55rem',
-                    margin: '.35rem',
-                    borderRadius: '50px'
-                  }}
-                >
-                  {phrase.phrase}
-                </span>
-              );
-            })} */}
-          </Typography>
-        </Box>
-        <Divider />
       </CardContent>
     </Card>
   );

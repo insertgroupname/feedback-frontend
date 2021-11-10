@@ -20,14 +20,14 @@ const Vocabulary = () => {
 
   const vocabulary =
     item.report && item.report.postProcessing
-      ? item.report.postProcessing.vocab
+      ? item.report.postProcessing.vocab.vocab
       : {};
   let words = [];
-  for (const [key] of Object.entries(vocabulary)) {
+  for (const [key, value] of Object.entries(vocabulary)) {
     words.push({
       id: key,
-      word: key,
-      partOfSpeech: 'Noun'
+      word: value.word,
+      partOfSpeech: value.pos
     });
   }
 

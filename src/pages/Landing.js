@@ -17,10 +17,10 @@ const Landing = () => {
   };
 
   const itemsState = useSelector((state) => state.items);
-  const { isLoading, items, error } = itemsState;
+  const { isLoading: isItemLoading, items, error } = itemsState;
 
   const settingsState = useSelector((state) => state.settings);
-  const { username } = settingsState;
+  const { isLoading: isSettingLoading, username } = settingsState;
 
   return (
     <>
@@ -30,11 +30,10 @@ const Landing = () => {
       <Box
         sx={{
           backgroundColor: 'background.default',
-          height: '100%',
-          py: 3
+          height: '100%'
         }}
       >
-        {isLoading ? (
+        {isItemLoading && isSettingLoading ? (
           <Box
             sx={{
               height: 'inherit',
@@ -48,7 +47,12 @@ const Landing = () => {
         ) : error ? (
           <ServerDown />
         ) : (
-          <Container maxWidth={false}>
+          <Container
+            maxWidth={false}
+            sx={{
+              py: 3
+            }}
+          >
             <LandingToolbar username={username} itemLength={items.length} />
             <Box sx={{ pt: 3 }}>
               <Grid container spacing={3}>

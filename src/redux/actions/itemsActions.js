@@ -101,7 +101,7 @@ export const getItemDetail = (videoUUID) => async (dispatch) => {
       `record/report/${videoUUID}`
     );
     const result = await fetch(
-      `http://10.4.56.44:81/api/v2/record/streaming/${videoUUID}`,
+      `${process.env.REACT_APP_API_URL}record/streaming/${videoUUID}`,
       {
         headers: {
           Authorization: `Bearer ${token}`

@@ -7,11 +7,15 @@ import {
   Card,
   CardHeader,
   CardContent,
+  IconButton,
   Divider,
   Typography,
+  Tooltip,
   Box,
   makeStyles
 } from '@material-ui/core';
+
+import HelpIcon from '@material-ui/icons/Help';
 
 const useStyles = makeStyles((theme) => ({
   cardContent: {
@@ -147,13 +151,13 @@ const Pace = (props) => {
           color: '#4dff4d',
           recommend: 'Your pace is conversational. Keep it up!'
         });
-      if (value > 170 && value <= 200)
+      if (value > 170 && value < 200)
         setAttributes({
           text: 'Fast',
           color: '#ee8d41',
           recommend: 'Your pace is fast, try to speed down your speech a bit'
         });
-      if (value > 200)
+      if (value >= 200)
         setAttributes({
           text: 'Very Fast',
           color: '#e81246',
@@ -165,7 +169,41 @@ const Pace = (props) => {
 
   return (
     <Card {...props}>
-      <CardHeader title="Pace" />
+      <Box display="flex" justifyContent="space-between">
+        <CardHeader title="Pace" />
+        <Box p={1}>
+          <Tooltip
+            title={
+              <>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '.5rem'
+                  }}
+                >
+                  <Typography variant="h5">Pace</Typography>
+                  <Box>
+                    <Typography variant="body1">0 - 59 is very slow</Typography>
+                    <Typography variant="body1">60 - 139 is slow</Typography>
+                    <Typography variant="body1">140 - 170 is good</Typography>
+                    <Typography variant="body1">171 - 200 is fast</Typography>
+                    <Typography variant="body1">
+                      &gt; 200 is very fast
+                    </Typography>
+                  </Box>
+                </Box>
+              </>
+            }
+            placement="left"
+            arrow
+          >
+            <IconButton>
+              <HelpIcon color="primary" />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      </Box>
       <Divider />
       <CardContent className={classes.cardContent}>
         <Box className={classes.gaugeContainer}>

@@ -8,6 +8,7 @@ import NotFound from 'src/pages/NotFound';
 import Register from 'src/pages/Register';
 import Settings from 'src/pages/Settings';
 import Landing from './pages/Landing';
+import UserAnalytics from './pages/UserAnalytics';
 
 const routes = (isLoggedIn) => [
   {
@@ -16,6 +17,7 @@ const routes = (isLoggedIn) => [
     children: [
       { path: 'landing', element: <Landing /> },
       { path: 'dashboard/:videoUUID', element: <Dashboard /> },
+      { path: 'analytics', element: <UserAnalytics /> },
       { path: 'settings', element: <Settings /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]

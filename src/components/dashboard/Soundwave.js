@@ -33,6 +33,7 @@ const Soundwave = (props) => {
     item.report && item.report.postProcessing
       ? item.report.postProcessing.hestiation_.marker
       : {};
+
   const wavesurferRef = useRef();
   const initialZoom = 0;
   const [zoom, setZoom] = useState(initialZoom);
@@ -135,6 +136,11 @@ const Soundwave = (props) => {
         if (videoRequired) {
           wavesurferRef.current.load(streaming);
           wavesurferRef.current.on('region-created', regionCreatedHandler);
+          wavesurferRef.current.on('seek', () => {
+            if (wavesurferRef.current.isPlaying()) {
+              wavesurferRef.current.play();
+            }
+          });
         }
       }
     },

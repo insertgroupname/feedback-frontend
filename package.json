@@ -1,7 +1,6 @@
 {
   "name": "react-material-dashboard",
   "version": "1.0.0",
-  "proxy": "http://10.4.56.44:81",
   "private": false,
   "scripts": {
     "start": "react-scripts start",
@@ -57,7 +56,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "shortid": "^2.2.16",
-    "wavesurfer-react": "^2.0.7",
+    "wavesurfer-react": "^2.0.11",
     "wavesurfer.js": "^5.2.0",
     "yup": "^0.29.3"
   },

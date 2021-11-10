@@ -9,6 +9,7 @@ import {
   CircularProgress
 } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
+import TagsAndStopwords from 'src/components/dashboard/TagsAndStopwords';
 import AveragePace from 'src/components/dashboard/AveragePace';
 import Pace from 'src/components/dashboard/Pace';
 import Fillers from 'src/components/dashboard/Fillers';
@@ -28,6 +29,8 @@ const Dashboard = () => {
   const itemDetailState = useSelector((state) => state.itemDetail);
   const { isLoading, item } = itemDetailState;
 
+  // const tags = item && item.tags ? item.tags : [];
+
   useEffect(() => {
     dispatch(getItemDetail(videoUUID));
     return () => {
@@ -44,8 +47,7 @@ const Dashboard = () => {
       <Box
         sx={{
           backgroundColor: 'background.default',
-          height: '100%',
-          py: 3
+          height: '100%'
         }}
       >
         {isLoading ? (
@@ -60,10 +62,35 @@ const Dashboard = () => {
             <CircularProgress />
           </Box>
         ) : (
-          <Container maxWidth={false}>
-            <Typography variant="h3" style={{ paddingBottom: '1rem' }}>
-              {item.videoName}
-            </Typography>
+          <Container
+            maxWidth={false}
+            sx={{
+              py: 3
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                gap: '.5rem',
+                pb: '1rem'
+              }}
+            >
+              <Typography variant="h3">{item.videoName}</Typography>
+              {/* {tags.map((tag) => (
+                <Chip
+                  key={tag}
+                  label={tag}
+                  color="primary"
+                  variant="outlined"
+                />
+              ))} */}
+            </Box>
+
+            <Box sx={{ pb: '1rem' }}>
+              <TagsAndStopwords />
+            </Box>
             <Grid container spacing={3}>
               <Grid item lg={9} md={12} xl={9} xs={12}>
                 <Soundwave />

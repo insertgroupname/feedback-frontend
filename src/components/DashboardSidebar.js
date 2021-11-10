@@ -11,7 +11,8 @@ import {
 } from '@material-ui/core';
 import {
   BarChart as BarChartIcon,
-  Settings as SettingsIcon
+  Settings as SettingsIcon,
+  BarChart2 as BarChart2Icon
 } from 'react-feather';
 import NavItem from './NavItem';
 
@@ -20,6 +21,11 @@ const items = [
     href: '/app/landing',
     icon: BarChartIcon,
     title: 'Landing'
+  },
+  {
+    href: '/app/analytics',
+    icon: BarChart2Icon,
+    title: 'Analytics'
   },
   {
     href: '/app/settings',
