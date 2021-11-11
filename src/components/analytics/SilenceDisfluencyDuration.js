@@ -2,11 +2,13 @@ import { Card, CardContent, CardHeader, Divider } from '@material-ui/core';
 import {
   ComposedChart,
   Bar,
+  Brush,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   Legend,
+  Label,
   ResponsiveContainer
 } from 'recharts';
 
@@ -35,6 +37,31 @@ const data = [
     videoUUID: 5,
     silence: 33,
     disfluency: 66
+  },
+  {
+    videoUUID: 6,
+    silence: 46,
+    disfluency: 54
+  },
+  {
+    videoUUID: 7,
+    silence: 30,
+    disfluency: 70
+  },
+  {
+    videoUUID: 8,
+    silence: 30,
+    disfluency: 70
+  },
+  {
+    videoUUID: 9,
+    silence: 50,
+    disfluency: 50
+  },
+  {
+    videoUUID: 10,
+    silence: 46,
+    disfluency: 54
   }
 ];
 
@@ -53,14 +80,30 @@ const SilenceDisfluencyDuration = (props) => {
               top: 5,
               right: 30,
               left: 20,
-              bottom: 40
+              bottom: 0
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="videoUUID" />
-            <YAxis />
+            <YAxis>
+              <Label
+                value="Percentage (%)"
+                angle={-90}
+                position="left"
+                style={{ textAnchor: 'middle' }}
+              />
+            </YAxis>
             <Tooltip />
-            <Legend />
+            <Legend verticalAlign="top" height={36} />
+            {data.length > 5 && (
+              <Brush
+                startIndex={data.length - 5}
+                endIndex={data.length - 1}
+                dataKey="videoUUID"
+                height={30}
+                stroke="#8884d8"
+              />
+            )}
             <Bar dataKey="silence" barSize={50} stackId="a" fill="#5664d2" />
             <Bar dataKey="disfluency" barSize={50} stackId="a" fill="#82ca9d" />
           </ComposedChart>

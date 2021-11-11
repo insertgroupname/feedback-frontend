@@ -1,5 +1,4 @@
 import AnalyticDetails from 'src/components/analytics/AnalyticDetails';
-import FrequencyDisfluency from 'src/components/analytics/FrequencyDisfluency';
 import AveragePace from 'src/components/analytics/AveragePace';
 import UserOverview from 'src/components/analytics/UserOverview';
 import DisfluencyTotalWord from 'src/components/analytics/DisfluencyTotalWord';
@@ -7,6 +6,7 @@ import SilenceClipDuration from 'src/components/analytics/SilenceClipDuration';
 import SilenceDisfluencyDuration from 'src/components/analytics/SilenceDisfluencyDuration';
 import { Helmet } from 'react-helmet';
 import { Box, Container, Grid, Typography } from '@material-ui/core';
+import DisfluencyClipDuration from 'src/components/analytics/DisfluencyClipDuration';
 
 const UserAnalytics = () => {
   return (
@@ -41,10 +41,10 @@ const UserAnalytics = () => {
               <AveragePace sx={{ height: '100%' }} />
             </Grid>
             <Grid item lg={4} md={12} xl={4} xs={12}>
-              <FrequencyDisfluency sx={{ height: '100%' }} />
+              <DisfluencyTotalWord sx={{ height: '100%' }} />
             </Grid>
             <Grid item lg={4} md={12} xl={4} xs={12}>
-              <DisfluencyTotalWord sx={{ height: '100%' }} />
+              <DisfluencyClipDuration sx={{ height: '100%' }} />
             </Grid>
             <Grid item lg={4} md={12} xl={4} xs={12}>
               <SilenceClipDuration sx={{ height: '100%' }} />

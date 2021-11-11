@@ -15,9 +15,11 @@ const App = () => {
   const { isAuthenticated } = authState;
 
   useEffect(() => {
-    dispatch(getItems());
-    dispatch(getSettings());
-  }, [dispatch]);
+    if (isAuthenticated) {
+      dispatch(getItems());
+      dispatch(getSettings());
+    }
+  }, [dispatch, isAuthenticated]);
 
   const routing = useRoutes(routes(isAuthenticated));
 

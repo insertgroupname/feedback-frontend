@@ -1,36 +1,67 @@
 import { Card, CardContent, CardHeader, Divider } from '@material-ui/core';
 import {
   ComposedChart,
+  Brush,
   Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   Legend,
-  Line,
+  Label,
   ResponsiveContainer
 } from 'recharts';
 
 const data = [
   {
     videoUUID: 1,
-    percent: Math.floor(Math.random() * 101)
+    silence: 30,
+    disfluency: 70
   },
   {
     videoUUID: 2,
-    percent: Math.floor(Math.random() * 101)
+    silence: 30,
+    disfluency: 70
   },
   {
     videoUUID: 3,
-    percent: Math.floor(Math.random() * 101)
+    silence: 50,
+    disfluency: 50
   },
   {
     videoUUID: 4,
-    percent: Math.floor(Math.random() * 101)
+    silence: 46,
+    disfluency: 54
   },
   {
     videoUUID: 5,
-    percent: Math.floor(Math.random() * 101)
+    silence: 33,
+    disfluency: 66
+  },
+  {
+    videoUUID: 6,
+    silence: 46,
+    disfluency: 54
+  },
+  {
+    videoUUID: 7,
+    silence: 30,
+    disfluency: 70
+  },
+  {
+    videoUUID: 8,
+    silence: 30,
+    disfluency: 70
+  },
+  {
+    videoUUID: 9,
+    silence: 50,
+    disfluency: 50
+  },
+  {
+    videoUUID: 10,
+    silence: 46,
+    disfluency: 54
   }
 ];
 
@@ -49,16 +80,32 @@ const SilenceClipDuration = (props) => {
               top: 5,
               right: 30,
               left: 20,
-              bottom: 40
+              bottom: 0
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="videoUUID" />
-            <YAxis />
+            <YAxis>
+              <Label
+                value="Percentage (%)"
+                angle={-90}
+                position="left"
+                style={{ textAnchor: 'middle' }}
+              />
+            </YAxis>
             <Tooltip />
-            <Legend />
-            <Bar dataKey="percent" barSize={50} fill="#5664d2" />
-            <Line type="monotone" dataKey="percent" stroke="#ff7300" />
+            <Legend verticalAlign="top" height={36} />
+            {data.length > 5 && (
+              <Brush
+                startIndex={data.length - 5}
+                endIndex={data.length - 1}
+                dataKey="videoUUID"
+                height={30}
+                stroke="#8884d8"
+              />
+            )}
+            <Bar dataKey="silence" stackId="a" barSize={50} fill="#5664d2" />
+            <Bar dataKey="disfluency" stackId="a" barSize={50} fill="#82ca9d" />
           </ComposedChart>
         </ResponsiveContainer>
       </CardContent>
