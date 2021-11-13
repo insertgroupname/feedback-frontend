@@ -67,7 +67,7 @@ const EditModal = () => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title" disableTypography>
-          <Typography variant="h3">Edit</Typography>
+          <Typography variant="h3">Edit Video Information</Typography>
         </DialogTitle>
         <DialogContent sx={{ paddingBottom: '16px' }}>
           <EditForm />

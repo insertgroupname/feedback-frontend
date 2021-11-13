@@ -36,7 +36,7 @@ const TagsAndStopwords = () => {
       >
         <Typography variant="body1">Stopwords:</Typography>
         {stopwords.map((stopword, index) => (
-          <Chip key={index} label={stopword} color="warning" />
+          <Chip key={index} label={stopword} color="secondary" />
         ))}
       </Box>
     </Box>

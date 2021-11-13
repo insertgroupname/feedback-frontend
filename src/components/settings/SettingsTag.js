@@ -20,6 +20,20 @@ const SettingsTag = (props) => {
   const dispatch = useDispatch();
   const settingState = useSelector((state) => state.settings);
   const { tags } = settingState;
+
+  const itemState = useSelector((state) => state.items);
+  const { items } = itemState;
+
+  const itemTags = items.map((item) => {
+    return item.tags;
+  });
+
+  const formatItemTags = [];
+
+  for (const i in itemTags) {
+    formatItemTags.push(...itemTags[i]);
+  }
+
   const [showInput, setShowInput] = useState(false);
   const [inputValues, setInputValues] = useState({
     tag: ''
@@ -72,7 +86,9 @@ const SettingsTag = (props) => {
             </Typography>
           )}
           {tags.map((tag, index) => {
-            return (
+            let result = formatItemTags.includes(tag) ? (
+              <Chip key={index} color="primary" sx={{ m: 0.5 }} label={tag} />
+            ) : (
               <Chip
                 key={index}
                 color="primary"
@@ -81,6 +97,7 @@ const SettingsTag = (props) => {
                 onDelete={deleteTagHandler(tag)}
               />
             );
+            return result;
           })}
           {showInput ? (
             <IconButton

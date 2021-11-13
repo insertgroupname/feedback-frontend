@@ -44,7 +44,7 @@ const Keyword = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Your rehearsal is match with those topics.</TableCell>
+              <TableCell>Your speech is match with those topics.</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

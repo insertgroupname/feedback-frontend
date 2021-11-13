@@ -28,6 +28,7 @@ const AveragePace = (props) => {
       ? item.report.postProcessing.wpm
       : {};
   let formatData = [];
+  console.log(averagePace);
   for (const [key, value] of Object.entries(averagePace)) {
     formatData.push({
       timestamp: secondToFormat(key.split('-')[1], 'mm:ss'),
@@ -54,6 +55,16 @@ const AveragePace = (props) => {
             }}
           />
           <Typography px={1}>good average pace</Typography>
+          <Box
+            sx={{
+              height: '15px',
+              width: '15px',
+              background: '#38E559',
+              border: '1px solid',
+              borderColor: '#8884d8'
+            }}
+          />
+          <Typography px={1}>your average pace</Typography>
         </Box>
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart

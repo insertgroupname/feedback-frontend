@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { TextField, Button, Box } from '@material-ui/core';
+import { TextField, Button, Box, Typography } from '@material-ui/core';
 import UploadIcon from '@material-ui/icons/Upload';
 import FormSelect from './FormSelect';
 import ReactPlayer from 'react-player';
@@ -76,6 +76,9 @@ const UploadForm = () => {
               }
             }}
           />
+          <Typography sx={{ mb: 2 }} variant="body2">
+            * Note: Maximun video duration must not exceed 20 minutes
+          </Typography>
           <label
             htmlFor="file"
             style={{

@@ -20,6 +20,7 @@ import Keyword from 'src/components/dashboard/Keyword';
 import Transcript from 'src/components/dashboard/Transcript';
 import SoundDetail from 'src/components/dashboard/SoundDetail';
 import Soundwave from 'src/components/dashboard/Soundwave';
+import ServerDown from './ServerDown';
 import { getItemDetail, resetItem } from 'src/redux/actions/itemsActions';
 
 const Dashboard = () => {
@@ -27,7 +28,7 @@ const Dashboard = () => {
   let { videoUUID } = useParams();
 
   const itemDetailState = useSelector((state) => state.itemDetail);
-  const { isLoading, item } = itemDetailState;
+  const { isLoading, item, error } = itemDetailState;
 
   // const tags = item && item.tags ? item.tags : [];
 
@@ -61,6 +62,8 @@ const Dashboard = () => {
           >
             <CircularProgress />
           </Box>
+        ) : error ? (
+          <ServerDown />
         ) : (
           <Container
             maxWidth={false}

@@ -52,6 +52,34 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const paceInformation = [
+  {
+    id: 1,
+    color: '#e81246',
+    label: '0 - 59 is very slow'
+  },
+  {
+    id: 2,
+    color: '#ee8d41',
+    label: '60 - 139 is slow'
+  },
+  {
+    id: 3,
+    color: '#4dff4d',
+    label: '140 - 170 is good'
+  },
+  {
+    id: 4,
+    color: '#ee8d41',
+    label: '171 - 200 is fast'
+  },
+  {
+    id: 5,
+    color: '#e81246',
+    label: '> 200 is very fast'
+  }
+];
+
 const Pace = (props) => {
   const itemDetailState = useSelector((state) => state.itemDetail);
   const { item } = itemDetailState;
@@ -184,13 +212,27 @@ const Pace = (props) => {
                 >
                   <Typography variant="h5">Pace</Typography>
                   <Box>
-                    <Typography variant="body1">0 - 59 is very slow</Typography>
-                    <Typography variant="body1">60 - 139 is slow</Typography>
-                    <Typography variant="body1">140 - 170 is good</Typography>
-                    <Typography variant="body1">171 - 200 is fast</Typography>
-                    <Typography variant="body1">
-                      &gt; 200 is very fast
-                    </Typography>
+                    {paceInformation.map((pace) => (
+                      <Box
+                        key={pace.id}
+                        sx={{
+                          display: 'flex',
+                          gap: '.5rem',
+                          alignItems: 'center'
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            height: '15px',
+                            width: '15px',
+                            background: pace.color,
+                            border: '1px solid',
+                            borderColor: 'white'
+                          }}
+                        />
+                        <Typography variant="body1">{pace.label}</Typography>
+                      </Box>
+                    ))}
                   </Box>
                 </Box>
               </>

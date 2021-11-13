@@ -23,9 +23,19 @@ const LandingCard = (props) => {
         }}
       >
         <CardContent>
-          <Typography color="textPrimary" gutterBottom variant="h4">
-            {props.item.videoName}
-          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between'
+            }}
+          >
+            <Typography color="textPrimary" gutterBottom variant="h4">
+              {props.item.videoName}
+            </Typography>
+            <Typography color="textPrimary" gutterBottom variant="h4">
+              {props.videoNumber}
+            </Typography>
+          </Box>
           <Typography color="textPrimary" variant="body1">
             Description: {props.item.description}
           </Typography>
