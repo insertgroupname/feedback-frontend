@@ -9,8 +9,8 @@ import {
   Tooltip,
   Legend,
   Label,
-  // Line,
-  ResponsiveContainer
+  ResponsiveContainer,
+  ReferenceLine
 } from 'recharts';
 
 const DisfluencyClipDuration = (props) => {
@@ -21,6 +21,10 @@ const DisfluencyClipDuration = (props) => {
       clip: parseFloat(100 - ele.disfluencyPerVideoLength * 100).toFixed(2)
     };
   });
+
+  const baseline = props.baseline
+    ? parseFloat(props.baseline * 100).toFixed(2)
+    : 0;
 
   return (
     <Card {...props}>
@@ -62,7 +66,12 @@ const DisfluencyClipDuration = (props) => {
             )}
             <Bar dataKey="disfluency" stackId="a" barSize={50} fill="#5664d2" />
             <Bar dataKey="clip" stackId="a" barSize={50} fill="#82ca9d" />
-            {/* <Line type="monotone" dataKey="percent" stroke="#ff7300" /> */}
+            <ReferenceLine
+              y={baseline}
+              stroke="black"
+              strokeWidth={2}
+              strokeDasharray="3 3"
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </CardContent>

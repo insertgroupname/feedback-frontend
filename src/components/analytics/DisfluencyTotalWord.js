@@ -9,18 +9,31 @@ import {
   Tooltip,
   Legend,
   Label,
-  // Line,
-  ResponsiveContainer
+  Line,
+  ResponsiveContainer,
+  ReferenceLine
 } from 'recharts';
 
 const DisfluencyTotalWord = (props) => {
   const formatData = props.data.map((ele, index) => {
     return {
       index: index + 1,
-      disfluency: ele.disfluencyCount,
-      word: ele.totalWord
+      totalDisfluency: ele.disfluencyCount,
+      totalWord: ele.totalWord,
+      disfluency: parseFloat(
+        (ele.disfluencyCount / ele.totalWord) * 100
+      ).toFixed(2),
+      word:
+        100 -
+        parseFloat((ele.disfluencyCount / ele.totalWord) * 100).toFixed(2),
+      average: parseFloat(ele.disfluencyPerTotalWord * 100).toFixed(2)
     };
   });
+
+  const baseline = props.baseline
+    ? parseFloat(props.baseline * 100).toFixed(2)
+    : 0;
+
   return (
     <Card {...props}>
       <CardHeader title="Total Disfluency / Total Words" />
@@ -62,7 +75,13 @@ const DisfluencyTotalWord = (props) => {
             )}
             <Bar dataKey="disfluency" barSize={50} fill="#5664d2" />
             <Bar dataKey="word" barSize={50} fill="#82ca9d" />
-            {/* <Line type="monotone" dataKey="average" stroke="#ff7300" /> */}
+            <Line type="monotone" dataKey="average" stroke="#ff7300" />
+            <ReferenceLine
+              y={baseline}
+              stroke="black"
+              strokeWidth={2}
+              strokeDasharray="3 3"
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </CardContent>

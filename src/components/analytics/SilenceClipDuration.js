@@ -9,7 +9,8 @@ import {
   Tooltip,
   Legend,
   Label,
-  ResponsiveContainer
+  ResponsiveContainer,
+  ReferenceLine
 } from 'recharts';
 
 const SilenceClipDuration = (props) => {
@@ -20,6 +21,11 @@ const SilenceClipDuration = (props) => {
       clip: parseFloat(100 - ele.silencePerVideoLength * 100).toFixed(2)
     };
   });
+
+  const baseline = props.baseline
+    ? parseFloat(props.baseline * 100).toFixed(2)
+    : 0;
+
   return (
     <Card {...props}>
       <CardHeader title="Silence Duration / Clip Duration" />
@@ -60,6 +66,12 @@ const SilenceClipDuration = (props) => {
             )}
             <Bar dataKey="silence" stackId="a" barSize={50} fill="#5664d2" />
             <Bar dataKey="clip" stackId="a" barSize={50} fill="#82ca9d" />
+            <ReferenceLine
+              y={baseline}
+              stroke="black"
+              strokeWidth={2}
+              strokeDasharray="3 3"
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </CardContent>

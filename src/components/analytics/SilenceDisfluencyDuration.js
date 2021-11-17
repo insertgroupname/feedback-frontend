@@ -9,7 +9,8 @@ import {
   Tooltip,
   Legend,
   Label,
-  ResponsiveContainer
+  ResponsiveContainer,
+  ReferenceLine
 } from 'recharts';
 
 const SilenceDisfluencyDuration = (props) => {
@@ -22,6 +23,11 @@ const SilenceDisfluencyDuration = (props) => {
       )
     };
   });
+
+  const baseline = props.baseline
+    ? parseFloat(props.baseline * 100).toFixed(2)
+    : 0;
+
   return (
     <Card {...props}>
       <CardHeader title="Silence Duration / Disfluency Duration" />
@@ -62,6 +68,12 @@ const SilenceDisfluencyDuration = (props) => {
             )}
             <Bar dataKey="disfluency" barSize={50} stackId="a" fill="#5664d2" />
             <Bar dataKey="silence" barSize={50} stackId="a" fill="#82ca9d" />
+            <ReferenceLine
+              y={baseline}
+              stroke="black"
+              strokeWidth={2}
+              strokeDasharray="3 3"
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </CardContent>

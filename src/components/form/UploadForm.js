@@ -76,8 +76,11 @@ const UploadForm = () => {
               }
             }}
           />
-          <Typography sx={{ mb: 2 }} variant="body2">
+          <Typography variant="body2" color="error">
             * Note: Maximun video duration must not exceed 20 minutes
+          </Typography>
+          <Typography sx={{ mb: 2 }} variant="body2" color="error">
+            * Accepted File Type: .mp3, .mp4, .ogg, .mpeg, .webm, .x-m4v, .mpeg
           </Typography>
           <label
             htmlFor="file"
