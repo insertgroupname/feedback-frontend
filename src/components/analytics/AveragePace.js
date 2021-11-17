@@ -20,6 +20,7 @@ import {
   ResponsiveContainer,
   ReferenceLine
 } from 'recharts';
+import { getFirstUUID } from 'src/utils/getFirstUUID';
 
 const renderLegend = (props) => {
   const { payload } = props;
@@ -48,9 +49,9 @@ const renderLegend = (props) => {
 };
 
 const AveragePace = (props) => {
-  const formatData = props.wpm.map((ele, index) => {
+  const formatData = props.wpm.map((ele) => {
     return {
-      index: index + 1,
+      videoUUID: getFirstUUID(ele.videoUUID),
       average: ele.avgWPM
     };
   });
@@ -75,7 +76,7 @@ const AveragePace = (props) => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="index" />
+            <XAxis dataKey="videoUUID" />
             <YAxis>
               <Label
                 value="Word Per Minute (WPM)"
@@ -90,7 +91,7 @@ const AveragePace = (props) => {
               <Brush
                 startIndex={formatData.length - 5}
                 endIndex={formatData.length - 1}
-                dataKey="index"
+                dataKey="videoUUID"
                 height={30}
                 stroke="#8884d8"
               />

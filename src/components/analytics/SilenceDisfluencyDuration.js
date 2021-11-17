@@ -12,11 +12,12 @@ import {
   ResponsiveContainer,
   ReferenceLine
 } from 'recharts';
+import { getFirstUUID } from 'src/utils/getFirstUUID';
 
 const SilenceDisfluencyDuration = (props) => {
   const formatData = props.data.map((ele, index) => {
     return {
-      index: index + 1,
+      videoUUID: getFirstUUID(ele.videoUUID),
       disfluency: parseFloat(ele.disfluencyPersilenceDuration * 100).toFixed(2),
       silence: parseFloat(100 - ele.disfluencyPersilenceDuration * 100).toFixed(
         2
@@ -46,7 +47,7 @@ const SilenceDisfluencyDuration = (props) => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="index" />
+            <XAxis dataKey="videoUUID" />
             <YAxis>
               <Label
                 value="Percentage (%)"
@@ -61,7 +62,7 @@ const SilenceDisfluencyDuration = (props) => {
               <Brush
                 startIndex={formatData.length - 5}
                 endIndex={formatData.length - 1}
-                dataKey="index"
+                dataKey="videoUUID"
                 height={30}
                 stroke="#8884d8"
               />

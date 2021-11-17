@@ -19,6 +19,7 @@ import EditModal from '../components/modal/EditModal';
 import ServerDown from './ServerDown';
 import UploadModal from '../components/modal/UploadModal';
 import { openEditModal } from 'src/redux/actions/modalActions';
+import { getFirstUUID } from 'src/utils/getFirstUUID';
 
 const Landing = () => {
   const dispatch = useDispatch();
@@ -118,11 +119,11 @@ const Landing = () => {
             <Box sx={{ pt: 3 }}>
               <Grid container spacing={3}>
                 {items.length > 0 ? (
-                  formatItem.map((item, index) => (
+                  formatItem.map((item) => (
                     <Grid item key={item.videoUUID} lg={4} md={6} xs={12}>
                       <LandingCard
                         item={item}
-                        videoNumber={index + 1}
+                        videoNumber={'#' + getFirstUUID(item.videoUUID)}
                         openEditModalHandler={() =>
                           openEditModalHandler(item.videoUUID)
                         }

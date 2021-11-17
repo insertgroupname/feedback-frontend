@@ -12,11 +12,12 @@ import {
   ResponsiveContainer,
   ReferenceLine
 } from 'recharts';
+import { getFirstUUID } from 'src/utils/getFirstUUID';
 
 const SilenceClipDuration = (props) => {
   const formatData = props.data.map((ele, index) => {
     return {
-      index: index + 1,
+      videoUUID: getFirstUUID(ele.videoUUID),
       silence: parseFloat(ele.silencePerVideoLength * 100).toFixed(2),
       clip: parseFloat(100 - ele.silencePerVideoLength * 100).toFixed(2)
     };
@@ -44,7 +45,7 @@ const SilenceClipDuration = (props) => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="index" />
+            <XAxis dataKey="videoUUID" />
             <YAxis>
               <Label
                 value="Percentage (%)"
@@ -59,7 +60,7 @@ const SilenceClipDuration = (props) => {
               <Brush
                 startIndex={formatData.length - 5}
                 endIndex={formatData.length - 1}
-                dataKey="index"
+                dataKey="videoUUID"
                 height={30}
                 stroke="#8884d8"
               />

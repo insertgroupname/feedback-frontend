@@ -13,11 +13,12 @@ import {
   ResponsiveContainer,
   ReferenceLine
 } from 'recharts';
+import { getFirstUUID } from 'src/utils/getFirstUUID';
 
 const DisfluencyTotalWord = (props) => {
-  const formatData = props.data.map((ele, index) => {
+  const formatData = props.data.map((ele) => {
     return {
-      index: index + 1,
+      videoUUID: getFirstUUID(ele.videoUUID),
       totalDisfluency: ele.disfluencyCount,
       totalWord: ele.totalWord,
       disfluency: parseFloat(
@@ -53,7 +54,7 @@ const DisfluencyTotalWord = (props) => {
             maxBarSize
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="index" />
+            <XAxis dataKey="videoUUID" />
             <YAxis>
               <Label
                 value="Total frequency"
@@ -68,7 +69,7 @@ const DisfluencyTotalWord = (props) => {
               <Brush
                 startIndex={formatData.length - 5}
                 endIndex={formatData.length - 1}
-                dataKey="index"
+                dataKey="videoUUID"
                 height={30}
                 stroke="#8884d8"
               />
