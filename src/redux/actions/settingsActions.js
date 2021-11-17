@@ -8,8 +8,6 @@ export const getSettings = () => async (dispatch) => {
     });
     const { data } = await axiosInstance.get(`user/data`);
 
-    console.log(data);
-
     dispatch({
       type: actionTypes.GET_SETTINGS_SUCCESS,
       payload: data

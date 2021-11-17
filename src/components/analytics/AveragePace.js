@@ -17,51 +17,9 @@ import {
   Legend,
   Label,
   Line,
-  ResponsiveContainer
+  ResponsiveContainer,
+  ReferenceLine
 } from 'recharts';
-
-const data = [
-  {
-    videoUUID: 1,
-    pace: 150
-  },
-  {
-    videoUUID: 2,
-    pace: 135
-  },
-  {
-    videoUUID: 3,
-    pace: 144
-  },
-  {
-    videoUUID: 4,
-    pace: 161
-  },
-  {
-    videoUUID: 5,
-    pace: 155
-  },
-  {
-    videoUUID: 6,
-    pace: 134
-  },
-  {
-    videoUUID: 7,
-    pace: 153
-  },
-  {
-    videoUUID: 8,
-    pace: 161
-  },
-  {
-    videoUUID: 9,
-    pace: 155
-  },
-  {
-    videoUUID: 10,
-    pace: 134
-  }
-];
 
 const renderLegend = (props) => {
   const { payload } = props;
@@ -90,6 +48,15 @@ const renderLegend = (props) => {
 };
 
 const AveragePace = (props) => {
+  const formatData = props.wpm.map((ele, index) => {
+    return {
+      index: index + 1,
+      average: ele.avgWPM
+    };
+  });
+
+  const averagePaceBaseline = props.baseline ? props.baseline : 0;
+
   return (
     <Card {...props}>
       <CardHeader title="Average Pace" />
@@ -99,7 +66,7 @@ const AveragePace = (props) => {
           <ComposedChart
             width={500}
             height={300}
-            data={data}
+            data={formatData}
             margin={{
               top: 5,
               right: 30,
@@ -108,8 +75,8 @@ const AveragePace = (props) => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="videoUUID" />
-            <YAxis domain={[124, 171]}>
+            <XAxis dataKey="index" />
+            <YAxis>
               <Label
                 value="Word Per Minute (WPM)"
                 angle={-90}
@@ -119,17 +86,23 @@ const AveragePace = (props) => {
             </YAxis>
             <Tooltip />
             <Legend verticalAlign="top" content={renderLegend} />
-            {data.length > 5 && (
+            {formatData.length > 5 && (
               <Brush
-                startIndex={data.length - 5}
-                endIndex={data.length - 1}
-                dataKey="videoUUID"
+                startIndex={formatData.length - 5}
+                endIndex={formatData.length - 1}
+                dataKey="index"
                 height={30}
                 stroke="#8884d8"
               />
             )}
-            <Bar barSize={50} dataKey="pace" fill="#5664d2" />
-            <Line type="monotone" dataKey="pace" stroke="#ff7300" />
+            <Bar barSize={50} dataKey="average" fill="#5664d2" />
+            <Line type="monotone" dataKey="average" stroke="#ff7300" />
+            <ReferenceLine
+              y={averagePaceBaseline}
+              stroke="black"
+              strokeWidth={2}
+              strokeDasharray="3 3"
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </CardContent>

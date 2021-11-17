@@ -9,6 +9,7 @@ import Register from 'src/pages/Register';
 import Settings from 'src/pages/Settings';
 import Landing from './pages/Landing';
 import UserAnalytics from './pages/UserAnalytics';
+import Admin from './pages/Admin';
 
 const routes = (isLoggedIn) => [
   {
@@ -19,6 +20,7 @@ const routes = (isLoggedIn) => [
       { path: 'dashboard/:videoUUID', element: <Dashboard /> },
       { path: 'analytics', element: <UserAnalytics /> },
       { path: 'settings', element: <Settings /> },
+      { path: 'admin', element: <Admin /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },

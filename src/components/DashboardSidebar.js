@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -12,29 +13,62 @@ import {
 import {
   BarChart as BarChartIcon,
   Settings as SettingsIcon,
-  BarChart2 as BarChart2Icon
+  BarChart2 as BarChart2Icon,
+  User as AdminIcon
 } from 'react-feather';
 import NavItem from './NavItem';
 
-const items = [
-  {
-    href: '/app/landing',
-    icon: BarChartIcon,
-    title: 'Landing'
-  },
-  {
-    href: '/app/analytics',
-    icon: BarChart2Icon,
-    title: 'Analytics'
-  },
-  {
-    href: '/app/settings',
-    icon: SettingsIcon,
-    title: 'Settings'
-  }
-];
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
+  let items;
+
+  const settingsState = useSelector((state) => state.settings);
+  const { isLoading, type } = settingsState;
+
   const location = useLocation();
+
+  if (type === 'admin') {
+    items = [
+      {
+        href: '/app/landing',
+        icon: BarChartIcon,
+        title: 'Landing'
+      },
+      {
+        href: '/app/analytics',
+        icon: BarChart2Icon,
+        title: 'Analytics'
+      },
+      {
+        href: '/app/settings',
+        icon: SettingsIcon,
+        title: 'Settings'
+      },
+      {
+        href: '/app/admin',
+        icon: AdminIcon,
+        title: 'Admin'
+      }
+    ];
+  } else {
+    items = [
+      {
+        href: '/app/landing',
+        icon: BarChartIcon,
+        title: 'Landing'
+      },
+      {
+        href: '/app/analytics',
+        icon: BarChart2Icon,
+        title: 'Analytics'
+      },
+      {
+        href: '/app/settings',
+        icon: SettingsIcon,
+        title: 'Settings'
+      }
+    ];
+  }
+
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
@@ -65,14 +99,16 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
       <Divider />
       <Box sx={{ p: 2 }}>
         <List>
-          {items.map((item) => (
-            <NavItem
-              href={item.href}
-              key={item.title}
-              title={item.title}
-              icon={item.icon}
-            />
-          ))}
+          {isLoading
+            ? null
+            : items.map((item) => (
+                <NavItem
+                  href={item.href}
+                  key={item.title}
+                  title={item.title}
+                  icon={item.icon}
+                />
+              ))}
         </List>
       </Box>
     </Box>

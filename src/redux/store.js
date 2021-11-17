@@ -8,6 +8,7 @@ import { authReducer } from './reducers/authReducer';
 import { itemReducer, itemDetailReducer } from './reducers/itemsReducer';
 import { modalReducer } from './reducers/modalReducer';
 import { settingsReducer } from './reducers/settingsReducer';
+import { analyticsReducer } from './reducers/analyticsReducer';
 
 const loggerMiddleware = createLogger();
 
@@ -16,7 +17,8 @@ const reducer = combineReducers({
   items: itemReducer,
   itemDetail: itemDetailReducer,
   modal: modalReducer,
-  settings: settingsReducer
+  settings: settingsReducer,
+  analytics: analyticsReducer
 });
 
 const middleware = [thunk, loggerMiddleware];

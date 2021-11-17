@@ -12,60 +12,14 @@ import {
   ResponsiveContainer
 } from 'recharts';
 
-const data = [
-  {
-    videoUUID: 1,
-    silence: 30,
-    disfluency: 70
-  },
-  {
-    videoUUID: 2,
-    silence: 30,
-    disfluency: 70
-  },
-  {
-    videoUUID: 3,
-    silence: 50,
-    disfluency: 50
-  },
-  {
-    videoUUID: 4,
-    silence: 46,
-    disfluency: 54
-  },
-  {
-    videoUUID: 5,
-    silence: 33,
-    disfluency: 66
-  },
-  {
-    videoUUID: 6,
-    silence: 46,
-    disfluency: 54
-  },
-  {
-    videoUUID: 7,
-    silence: 30,
-    disfluency: 70
-  },
-  {
-    videoUUID: 8,
-    silence: 30,
-    disfluency: 70
-  },
-  {
-    videoUUID: 9,
-    silence: 50,
-    disfluency: 50
-  },
-  {
-    videoUUID: 10,
-    silence: 46,
-    disfluency: 54
-  }
-];
-
 const SilenceClipDuration = (props) => {
+  const formatData = props.data.map((ele, index) => {
+    return {
+      index: index + 1,
+      silence: parseFloat(ele.silencePerVideoLength * 100).toFixed(2),
+      clip: parseFloat(100 - ele.silencePerVideoLength * 100).toFixed(2)
+    };
+  });
   return (
     <Card {...props}>
       <CardHeader title="Silence Duration / Clip Duration" />
@@ -75,7 +29,7 @@ const SilenceClipDuration = (props) => {
           <ComposedChart
             width={500}
             height={300}
-            data={data}
+            data={formatData}
             margin={{
               top: 5,
               right: 30,
@@ -84,7 +38,7 @@ const SilenceClipDuration = (props) => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="videoUUID" />
+            <XAxis dataKey="index" />
             <YAxis>
               <Label
                 value="Percentage (%)"
@@ -95,17 +49,17 @@ const SilenceClipDuration = (props) => {
             </YAxis>
             <Tooltip />
             <Legend verticalAlign="top" height={36} />
-            {data.length > 5 && (
+            {formatData.length > 5 && (
               <Brush
-                startIndex={data.length - 5}
-                endIndex={data.length - 1}
-                dataKey="videoUUID"
+                startIndex={formatData.length - 5}
+                endIndex={formatData.length - 1}
+                dataKey="index"
                 height={30}
                 stroke="#8884d8"
               />
             )}
             <Bar dataKey="silence" stackId="a" barSize={50} fill="#5664d2" />
-            <Bar dataKey="disfluency" stackId="a" barSize={50} fill="#82ca9d" />
+            <Bar dataKey="clip" stackId="a" barSize={50} fill="#82ca9d" />
           </ComposedChart>
         </ResponsiveContainer>
       </CardContent>

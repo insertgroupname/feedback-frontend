@@ -4,6 +4,7 @@ const initialSettingState = {
   username: '',
   stopwords: [],
   tags: [],
+  type: null,
   isLoading: false
 };
 
@@ -20,10 +21,12 @@ export const settingsReducer = (state = initialSettingState, action) => {
     case actionTypes.GET_SETTINGS_SUCCESS:
       const username = action.payload.username;
       const stopwords = action.payload.stopwords;
+      const type = action.payload.type;
       const tags = action.payload.tags;
       return {
         username: username,
         stopwords: stopwords,
+        type: type,
         tags: tags,
         isLoading: false
       };
