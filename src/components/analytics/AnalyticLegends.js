@@ -13,37 +13,53 @@ export const AnalyticLegends = ({ payload }) => {
       alignItems="center"
       sx={{
         pb: 2,
-        gap: '.3rem'
+        gap: '.5rem'
       }}
     >
       {duplicatedPayload.map((ele, index) => (
-        <>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '.3rem'
+          }}
+          key={index}
+        >
           <Box sx={{ height: 11, width: 15, background: ele.color }} />
           <Typography
             sx={{
               fontSize: '14px',
               color: ele.color
             }}
-            key={index}
           >
             {ele.value}
           </Typography>
-        </>
+        </Box>
       ))}
-      <hr
-        style={{
-          borderTop: '2px dotted black',
-          width: 15
-        }}
-      />
-      <Typography
+      <Box
         sx={{
-          fontSize: '14px',
-          color: 'black'
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '.3rem'
         }}
       >
-        users baseline
-      </Typography>
+        <hr
+          style={{
+            borderTop: '2px dotted black',
+            width: 15
+          }}
+        />
+        <Typography
+          sx={{
+            fontSize: '14px',
+            color: 'black'
+          }}
+        >
+          users baseline
+        </Typography>
+      </Box>
     </Box>
   );
 };

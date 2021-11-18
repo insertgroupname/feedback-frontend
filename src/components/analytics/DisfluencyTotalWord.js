@@ -40,11 +40,11 @@ const DisfluencyTotalWord = (props) => {
     <Card sx={props.sx}>
       <CardHeader title="Total Disfluency / Total Words" />
       <Divider />
-      <CardContent sx={{ height: '300px' }}>
+      <CardContent sx={{ height: '350px' }}>
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart
             width={500}
-            height={300}
+            height={350}
             data={formatData}
             margin={{
               top: 5,
@@ -55,7 +55,9 @@ const DisfluencyTotalWord = (props) => {
             maxBarSize
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="videoUUID" />
+            <XAxis dataKey="videoUUID" height={55}>
+              <Label value="Hashtag (#)" dy={5} />
+            </XAxis>
             <YAxis>
               <Label
                 value="Percentage(%)"

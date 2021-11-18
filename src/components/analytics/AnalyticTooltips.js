@@ -33,7 +33,7 @@ export const AnalyticTooltips = ({ active, payload, userBaseline }) => {
         ))}
         <Typography sx={{ fontSize: '14px' }}>
           All users baseline: {userBaseline}
-          {payload[0].name === 'wpm' ? ' wpm' : ' %'}
+          {payload[0].name === 'wpm' ? ' wpm' : '%'}
         </Typography>
       </Box>
     );
