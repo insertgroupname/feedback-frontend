@@ -2,10 +2,14 @@ import { Box, Typography } from '@material-ui/core';
 import React from 'react';
 
 export const AnalyticTooltips = ({ active, payload, userBaseline }) => {
-  const duplicatedPayload = payload.filter(
-    (item, index, self) => index === self.findIndex((i) => i.name === item.name)
-  );
   if (active && payload && payload.length) {
+    const duplicatedPayload = payload.filter(
+      (item, index, self) =>
+        index === self.findIndex((i) => i.name === item.name)
+    );
+
+    const capitalize = (s) => (s && s[0].toUpperCase() + s.slice(1)) || '';
+
     return (
       <Box
         sx={{
@@ -21,7 +25,7 @@ export const AnalyticTooltips = ({ active, payload, userBaseline }) => {
         </Typography>
         {duplicatedPayload.map((ele, index) => (
           <Typography key={index} sx={{ fontSize: '14px', color: ele.color }}>
-            {ele.name}:{' '}
+            {ele.name === 'wpm' ? 'WPM' : capitalize(ele.name)}:{' '}
             {ele.name === 'wpm' ? `${ele.value} wpm` : `${ele.value}%`}{' '}
             {ele.name === 'disfluency' && ele.payload.totalDisfluency
               ? `(${ele.payload.totalDisfluency} words)`

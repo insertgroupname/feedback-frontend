@@ -12,6 +12,7 @@ import UserBaselineCard from 'src/components/admin/UserBaselineCard';
 import { getAllBaseline } from 'src/redux/actions/adminActions';
 import UserPaceCard from 'src/components/admin/UserPaceCard';
 import UserDisfluencyCard from 'src/components/admin/UserDisfluencyCard';
+import AdminBaseLine from 'src/components/admin/AdminBaseLine';
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -74,6 +75,9 @@ const Admin = () => {
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
                 <UserBaselineCard />
+              </Grid>
+              <Grid item lg={12} md={12} xl={12} xs={12}>
+                <AdminBaseLine />
               </Grid>
             </Grid>
           </Container>

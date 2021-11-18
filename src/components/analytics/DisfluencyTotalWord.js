@@ -56,7 +56,7 @@ const DisfluencyTotalWord = (props) => {
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="videoUUID" height={55}>
-              <Label value="Hashtag (#)" dy={5} />
+              <Label value="Video hashtag (#)" dy={8} />
             </XAxis>
             <YAxis>
               <Label

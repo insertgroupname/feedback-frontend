@@ -4,7 +4,7 @@ import {
   useLocation
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Button, ListItem } from '@material-ui/core';
+import { Button, ListItem, Typography } from '@material-ui/core';
 
 const NavItem = ({ href, icon: Icon, title, ...rest }) => {
   const location = useLocation();
@@ -48,7 +48,7 @@ const NavItem = ({ href, icon: Icon, title, ...rest }) => {
         to={href}
       >
         {Icon && <Icon size="20" />}
-        <span>{title}</span>
+        <Typography sx={{ fontSize: '1rem' }}>{title}</Typography>
       </Button>
     </ListItem>
   );

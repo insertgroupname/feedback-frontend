@@ -2,6 +2,23 @@ import { Box, Typography } from '@material-ui/core';
 import React from 'react';
 
 export const AdminLegends = ({ payload }) => {
+  const mapPayloadName = (name) => {
+    switch (name) {
+      case 'disfluencyPerTotalWord':
+        return 'Disfluency per Total Word';
+      case 'disfluencyPerVideoDuration':
+        return 'Disfluency per Video Duration';
+      case 'silencePerVideoDuration':
+        return 'Silence per Video Duration';
+      case 'disfluencyPerSilence':
+        return 'Disfluency per Silence';
+      default:
+        return name;
+    }
+  };
+
+  const capitalize = (s) => (s && s[0].toUpperCase() + s.slice(1)) || '';
+
   return (
     <Box
       display="flex"
@@ -35,7 +52,9 @@ export const AdminLegends = ({ payload }) => {
               color: ele.color
             }}
           >
-            {ele.value}
+            {ele.value === 'wpm'
+              ? 'WPM'
+              : capitalize(mapPayloadName(ele.value))}
           </Typography>
         </Box>
       ))}

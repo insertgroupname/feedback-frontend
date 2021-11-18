@@ -9,7 +9,7 @@ export const getAllBaseline = (tag) => async (dispatch) => {
     const { data } = await axiosInstance.get(`admin/allAvg`);
     dispatch({
       type: actionTypes.GET_ADMIN_SUCCESS,
-      payload: data
+      payload: data.reverse()
     });
   } catch (error) {
     dispatch({

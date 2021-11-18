@@ -31,7 +31,8 @@ const UserBaselineChart = (props) => {
       disfluencyPerTotalWord: parseFloat(
         ele.avgDisfluencyPerTotalWord * 100
       ).toFixed(2),
-      createDate: moment(ele.createDate).format('MM/DD/YYYY')
+      createDate: moment(ele.createDate).format('DD/MM/YYYY'),
+      datetime: moment(ele.createDate).format('DD/MM/YYYY HH:mm')
     };
   });
   return (

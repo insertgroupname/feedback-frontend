@@ -20,7 +20,8 @@ const UserPaceChart = (props) => {
   const formatData = data.map((ele) => {
     return {
       wpm: parseInt(ele.avgWPM),
-      createDate: moment(ele.createDate).format('MM/DD/YYYY')
+      createDate: moment(ele.createDate).format('DD/MM/YYYY'),
+      datetime: moment(ele.createDate).format('DD/MM/YYYY HH:mm')
     };
   });
   return (
