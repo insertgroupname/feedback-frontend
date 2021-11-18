@@ -44,12 +44,12 @@ const LandingCard = (props) => {
           </Typography>
           <Typography color="textPrimary" variant="body1">
             Created at:{' '}
-            {moment(props.item.createDate).format('MMMM Do YYYY, h:mm:ss a')}
+            {moment(props.item.createDate).format('MMMM DD YYYY, h:mm:ss a')}
           </Typography>
           {props.item.status === 'Done' && (
             <Typography color="textPrimary" variant="body1">
               Updated at:{' '}
-              {moment(props.item.lastUpdate).format('MMMM Do YYYY, h:mm:ss a')}
+              {moment(props.item.lastUpdate).format('MMMM DD YYYY, h:mm:ss a')}
             </Typography>
           )}
 

@@ -81,14 +81,6 @@ const Dashboard = () => {
               }}
             >
               <Typography variant="h3">{item.videoName}</Typography>
-              {/* {tags.map((tag) => (
-                <Chip
-                  key={tag}
-                  label={tag}
-                  color="primary"
-                  variant="outlined"
-                />
-              ))} */}
             </Box>
 
             <Box sx={{ pb: '1rem' }}>

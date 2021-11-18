@@ -1,7 +1,7 @@
 import * as actionTypes from '../constants/adminConstants';
 
 const initialState = {
-  admin: [],
+  allUserBaseline: [],
   isLoading: false
 };
 
@@ -9,12 +9,12 @@ export const adminReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_ADMIN_REQUEST:
       return {
-        admin: state.admin,
+        allUserBaseline: state.allUserBaseline,
         isLoading: true
       };
     case actionTypes.GET_ADMIN_SUCCESS:
       return {
-        admin: action.payload,
+        allUserBaseline: action.payload,
         isLoading: false
       };
 

@@ -24,7 +24,7 @@ import DisfluencyClipDuration from 'src/components/analytics/DisfluencyClipDurat
 import {
   getAllBaseline,
   getAnalytics
-} from 'src/redux/actions/analyticsReducer';
+} from 'src/redux/actions/analyticsActions';
 
 const UserAnalytics = () => {
   const dispatch = useDispatch();

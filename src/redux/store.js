@@ -9,6 +9,7 @@ import { itemReducer, itemDetailReducer } from './reducers/itemsReducer';
 import { modalReducer } from './reducers/modalReducer';
 import { settingsReducer } from './reducers/settingsReducer';
 import { analyticsReducer } from './reducers/analyticsReducer';
+import { adminReducer } from './reducers/adminReducer';
 
 const loggerMiddleware = createLogger();
 
@@ -18,7 +19,8 @@ const reducer = combineReducers({
   itemDetail: itemDetailReducer,
   modal: modalReducer,
   settings: settingsReducer,
-  analytics: analyticsReducer
+  analytics: analyticsReducer,
+  admin: adminReducer
 });
 
 const middleware = [thunk, loggerMiddleware];
