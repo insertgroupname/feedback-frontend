@@ -1,11 +1,4 @@
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  CardHeader,
-  Divider
-} from '@material-ui/core';
+import { Card, CardContent, CardHeader, Divider } from '@material-ui/core';
 import {
   ComposedChart,
   Bar,
@@ -21,45 +14,22 @@ import {
   ReferenceLine
 } from 'recharts';
 import { getFirstUUID } from 'src/utils/getFirstUUID';
-
-const renderLegend = (props) => {
-  const { payload } = props;
-  const payloadValue = payload.map((entry) => {
-    return entry.value;
-  });
-  let cleaningPayload = [...new Set(payloadValue)];
-  return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      sx={{
-        pb: 1,
-        gap: '.5rem'
-      }}
-    >
-      <Box sx={{ height: 15, width: 15, background: '#5664d2' }} />
-      {cleaningPayload.map((value, index) => (
-        <Typography color="#5664d2" key={index}>
-          {value}
-        </Typography>
-      ))}
-    </Box>
-  );
-};
+import { AnalyticLegends } from './AnalyticLegends';
+import { AnalyticTooltips } from './AnalyticTooltips';
 
 const AveragePace = (props) => {
   const formatData = props.wpm.map((ele) => {
     return {
       videoUUID: getFirstUUID(ele.videoUUID),
-      average: ele.avgWPM
+      videoName: ele.videoName,
+      wpm: parseInt(ele.avgWPM)
     };
   });
 
-  const averagePaceBaseline = props.baseline ? props.baseline : 0;
+  const userBaseline = props.userBaseline ? parseInt(props.userBaseline) : 0;
 
   return (
-    <Card {...props}>
+    <Card sx={props.sx}>
       <CardHeader title="Average Pace" />
       <Divider />
       <CardContent sx={{ height: '300px' }}>
@@ -85,8 +55,10 @@ const AveragePace = (props) => {
                 style={{ textAnchor: 'middle' }}
               />
             </YAxis>
-            <Tooltip />
-            <Legend verticalAlign="top" content={renderLegend} />
+            <Tooltip
+              content={<AnalyticTooltips userBaseline={userBaseline} />}
+            />
+            <Legend verticalAlign="top" content={<AnalyticLegends />} />
             {formatData.length > 5 && (
               <Brush
                 startIndex={formatData.length - 5}
@@ -96,10 +68,10 @@ const AveragePace = (props) => {
                 stroke="#8884d8"
               />
             )}
-            <Bar barSize={50} dataKey="average" fill="#5664d2" />
-            <Line type="monotone" dataKey="average" stroke="#ff7300" />
+            <Bar barSize={50} dataKey="wpm" fill="#5664d2" />
+            <Line type="monotone" dataKey="wpm" stroke="#ff7300" />
             <ReferenceLine
-              y={averagePaceBaseline}
+              y={userBaseline}
               stroke="black"
               strokeWidth={2}
               strokeDasharray="3 3"

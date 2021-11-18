@@ -14,29 +14,30 @@ import {
   ReferenceLine
 } from 'recharts';
 import { getFirstUUID } from 'src/utils/getFirstUUID';
+import { AnalyticLegends } from './AnalyticLegends';
+import { AnalyticTooltips } from './AnalyticTooltips';
 
 const DisfluencyTotalWord = (props) => {
   const formatData = props.data.map((ele) => {
     return {
       videoUUID: getFirstUUID(ele.videoUUID),
+      videoName: ele.videoName,
       totalDisfluency: ele.disfluencyCount,
       totalWord: ele.totalWord,
       disfluency: parseFloat(
         (ele.disfluencyCount / ele.totalWord) * 100
       ).toFixed(2),
       word:
-        100 -
-        parseFloat((ele.disfluencyCount / ele.totalWord) * 100).toFixed(2),
-      average: parseFloat(ele.disfluencyPerTotalWord * 100).toFixed(2)
+        100 - parseFloat((ele.disfluencyCount / ele.totalWord) * 100).toFixed(2)
     };
   });
 
-  const baseline = props.baseline
-    ? parseFloat(props.baseline * 100).toFixed(2)
+  const userBaseline = props.userBaseline
+    ? parseFloat(props.userBaseline * 100).toFixed(2)
     : 0;
 
   return (
-    <Card {...props}>
+    <Card sx={props.sx}>
       <CardHeader title="Total Disfluency / Total Words" />
       <Divider />
       <CardContent sx={{ height: '300px' }}>
@@ -57,14 +58,16 @@ const DisfluencyTotalWord = (props) => {
             <XAxis dataKey="videoUUID" />
             <YAxis>
               <Label
-                value="Total frequency"
+                value="Percentage(%)"
                 angle={-90}
                 position="left"
                 style={{ textAnchor: 'middle' }}
               />
             </YAxis>
-            <Tooltip />
-            <Legend verticalAlign="top" height={36} />
+            <Tooltip
+              content={<AnalyticTooltips userBaseline={userBaseline} />}
+            />
+            <Legend verticalAlign="top" content={<AnalyticLegends />} />
             {formatData.length > 5 && (
               <Brush
                 startIndex={formatData.length - 5}
@@ -76,9 +79,9 @@ const DisfluencyTotalWord = (props) => {
             )}
             <Bar dataKey="disfluency" barSize={50} fill="#5664d2" />
             <Bar dataKey="word" barSize={50} fill="#82ca9d" />
-            <Line type="monotone" dataKey="average" stroke="#ff7300" />
+            <Line type="monotone" dataKey="disfluency" stroke="#ff7300" />
             <ReferenceLine
-              y={baseline}
+              y={userBaseline}
               stroke="black"
               strokeWidth={2}
               strokeDasharray="3 3"

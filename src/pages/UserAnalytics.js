@@ -151,35 +151,35 @@ const UserAnalytics = () => {
               <Grid item lg={4} md={12} xl={4} xs={12}>
                 <AveragePace
                   wpm={wpm}
-                  baseline={baselines.avgWPM}
+                  userBaseline={baselines.avgWPM}
                   sx={{ height: '100%' }}
                 />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
                 <DisfluencyTotalWord
                   data={disfluencyPerTotalWord}
-                  baseline={baselines.avgDisfluencyPerTotalWord}
+                  userBaseline={baselines.avgDisfluencyPerTotalWord}
                   sx={{ height: '100%' }}
                 />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
                 <DisfluencyClipDuration
                   data={disfluencyPerVideoLength}
-                  baseline={baselines.avgDisfluencyPerVideoLength}
+                  userBaseline={baselines.avgDisfluencyPerVideoLength}
                   sx={{ height: '100%' }}
                 />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
                 <SilenceClipDuration
                   data={silencePerVideoLength}
-                  baseline={baselines.avgSilencePerVideoLength}
+                  userBaseline={baselines.avgSilencePerVideoLength}
                   sx={{ height: '100%' }}
                 />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
                 <SilenceDisfluencyDuration
                   data={disfluencyPerSilence}
-                  baseline={baselines.avgDisfluencyPerSilence}
+                  userBaseline={baselines.avgDisfluencyPerSilence}
                   sx={{ height: '100%' }}
                 />
               </Grid>

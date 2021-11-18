@@ -13,22 +13,25 @@ import {
   ReferenceLine
 } from 'recharts';
 import { getFirstUUID } from 'src/utils/getFirstUUID';
+import { AnalyticLegends } from './AnalyticLegends';
+import { AnalyticTooltips } from './AnalyticTooltips';
 
 const SilenceClipDuration = (props) => {
-  const formatData = props.data.map((ele, index) => {
+  const formatData = props.data.map((ele) => {
     return {
       videoUUID: getFirstUUID(ele.videoUUID),
+      videoName: ele.videoName,
       silence: parseFloat(ele.silencePerVideoLength * 100).toFixed(2),
       clip: parseFloat(100 - ele.silencePerVideoLength * 100).toFixed(2)
     };
   });
 
-  const baseline = props.baseline
-    ? parseFloat(props.baseline * 100).toFixed(2)
+  const userBaseline = props.userBaseline
+    ? parseFloat(props.userBaseline * 100).toFixed(2)
     : 0;
 
   return (
-    <Card {...props}>
+    <Card sx={props.sx}>
       <CardHeader title="Silence Duration / Clip Duration" />
       <Divider />
       <CardContent sx={{ height: '300px' }}>
@@ -54,8 +57,10 @@ const SilenceClipDuration = (props) => {
                 style={{ textAnchor: 'middle' }}
               />
             </YAxis>
-            <Tooltip />
-            <Legend verticalAlign="top" height={36} />
+            <Tooltip
+              content={<AnalyticTooltips userBaseline={userBaseline} />}
+            />
+            <Legend verticalAlign="top" content={<AnalyticLegends />} />
             {formatData.length > 5 && (
               <Brush
                 startIndex={formatData.length - 5}
@@ -68,7 +73,7 @@ const SilenceClipDuration = (props) => {
             <Bar dataKey="silence" stackId="a" barSize={50} fill="#5664d2" />
             <Bar dataKey="clip" stackId="a" barSize={50} fill="#82ca9d" />
             <ReferenceLine
-              y={baseline}
+              y={userBaseline}
               stroke="black"
               strokeWidth={2}
               strokeDasharray="3 3"

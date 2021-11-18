@@ -13,11 +13,14 @@ import {
   ReferenceLine
 } from 'recharts';
 import { getFirstUUID } from 'src/utils/getFirstUUID';
+import { AnalyticTooltips } from './AnalyticTooltips';
+import { AnalyticLegends } from './AnalyticLegends';
 
 const SilenceDisfluencyDuration = (props) => {
-  const formatData = props.data.map((ele, index) => {
+  const formatData = props.data.map((ele) => {
     return {
       videoUUID: getFirstUUID(ele.videoUUID),
+      videoName: ele.videoName,
       disfluency: parseFloat(ele.disfluencyPersilenceDuration * 100).toFixed(2),
       silence: parseFloat(100 - ele.disfluencyPersilenceDuration * 100).toFixed(
         2
@@ -25,13 +28,13 @@ const SilenceDisfluencyDuration = (props) => {
     };
   });
 
-  const baseline = props.baseline
-    ? parseFloat(props.baseline * 100).toFixed(2)
+  const userBaseline = props.userBaseline
+    ? parseFloat(props.userBaseline * 100).toFixed(2)
     : 0;
 
   return (
-    <Card {...props}>
-      <CardHeader title="Silence Duration / Disfluency Duration" />
+    <Card sx={props.sx}>
+      <CardHeader title="Disfluency Duration / Silence Duration" />
       <Divider />
       <CardContent sx={{ height: '300px' }}>
         <ResponsiveContainer width="100%" height="100%">
@@ -56,8 +59,10 @@ const SilenceDisfluencyDuration = (props) => {
                 style={{ textAnchor: 'middle' }}
               />
             </YAxis>
-            <Tooltip />
-            <Legend verticalAlign="top" height={36} />
+            <Tooltip
+              content={<AnalyticTooltips userBaseline={userBaseline} />}
+            />
+            <Legend verticalAlign="top" content={<AnalyticLegends />} />
             {formatData.length > 5 && (
               <Brush
                 startIndex={formatData.length - 5}
@@ -70,7 +75,7 @@ const SilenceDisfluencyDuration = (props) => {
             <Bar dataKey="disfluency" barSize={50} stackId="a" fill="#5664d2" />
             <Bar dataKey="silence" barSize={50} stackId="a" fill="#82ca9d" />
             <ReferenceLine
-              y={baseline}
+              y={userBaseline}
               stroke="black"
               strokeWidth={2}
               strokeDasharray="3 3"

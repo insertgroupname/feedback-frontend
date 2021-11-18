@@ -9,7 +9,6 @@ export const getAnalytics = (tag) => async (dispatch) => {
     const { data } = await axiosInstance.get(
       `record/report/analytic/?tag=${tag}`
     );
-    console.log(`record/report/analytic/?tag=${tag}`);
     dispatch({
       type: actionTypes.GET_ANALYTIC_SUCCESS,
       payload: data
