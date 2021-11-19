@@ -22,19 +22,6 @@ const SettingsStopword = (props) => {
   const settingState = useSelector((state) => state.settings);
   const { stopwords } = settingState;
 
-  const itemState = useSelector((state) => state.items);
-  const { items } = itemState;
-
-  const itemStopwords = items.map((item) => {
-    return item.stopwords;
-  });
-
-  const formatItemStopwords = [];
-
-  for (const i in itemStopwords) {
-    formatItemStopwords.push(...itemStopwords[i]);
-  }
-
   const [showInput, setShowInput] = useState(false);
   const [inputValues, setInputValues] = useState({
     stopword: ''
@@ -89,25 +76,15 @@ const SettingsStopword = (props) => {
               button
             </Typography>
           )}
-          {stopwords.map((stopword, index) => {
-            let result = formatItemStopwords.includes(stopword) ? (
-              <Chip
-                key={index}
-                color="primary"
-                sx={{ m: 0.5 }}
-                label={stopword}
-              />
-            ) : (
-              <Chip
-                key={index}
-                color="primary"
-                sx={{ m: 0.5 }}
-                label={stopword}
-                onDelete={deleteStopwordHandler(stopword)}
-              />
-            );
-            return result;
-          })}
+          {stopwords.map((stopword, index) => (
+            <Chip
+              key={index}
+              color="primary"
+              sx={{ m: 0.5 }}
+              label={stopword}
+              onDelete={deleteStopwordHandler(stopword)}
+            />
+          ))}
           {showInput ? (
             <IconButton
               color="primary"

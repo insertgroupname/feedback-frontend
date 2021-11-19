@@ -34,7 +34,8 @@ export const settingsReducer = (state = initialSettingState, action) => {
     case actionTypes.GET_SETTINGS_FAILURE:
       return {
         username: state.username,
-        error: action.payload
+        error: action.payload,
+        type: state.type
       };
 
     case actionTypes.ADD_STOPWORD_SUCCESS: {
@@ -42,14 +43,16 @@ export const settingsReducer = (state = initialSettingState, action) => {
       return {
         username: state.username,
         stopwords: newStopwords,
-        tags: state.tags
+        tags: state.tags,
+        type: state.type
       };
     }
 
     case actionTypes.ADD_STOPWORD_FAILURE:
       return {
         username: state.username,
-        error: action.payload
+        error: action.payload,
+        type: state.type
       };
 
     case actionTypes.ADD_TAG_SUCCESS: {
@@ -57,14 +60,16 @@ export const settingsReducer = (state = initialSettingState, action) => {
       return {
         username: state.username,
         stopwords: state.stopwords,
-        tags: newTags
+        tags: newTags,
+        type: state.type
       };
     }
 
     case actionTypes.ADD_TAG_FAILURE:
       return {
         username: state.username,
-        error: action.payload
+        error: action.payload,
+        type: state.type
       };
 
     case actionTypes.DELETE_STOPWORD_SUCCESS: {
@@ -72,14 +77,16 @@ export const settingsReducer = (state = initialSettingState, action) => {
       return {
         username: state.username,
         stopwords: updatedStopwords,
-        tags: state.tags
+        tags: state.tags,
+        type: state.type
       };
     }
 
     case actionTypes.DELETE_STOPWORD_FAILURE:
       return {
         username: state.username,
-        error: action.payload
+        error: action.payload,
+        type: state.type
       };
 
     case actionTypes.DELETE_TAG_SUCCESS: {
@@ -87,14 +94,16 @@ export const settingsReducer = (state = initialSettingState, action) => {
       return {
         username: state.username,
         stopwords: state.stopwords,
-        tags: updatedTags
+        tags: updatedTags,
+        type: state.type
       };
     }
 
     case actionTypes.DELETE_TAG_FAILURE:
       return {
         username: state.username,
-        error: action.payload
+        error: action.payload,
+        type: state.type
       };
 
     default:

@@ -23,6 +23,26 @@ const Fillers = (props) => {
       ? item.report.postProcessing.repeat_list
       : {};
 
+  let custom_stopwords =
+    item.report && item.report.postProcessing
+      ? item.report.postProcessing.custom_stopwords
+      : [];
+
+  if (!custom_stopwords) {
+    custom_stopwords = [];
+  }
+
+  const mapStopword = custom_stopwords.map((stopword) => {
+    return {
+      label: stopword[0].split(' ').join(''),
+      count: stopword[1]
+    };
+  });
+
+  const formatStopword = mapStopword.filter(
+    (stopword) => stopword.label.length !== 0
+  );
+
   let repeatWords = [];
 
   if (repeat_list) {
@@ -46,28 +66,49 @@ const Fillers = (props) => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          height: 'calc(100% - 101px)'
+          height: '100%'
         }}
       >
         <Box
           sx={{
             display: 'flex',
-            height: '25%',
             alignItems: 'center',
-            pb: '1rem'
+            pt: '1rem',
+            pb: '2rem'
           }}
         >
           <Typography>Hesitation frequency: {fillerCount} times</Typography>
         </Box>
         <Divider />
-        <Box sx={{ height: '75%', py: '2rem' }}>
-          <Box sx={{ display: 'flex', gap: '.5rem', alignItems: 'center' }}>
+        <Box sx={{ py: '2rem' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '.5rem',
+              alignItems: 'center'
+            }}
+          >
             <Typography>Frequency phrases:</Typography>
             {repeatWords.map((repeatWord) => (
               <Chip
                 key={repeatWord.id}
                 label={`${repeatWord.word} x ${repeatWord.count}`}
                 color="primary"
+                variant="outlined"
+              />
+            ))}
+          </Box>
+        </Box>
+        <Divider />
+        <Box sx={{ py: '2rem' }}>
+          <Box sx={{ display: 'flex', gap: '.5rem', alignItems: 'center' }}>
+            <Typography>Custom Stopword Detection:</Typography>
+            {formatStopword.map((stopword, index) => (
+              <Chip
+                key={index}
+                label={`${stopword.label} x ${stopword.count}`}
+                color="secondary"
                 variant="outlined"
               />
             ))}

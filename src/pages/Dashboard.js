@@ -30,8 +30,6 @@ const Dashboard = () => {
   const itemDetailState = useSelector((state) => state.itemDetail);
   const { isLoading, item, error } = itemDetailState;
 
-  // const tags = item && item.tags ? item.tags : [];
-
   useEffect(() => {
     dispatch(getItemDetail(videoUUID));
     return () => {

@@ -21,19 +21,6 @@ const SettingsTag = (props) => {
   const settingState = useSelector((state) => state.settings);
   const { tags } = settingState;
 
-  const itemState = useSelector((state) => state.items);
-  const { items } = itemState;
-
-  const itemTags = items.map((item) => {
-    return item.tags;
-  });
-
-  const formatItemTags = [];
-
-  for (const i in itemTags) {
-    formatItemTags.push(...itemTags[i]);
-  }
-
   const [showInput, setShowInput] = useState(false);
   const [inputValues, setInputValues] = useState({
     tag: ''
@@ -85,20 +72,15 @@ const SettingsTag = (props) => {
               You don't have any tag yet. You can add it by clicked add button
             </Typography>
           )}
-          {tags.map((tag, index) => {
-            let result = formatItemTags.includes(tag) ? (
-              <Chip key={index} color="primary" sx={{ m: 0.5 }} label={tag} />
-            ) : (
-              <Chip
-                key={index}
-                color="primary"
-                sx={{ m: 0.5 }}
-                label={tag}
-                onDelete={deleteTagHandler(tag)}
-              />
-            );
-            return result;
-          })}
+          {tags.map((tag, index) => (
+            <Chip
+              key={index}
+              color="primary"
+              sx={{ m: 0.5 }}
+              label={tag}
+              onDelete={deleteTagHandler(tag)}
+            />
+          ))}
           {showInput ? (
             <IconButton
               color="primary"
