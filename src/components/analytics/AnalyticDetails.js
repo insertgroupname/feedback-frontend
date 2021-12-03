@@ -1,50 +1,24 @@
 import { Box, Card } from '@material-ui/core';
 import AnalyticItems from './AnalyticItems';
 
-const items = [
-  {
-    label: 'Longest Video Duration',
-    value: '28.02 Minutes'
-  },
-  {
-    label: 'Best Average Pace',
-    value: '161 WPM'
-  },
-  {
-    label: 'Less Disfluency Count',
-    value: '2 Disfluency'
-  },
-  {
-    label: 'Less Silence Times',
-    value: '88 seconds'
-  },
-  {
-    label: 'Less Stopword Detection',
-    value: '9 words'
-  },
-  {
-    label: 'Most Topics',
-    value: '20 Topics'
-  }
-];
-
 const AnalyticDetails = (props) => {
+  const { analyticDetails, sx } = props;
   return (
-    <Card {...props}>
+    <Card sx={sx}>
       <Box
         sx={{
           display: 'flex',
-          py: 2.5,
+          pt: 3,
           px: 4,
           flexDirection: 'column',
           gap: '1rem'
         }}
       >
-        {items.map((item) => (
+        {analyticDetails.map((analyticDetail) => (
           <AnalyticItems
-            key={item.label}
-            label={item.label}
-            value={item.value}
+            key={analyticDetail.label}
+            label={analyticDetail.label}
+            value={analyticDetail.value}
           />
         ))}
       </Box>

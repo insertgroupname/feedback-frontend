@@ -59,6 +59,7 @@ const LoginForm = () => {
           )}
           <TextField
             error={Boolean(touched.email && errors.email)}
+            autoComplete="off"
             fullWidth
             helperText={touched.email && errors.email}
             label="Email Address"
@@ -72,6 +73,7 @@ const LoginForm = () => {
           />
           <TextField
             error={Boolean(touched.password && errors.password)}
+            autoComplete="off"
             fullWidth
             helperText={touched.password && errors.password}
             label="Password"

@@ -25,6 +25,7 @@ import {
   getAllBaseline,
   getAnalytics
 } from 'src/redux/actions/analyticsActions';
+import { secondToFormat } from 'src/utils/secondTomin';
 
 const UserAnalytics = () => {
   const dispatch = useDispatch();
@@ -45,6 +46,9 @@ const UserAnalytics = () => {
   const handleChange = (event) => {
     setTag(event.target.value);
   };
+
+  const findAverage = (value) =>
+    value.reduce((prev, curr) => prev + curr / value.length, 0);
 
   useEffect(() => {
     dispatch(getAnalytics(tag));
@@ -75,6 +79,72 @@ const UserAnalytics = () => {
     analytics && analytics.allVideoAnalytic
       ? analytics.allVideoAnalytic.disfluencyPerSilence
       : [];
+
+  const allAveragePace = wpm && wpm.map((ele) => ele.avgWPM);
+  const dividedAveragePace = findAverage(allAveragePace);
+
+  const allAverageDisfluency =
+    disfluencyPerTotalWord &&
+    disfluencyPerTotalWord.map((ele) => ele.disfluencyCount);
+
+  const allAverageTotalWord =
+    disfluencyPerTotalWord &&
+    disfluencyPerTotalWord.map((ele) => ele.totalWord);
+
+  const dividedAverageDisfluency = findAverage(allAverageDisfluency);
+  const dividedAverageTotalWord = findAverage(allAverageTotalWord);
+
+  const disfluencyDuration =
+    disfluencyPerVideoLength &&
+    disfluencyPerVideoLength.map((ele) => ele.disfluencyDuration);
+
+  const videoDuration =
+    disfluencyPerVideoLength &&
+    disfluencyPerVideoLength.map((ele) => ele.videoLength);
+
+  const dividedDisfluencyDuration = findAverage(disfluencyDuration);
+  const dividedVideoDuration = findAverage(videoDuration);
+
+  const silenceDuration =
+    silencePerVideoLength &&
+    silencePerVideoLength.map((ele) => ele.silenceDuration);
+  const dividedSilenceDuration = findAverage(silenceDuration);
+
+  const analyticDetails = [
+    {
+      label: 'Average Pace',
+      value: `${parseInt(dividedAveragePace)} wpm`
+    },
+    {
+      label: 'Average Disfluency',
+      value: `${parseInt(dividedAverageDisfluency)} words`
+    },
+    {
+      label: 'Average Total Word',
+      value: `${parseInt(dividedAverageTotalWord)} words`
+    },
+    {
+      label: 'Average Disfluency Duration',
+      value: `${secondToFormat(
+        parseInt(dividedDisfluencyDuration),
+        'mm:ss'
+      )} minutes`
+    },
+    {
+      label: 'Average Silence Duration',
+      value: `${secondToFormat(
+        parseInt(dividedSilenceDuration),
+        'mm:ss'
+      )} minutes`
+    },
+    {
+      label: 'Average Clip Duration',
+      value: `${secondToFormat(
+        parseInt(dividedVideoDuration),
+        'mm:ss'
+      )} minutes`
+    }
+  ];
 
   return (
     <>
@@ -146,7 +216,10 @@ const UserAnalytics = () => {
                 <UserOverview score={analytics.scoringResult} />
               </Grid>
               <Grid item lg={6} md={12} xl={6} xs={12}>
-                <AnalyticDetails sx={{ height: '100%' }} />
+                <AnalyticDetails
+                  analyticDetails={analyticDetails}
+                  sx={{ height: '100%' }}
+                />
               </Grid>
               <Grid item lg={4} md={12} xl={4} xs={12}>
                 <AveragePace

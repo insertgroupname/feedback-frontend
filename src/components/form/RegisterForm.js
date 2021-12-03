@@ -68,6 +68,7 @@ const RegisterForm = () => {
           )}
           <TextField
             error={Boolean(touched.username && errors.username)}
+            autoComplete="off"
             fullWidth
             helperText={touched.username && errors.username}
             label="Username"
@@ -80,6 +81,7 @@ const RegisterForm = () => {
           />
           <TextField
             error={Boolean(touched.email && errors.email)}
+            autoComplete="off"
             fullWidth
             helperText={touched.email && errors.email}
             label="Email Address"
@@ -93,6 +95,7 @@ const RegisterForm = () => {
           />
           <TextField
             error={Boolean(touched.password && errors.password)}
+            autoComplete="off"
             fullWidth
             helperText={touched.password && errors.password}
             label="Password"
@@ -107,6 +110,7 @@ const RegisterForm = () => {
 
           <TextField
             error={Boolean(touched.confirmPassword && errors.confirmPassword)}
+            autoComplete="off"
             fullWidth
             helperText={touched.confirmPassword && errors.confirmPassword}
             label="Confirm Password"

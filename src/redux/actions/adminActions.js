@@ -1,7 +1,7 @@
 import * as actionTypes from '../constants/adminConstants';
 import { axiosInstance } from 'src/utils/axiosInstance';
 
-export const getAllBaseline = (tag) => async (dispatch) => {
+export const getAllBaseline = () => async (dispatch) => {
   try {
     dispatch({
       type: actionTypes.GET_ADMIN_REQUEST
