@@ -10,6 +10,7 @@ const initialItemState = {
 
 const initialItemDetailState = {
   item: {},
+  baseline: {},
   streaming: null,
   videoRequired: false,
   isLoading: false
@@ -113,14 +114,16 @@ export const itemDetailReducer = (state = initialItemDetailState, action) => {
         isLoading: true,
         streaming: null,
         videoRequired: false,
-        item: {}
+        item: {},
+        baseline: state.baseline
       };
     case actionTypes.GET_ITEM_DETAIL_SUCCESS:
       return {
         item: action.payload.videoDetailData,
         streaming: action.payload.streamData,
         videoRequired: true,
-        isLoading: false
+        isLoading: false,
+        baseline: state.baseline
       };
 
     case actionTypes.GET_ITEM_DETAIL_FAILURE:
@@ -128,6 +131,33 @@ export const itemDetailReducer = (state = initialItemDetailState, action) => {
         isLoading: false,
         videoRequired: false,
         streaming: null,
+        error: action.payload
+      };
+
+    case actionTypes.GET_ITEM_DETAIL_BASELINE_REQUEST:
+      return {
+        isLoading: state.isLoading,
+        streaming: state.streaming,
+        videoRequired: state.videoRequired,
+        item: state.item,
+        baseline: {}
+      };
+
+    case actionTypes.GET_ITEM_DETAIL_BASELINE_SUCCESS:
+      return {
+        isLoading: state.isLoading,
+        streaming: state.streaming,
+        videoRequired: state.videoRequired,
+        item: state.item,
+        baseline: action.payload
+      };
+
+    case actionTypes.GET_ITEM_DETAIL_BASELINE_FAILURE:
+      return {
+        isLoading: state.isLoading,
+        streaming: state.streaming,
+        videoRequired: state.videoRequired,
+        item: state.item,
         error: action.payload
       };
 

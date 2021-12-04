@@ -21,7 +21,11 @@ import Transcript from 'src/components/dashboard/Transcript';
 import SoundDetail from 'src/components/dashboard/SoundDetail';
 import Soundwave from 'src/components/dashboard/Soundwave';
 import ServerDown from './ServerDown';
-import { getItemDetail, resetItem } from 'src/redux/actions/itemsActions';
+import {
+  getItemDetail,
+  getItemDetailBaseline,
+  resetItem
+} from 'src/redux/actions/itemsActions';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -32,6 +36,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getItemDetail(videoUUID));
+    dispatch(getItemDetailBaseline());
     return () => {
       dispatch(resetItem());
     };

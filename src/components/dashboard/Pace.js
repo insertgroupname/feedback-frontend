@@ -82,7 +82,7 @@ const paceInformation = [
 
 const Pace = (props) => {
   const itemDetailState = useSelector((state) => state.itemDetail);
-  const { item } = itemDetailState;
+  const { item, baseline } = itemDetailState;
 
   const [coordinate, setCoordinate] = useState([]);
   const [attributes, setAttributes] = useState({
@@ -97,8 +97,41 @@ const Pace = (props) => {
       ? item.report.postProcessing.avg_wpm
       : 0
   );
+
+  const wpmRange = baseline ? baseline.WPMrange : [];
+  const arcRange = wpmRange
+    ? wpmRange.map((ele) => {
+        return {
+          min: ele[0],
+          max: ele[1]
+        };
+      })
+    : [];
+
+  const getArcLength = (prev, max, min) => {
+    return prev + ((max - min) * 180) / 250;
+  };
+
+  const minDomain = 0;
+  const maxDomain = 250;
+
+  const maxVSlow = arcRange[0] && arcRange[0].max;
+  const minSlow = arcRange[1] && arcRange[1].min;
+  const maxSlow = arcRange[1] && arcRange[1].max;
+  const minGood = arcRange[2] && arcRange[2].min;
+  const maxGood = arcRange[2] && arcRange[2].max;
+  const minFast = arcRange[3] && arcRange[3].min;
+  const maxFast = arcRange[3] && arcRange[3].max;
+
+  const b = getArcLength(minDomain, maxVSlow, minDomain);
+  const c = getArcLength(b, maxSlow, minSlow);
+  const d = getArcLength(c, maxGood, minGood);
+  const e = getArcLength(d, maxFast, minFast);
+
   useEffect(() => {
-    const percentScale = scaleLinear().domain([0, 250]).range([0, 1]);
+    const percentScale = scaleLinear()
+      .domain([minDomain, maxDomain])
+      .range([0, 1]);
     const percent = percentScale(value);
     const angleScale = scaleLinear()
       .domain([0, 1])
@@ -115,77 +148,77 @@ const Pace = (props) => {
   const redArcLeft = arc()
     .innerRadius(1)
     .outerRadius(0.9)
-    .startAngle(-Math.PI / 2)
-    .endAngle(-Math.PI / 4)
+    .startAngle(0)
+    .endAngle(b * (Math.PI / 180))
     .padAngle(0)
     .cornerRadius(2)();
 
   const orangeArcLeft = arc()
     .innerRadius(1)
     .outerRadius(0.9)
-    .startAngle(-Math.PI / 4.15)
-    .endAngle(Math.PI / 20)
+    .startAngle(b * (Math.PI / 180))
+    .endAngle(c * (Math.PI / 180))
     .padAngle(0)
     .cornerRadius(2)();
   const greenArc = arc()
     .innerRadius(1)
     .outerRadius(0.9)
-    .startAngle(Math.PI / 17)
-    .endAngle(Math.PI / 5.75)
+    .startAngle(c * (Math.PI / 180))
+    .endAngle(d * (Math.PI / 180))
     .padAngle(0)
     .cornerRadius(2)();
 
   const orangeArcRight = arc()
     .innerRadius(1)
     .outerRadius(0.9)
-    .startAngle(Math.PI / 5.5)
-    .endAngle(Math.PI / 3.5)
+    .startAngle(d * (Math.PI / 180))
+    .endAngle(e * (Math.PI / 180))
     .padAngle(0)
     .cornerRadius(2)();
 
   const redArcRight = arc()
     .innerRadius(1)
     .outerRadius(0.9)
-    .startAngle(Math.PI / 3.35)
-    .endAngle(Math.PI / 2)
+    .startAngle(e * (Math.PI / 180))
+    .endAngle(180 * (Math.PI / 180))
     .padAngle(0)
     .cornerRadius(2)();
 
   const getBlobColor = (value) => {
-    if (value >= 0 && value < 60) return '#e81246';
-    if (value >= 60 && value < 140) return '#ee8d41';
-    if (value >= 140 && value <= 170) return '#4dff4d';
-    if (value > 170 && value <= 200) return '#ee8d41';
-    if (value > 200) return '#e81246';
+    if (value >= minDomain && value <= maxVSlow) return '#e81246';
+    if (value >= minSlow && value <= maxSlow) return '#ee8d41';
+    if (value >= minGood && value <= maxGood) return '#4dff4d';
+    if (value >= minFast && value <= maxFast) return '#ee8d41';
+    if (value > maxFast) return '#e81246';
   };
 
   useEffect(() => {
     const getTextAndColor = (value) => {
-      if (value >= 0 && value < 60)
+      if (value >= minDomain && value <= maxVSlow)
         setAttributes({
           text: 'Very Slow',
           color: '#e81246',
           recommend: 'Your pace is very slow, try to speed up your speech!'
         });
-      if (value >= 60 && value < 140)
+      if (value >= minSlow && value <= maxSlow)
         setAttributes({
           text: 'Slow',
           color: '#ee8d41',
           recommend: 'Your pace is slow, try to speed up your speech a bit'
         });
-      if (value >= 140 && value <= 170)
+      if (value >= minGood && value <= maxGood)
         setAttributes({
           text: 'Good',
           color: '#4dff4d',
           recommend: 'Your pace is conversational. Keep it up!'
         });
-      if (value > 170 && value < 200)
+      if (value >= minFast && value <= maxFast)
         setAttributes({
           text: 'Fast',
           color: '#ee8d41',
           recommend: 'Your pace is fast, try to speed down your speech a bit'
         });
-      if (value >= 200)
+      if (value >= maxFast)
         setAttributes({
           text: 'Very Fast',
           color: '#e81246',
@@ -193,7 +226,7 @@ const Pace = (props) => {
         });
     };
     getTextAndColor(value);
-  }, [value]);
+  }, [value, maxFast, maxGood, maxSlow, maxVSlow, minFast, minGood, minSlow]);
 
   return (
     <Card {...props}>
@@ -250,11 +283,31 @@ const Pace = (props) => {
       <CardContent className={classes.cardContent}>
         <Box className={classes.gaugeContainer}>
           <svg viewBox={[-1, -1, 2, 1].join(' ')} className={classes.gauge}>
-            <path d={redArcLeft} fill="#e81246" />
-            <path d={orangeArcLeft} fill="#ee8d41" />
-            <path d={greenArc} fill="#4dff4d" />
-            <path d={orangeArcRight} fill="#ee8d41" />
-            <path d={redArcRight} fill="#e81246" />
+            <path
+              style={{ transform: 'rotate(-90deg)' }}
+              d={redArcLeft}
+              fill="#e81246"
+            />
+            <path
+              style={{ transform: 'rotate(-90deg)' }}
+              d={orangeArcLeft}
+              fill="#ee8d41"
+            />
+            <path
+              style={{ transform: 'rotate(-90deg)' }}
+              d={greenArc}
+              fill="#4dff4d"
+            />
+            <path
+              style={{ transform: 'rotate(-90deg)' }}
+              d={orangeArcRight}
+              fill="#ee8d41"
+            />
+            <path
+              style={{ transform: 'rotate(-90deg)' }}
+              d={redArcRight}
+              fill="#e81246"
+            />
             <circle
               cx={coordinate[0]}
               cy={coordinate[1]}
