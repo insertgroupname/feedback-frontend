@@ -10,6 +10,7 @@ import {
 import {
   BarChart,
   Bar,
+  Brush,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -111,6 +112,15 @@ const FillersChart = (props) => {
             </YAxis>
             <Tooltip />
             <Legend verticalAlign="top" height={36} content={renderLegend} />
+            {formatData.length > 10 && (
+              <Brush
+                startIndex={formatData.length - 10}
+                endIndex={formatData.length - 1}
+                dataKey="videoUUID"
+                height={30}
+                stroke="#8884d8"
+              />
+            )}
             <Bar dataKey="disfluency" fill="#F05311" />
             <ReferenceLine
               y={acceptable}
