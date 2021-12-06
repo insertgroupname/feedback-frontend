@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 const token = Cookies.get('jwt');
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: process.env.REACT_APP_API_URL + '/api/v2/',
   withCredentials: true
 });
 

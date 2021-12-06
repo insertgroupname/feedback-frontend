@@ -21,6 +21,7 @@ import {
   Label
 } from 'recharts';
 import { secondToFormat } from '../../utils/secondTomin';
+import { DashboardTooltip } from './DashboardTooltip';
 
 const renderLegend = (props) => {
   const { payload } = props;
@@ -110,7 +111,7 @@ const FillersChart = (props) => {
                 style={{ textAnchor: 'middle' }}
               />
             </YAxis>
-            <Tooltip />
+            <Tooltip content={<DashboardTooltip acceptable={acceptable} />} />
             <Legend verticalAlign="top" height={36} content={renderLegend} />
             {formatData.length > 10 && (
               <Brush

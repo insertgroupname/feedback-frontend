@@ -18,6 +18,7 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import { secondToFormat } from '../../utils/secondTomin';
+import { DashboardTooltip } from './DashboardTooltip';
 
 const AveragePace = (props) => {
   const itemDetailState = useSelector((state) => state.itemDetail);
@@ -95,7 +96,7 @@ const AveragePace = (props) => {
                 style={{ textAnchor: 'middle' }}
               />
             </YAxis>
-            <Tooltip />
+            <Tooltip content={<DashboardTooltip />} />
             <Area
               type="monotone"
               dataKey="pace"
