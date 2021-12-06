@@ -15,7 +15,8 @@ import {
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
-  ResponsiveContainer
+  ResponsiveContainer,
+  Tooltip
 } from 'recharts';
 
 const UserOverview = (props) => {
@@ -29,17 +30,17 @@ const UserOverview = (props) => {
   const data = [
     {
       label: 'WPM',
-      score: score.wpmScore,
+      score: Math.round(score.wpmScore),
       fullMark: 5
     },
     {
       label: 'Hesitation Duration',
-      score: score.hesitationDurationScore,
+      score: Math.round(score.hesitationDurationScore),
       fullMark: 5
     },
     {
       label: 'Silence Time',
-      score: score.silenceDurationScore,
+      score: Math.round(score.silenceDurationScore),
       fullMark: 5
     }
   ];
@@ -69,6 +70,7 @@ const UserOverview = (props) => {
       <CardContent sx={{ height: '300px' }}>
         <ResponsiveContainer width="100%" height="100%">
           <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+            <Tooltip />
             <PolarGrid />
             <PolarAngleAxis dataKey="label" />
             <PolarRadiusAxis />
