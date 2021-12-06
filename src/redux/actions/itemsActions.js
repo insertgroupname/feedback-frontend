@@ -129,27 +129,6 @@ export const getItemDetail = (videoUUID) => async (dispatch) => {
   }
 };
 
-export const getItemDetailBaseline = () => async (dispatch) => {
-  try {
-    dispatch({
-      type: actionTypes.GET_ITEM_DETAIL_BASELINE_REQUEST
-    });
-    const { data } = await axiosInstance.get('baseline');
-    dispatch({
-      type: actionTypes.GET_ITEM_DETAIL_BASELINE_SUCCESS,
-      payload: data
-    });
-  } catch (error) {
-    dispatch({
-      type: actionTypes.GET_ITEM_DETAIL_BASELINE_FAILURE,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message
-    });
-  }
-};
-
 export const resetItem = () => async (dispatch) => {
   dispatch({
     type: actionTypes.ITEM_DETAIL_RESET

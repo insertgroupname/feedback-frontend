@@ -13,6 +13,9 @@ import { getAllBaseline } from 'src/redux/actions/adminActions';
 import UserPaceCard from 'src/components/admin/UserPaceCard';
 import UserDisfluencyCard from 'src/components/admin/UserDisfluencyCard';
 import AdminBaseLine from 'src/components/admin/AdminBaseLine';
+import AdminGauge from 'src/components/admin/AdminGauge';
+import UpdateModalSuccess from 'src/components/modal/UpdateModalSuccess';
+import UpdateModalFail from 'src/components/modal/UpdateModalFail';
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -79,10 +82,15 @@ const Admin = () => {
               <Grid item lg={12} md={12} xl={12} xs={12}>
                 <AdminBaseLine />
               </Grid>
+              <Grid item lg={12} md={12} xl={12} xs={12}>
+                <AdminGauge />
+              </Grid>
             </Grid>
           </Container>
         )}
       </Box>
+      <UpdateModalSuccess />
+      <UpdateModalFail />
     </>
   );
 };

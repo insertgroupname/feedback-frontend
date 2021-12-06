@@ -52,37 +52,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const paceInformation = [
-  {
-    id: 1,
-    color: '#e81246',
-    label: '0 - 59 is very slow'
-  },
-  {
-    id: 2,
-    color: '#ee8d41',
-    label: '60 - 139 is slow'
-  },
-  {
-    id: 3,
-    color: '#4dff4d',
-    label: '140 - 170 is good'
-  },
-  {
-    id: 4,
-    color: '#ee8d41',
-    label: '171 - 200 is fast'
-  },
-  {
-    id: 5,
-    color: '#e81246',
-    label: '> 200 is very fast'
-  }
-];
-
 const Pace = (props) => {
   const itemDetailState = useSelector((state) => state.itemDetail);
-  const { item, baseline } = itemDetailState;
+  const { item } = itemDetailState;
+  const baselineState = useSelector((state) => state.baseline);
+  const { baseline } = baselineState;
 
   const [coordinate, setCoordinate] = useState([]);
   const [attributes, setAttributes] = useState({
@@ -122,6 +96,34 @@ const Pace = (props) => {
   const maxGood = arcRange[2] && arcRange[2].max;
   const minFast = arcRange[3] && arcRange[3].min;
   const maxFast = arcRange[3] && arcRange[3].max;
+
+  const paceInformation = [
+    {
+      id: 1,
+      color: '#e81246',
+      label: `${minDomain} - ${maxVSlow} is very slow`
+    },
+    {
+      id: 2,
+      color: '#ee8d41',
+      label: `${minSlow} - ${maxSlow} is slow`
+    },
+    {
+      id: 3,
+      color: '#4dff4d',
+      label: `${minGood} - ${maxGood} is good`
+    },
+    {
+      id: 4,
+      color: '#ee8d41',
+      label: `${minFast} - ${maxFast} is fast`
+    },
+    {
+      id: 5,
+      color: '#e81246',
+      label: `> ${maxFast} is very fast`
+    }
+  ];
 
   const b = getArcLength(minDomain, maxVSlow, minDomain);
   const c = getArcLength(b, maxSlow, minSlow);

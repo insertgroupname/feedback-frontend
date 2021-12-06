@@ -14,11 +14,13 @@ const AnalyticDetails = (props) => {
           gap: '1rem'
         }}
       >
-        {analyticDetails.map((analyticDetail) => (
+        {analyticDetails.map((analyticDetail, index, arr) => (
           <AnalyticItems
             key={analyticDetail.label}
             label={analyticDetail.label}
             value={analyticDetail.value}
+            index={index}
+            arr={arr}
           />
         ))}
       </Box>

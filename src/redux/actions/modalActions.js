@@ -55,6 +55,18 @@ export const openDeleteFailModal = () => async (dispatch) => {
   });
 };
 
+export const openUpdateSuccessModal = () => async (dispatch) => {
+  dispatch({
+    type: actionTypes.OPEN_UPDATE_BASELINE_SUCCESS_MODAL
+  });
+};
+
+export const openUpdateFailModal = () => async (dispatch) => {
+  dispatch({
+    type: actionTypes.OPEN_UPDATE_BASELINE_FAIL_MODAL
+  });
+};
+
 export const closeUploadModal = () => async (dispatch) => {
   dispatch({
     type: actionTypes.CLOSE_UPLOAD_MODAL
@@ -70,6 +82,18 @@ export const closeEditModal = () => async (dispatch) => {
 export const closeConfirmModal = () => async (dispatch) => {
   dispatch({
     type: actionTypes.CLOSE_CONFIRM_MODAL
+  });
+};
+
+export const closeUpdateSuccessModal = () => async (dispatch) => {
+  dispatch({
+    type: actionTypes.CLOSE_UPDATE_BASELINE_SUCCESS_MODAL
+  });
+};
+
+export const closeUpdateFailModal = () => async (dispatch) => {
+  dispatch({
+    type: actionTypes.CLOSE_UPDATE_BASELINE_FAIL_MODAL
   });
 };
 

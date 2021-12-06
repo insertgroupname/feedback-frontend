@@ -23,17 +23,24 @@ const AveragePace = (props) => {
   const itemDetailState = useSelector((state) => state.itemDetail);
   const { item } = itemDetailState;
 
+  const baselineState = useSelector((state) => state.baseline);
+  const { baseline } = baselineState;
+
   const averagePace =
     item.report && item.report.postProcessing
       ? item.report.postProcessing.wpm
       : {};
+
+  const wpmRange = baseline ? baseline.WPMrange : [];
+  const goodAverage = wpmRange && wpmRange[2];
+
   let formatData = [];
-  console.log(averagePace);
+
   for (const [key, value] of Object.entries(averagePace)) {
     formatData.push({
       timestamp: secondToFormat(key.split('-')[1], 'mm:ss'),
-      pace: value.wpm,
-      range: [140, 170]
+      pace: parseInt(value.wpm),
+      range: goodAverage
     });
   }
   return (

@@ -53,6 +53,11 @@ const FillersChart = (props) => {
   const itemDetailState = useSelector((state) => state.itemDetail);
   const { item } = itemDetailState;
 
+  const baselineState = useSelector((state) => state.baseline);
+  const { baseline } = baselineState;
+
+  const acceptable = baseline ? baseline.acceptableDisfluencyPerMinut : 0;
+
   const fillerChartData =
     item.report && item.report.postProcessing
       ? item.report.postProcessing.hestiation_.marker
@@ -108,7 +113,7 @@ const FillersChart = (props) => {
             <Legend verticalAlign="top" height={36} content={renderLegend} />
             <Bar dataKey="disfluency" fill="#F05311" />
             <ReferenceLine
-              y={2}
+              y={acceptable}
               stroke="blue"
               strokeWidth={2}
               strokeDasharray="3 3"

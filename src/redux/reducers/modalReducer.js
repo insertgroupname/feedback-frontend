@@ -10,6 +10,8 @@ const initialModalState = {
   showEditFailModal: false,
   showDeleteSuccessModal: false,
   showDeleteFailModal: false,
+  showUpdateSuccessModal: false,
+  showUpdateFailModal: false,
   videoUUID: null
 };
 
@@ -76,6 +78,20 @@ export const modalReducer = (state = initialModalState, action) => {
       };
     }
 
+    case actionTypes.OPEN_UPDATE_BASELINE_SUCCESS_MODAL: {
+      return {
+        ...state,
+        showUpdateSuccessModal: true
+      };
+    }
+
+    case actionTypes.OPEN_UPDATE_BASELINE_FAIL_MODAL: {
+      return {
+        ...state,
+        showUpdateFailModal: true
+      };
+    }
+
     case actionTypes.CLOSE_UPLOAD_MODAL:
       return {
         ...state,
@@ -95,6 +111,20 @@ export const modalReducer = (state = initialModalState, action) => {
         ...state,
         showConfirmModal: false
       };
+
+    case actionTypes.CLOSE_UPDATE_BASELINE_SUCCESS_MODAL: {
+      return {
+        ...state,
+        showUpdateSuccessModal: false
+      };
+    }
+
+    case actionTypes.CLOSE_UPDATE_BASELINE_FAIL_MODAL: {
+      return {
+        ...state,
+        showUpdateFailModal: false
+      };
+    }
 
     case actionTypes.CLOSE_SUCCESS_FAIL_MODAL: {
       return {

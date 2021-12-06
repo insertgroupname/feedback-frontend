@@ -8,6 +8,7 @@ import theme from 'src/theme';
 import routes from 'src/routes';
 import { getItems } from 'src/redux/actions/itemsActions';
 import { getSettings } from 'src/redux/actions/settingsActions';
+import { getItemDetailBaseline } from './redux/actions/baselineActions';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const App = () => {
     if (isAuthenticated) {
       dispatch(getItems());
       dispatch(getSettings());
+      dispatch(getItemDetailBaseline());
     }
   }, [dispatch, isAuthenticated]);
 
