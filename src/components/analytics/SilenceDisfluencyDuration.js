@@ -1,4 +1,14 @@
-import { Card, CardContent, CardHeader, Divider } from '@material-ui/core';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  IconButton,
+  Tooltip as MuiTooltip,
+  Typography
+} from '@material-ui/core';
+import HelpIcon from '@material-ui/icons/Help';
 import {
   ComposedChart,
   Bar,
@@ -34,7 +44,26 @@ const SilenceDisfluencyDuration = (props) => {
 
   return (
     <Card sx={props.sx}>
-      <CardHeader title="Disfluency Duration / Silence Duration" />
+      <Box display="flex" justifyContent="space-between">
+        <CardHeader title="Disfluency Duration / Silence Duration" />
+        <Box p={1}>
+          <MuiTooltip
+            title={
+              <>
+                <Typography>
+                  The ratio between silences duration and total video duration
+                </Typography>
+              </>
+            }
+            arrow
+          >
+            <IconButton>
+              <HelpIcon color="primary" />
+            </IconButton>
+          </MuiTooltip>
+        </Box>
+      </Box>
+
       <Divider />
       <CardContent sx={{ height: '350px' }}>
         <ResponsiveContainer width="100%" height="100%">

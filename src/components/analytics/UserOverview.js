@@ -1,4 +1,14 @@
-import { Card, CardHeader, Divider, CardContent } from '@material-ui/core';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  IconButton,
+  Tooltip as MuiTooltip,
+  Typography
+} from '@material-ui/core';
+import HelpIcon from '@material-ui/icons/Help';
 import {
   Radar,
   RadarChart,
@@ -35,7 +45,26 @@ const UserOverview = (props) => {
   ];
   return (
     <Card {...props}>
-      <CardHeader title="Overview" />
+      <Box display="flex" justifyContent="space-between">
+        <CardHeader title="Overview" />
+        <Box p={1}>
+          <MuiTooltip
+            title={
+              <>
+                <Typography>
+                  Score the word per minute, silences time, and hesitation
+                  duration by 0 to 5
+                </Typography>
+              </>
+            }
+            arrow
+          >
+            <IconButton>
+              <HelpIcon color="primary" />
+            </IconButton>
+          </MuiTooltip>
+        </Box>
+      </Box>
       <Divider />
       <CardContent sx={{ height: '300px' }}>
         <ResponsiveContainer width="100%" height="100%">

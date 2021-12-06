@@ -1,4 +1,14 @@
-import { Card, CardContent, CardHeader, Divider } from '@material-ui/core';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Tooltip as MuiTooltip,
+  IconButton,
+  Typography
+} from '@material-ui/core';
+import HelpIcon from '@material-ui/icons/Help';
 import {
   ComposedChart,
   Bar,
@@ -38,7 +48,25 @@ const DisfluencyTotalWord = (props) => {
 
   return (
     <Card sx={props.sx}>
-      <CardHeader title="Total Disfluency / Total Words" />
+      <Box display="flex" justifyContent="space-between">
+        <CardHeader title="Total Disfluency / Total Words" />
+        <Box p={1}>
+          <MuiTooltip
+            title={
+              <>
+                <Typography>
+                  The ratio between total disfluency and total words
+                </Typography>
+              </>
+            }
+            arrow
+          >
+            <IconButton>
+              <HelpIcon color="primary" />
+            </IconButton>
+          </MuiTooltip>
+        </Box>
+      </Box>
       <Divider />
       <CardContent sx={{ height: '350px' }}>
         <ResponsiveContainer width="100%" height="100%">
