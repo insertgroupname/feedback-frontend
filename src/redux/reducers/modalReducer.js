@@ -12,6 +12,7 @@ const initialModalState = {
   showDeleteFailModal: false,
   showUpdateSuccessModal: false,
   showUpdateFailModal: false,
+  showHelpModal: false,
   videoUUID: null
 };
 
@@ -92,6 +93,13 @@ export const modalReducer = (state = initialModalState, action) => {
       };
     }
 
+    case actionTypes.OPEN_HELP_MODAL: {
+      return {
+        ...state,
+        showHelpModal: true
+      };
+    }
+
     case actionTypes.CLOSE_UPLOAD_MODAL:
       return {
         ...state,
@@ -123,6 +131,13 @@ export const modalReducer = (state = initialModalState, action) => {
       return {
         ...state,
         showUpdateFailModal: false
+      };
+    }
+
+    case actionTypes.CLOSE_HELP_MODAL: {
+      return {
+        ...state,
+        showHelpModal: false
       };
     }
 

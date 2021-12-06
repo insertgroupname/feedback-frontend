@@ -19,6 +19,7 @@ const LandingCard = (props) => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
+          justifyContent: 'space-between',
           height: '100%'
         }}
       >
@@ -36,9 +37,11 @@ const LandingCard = (props) => {
               {props.videoNumber}
             </Typography>
           </Box>
-          <Typography color="textPrimary" variant="body1">
-            Description: {props.item.description}
-          </Typography>
+          {props.item.description.length > 0 ? (
+            <Typography color="textPrimary" variant="body1">
+              Description: {props.item.description}
+            </Typography>
+          ) : null}
           <Typography color="textPrimary" variant="body1">
             Status: {props.item.status}
           </Typography>
@@ -52,27 +55,27 @@ const LandingCard = (props) => {
               {moment(props.item.lastUpdate).format('DD/MM/YYYY, h:mm:ss')}
             </Typography>
           )}
-
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center'
-            }}
-          >
-            <Typography color="textPrimary" variant="body1">
-              Tags:
-            </Typography>
-            {props.item.tags.map((tag) => (
-              <Chip key={tag} color="primary" sx={{ m: 0.5 }} label={tag} />
-            ))}
-          </Box>
+          {props.item.tags.length > 0 ? (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
+              <Typography color="textPrimary" variant="body1">
+                Tags:
+              </Typography>
+              {props.item.tags.map((tag) => (
+                <Chip key={tag} color="primary" sx={{ m: 0.5 }} label={tag} />
+              ))}
+            </Box>
+          ) : null}
         </CardContent>
         {props.item.status === 'Done' && (
           <CardActions
             style={{
               display: 'flex',
-              justifyContent: 'flex-end',
-              alignItems: 'stretch'
+              justifyContent: 'flex-end'
             }}
           >
             <Button

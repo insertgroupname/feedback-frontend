@@ -102,17 +102,19 @@ const Fillers = (props) => {
         </Box>
         <Divider />
         <Box sx={{ py: '2rem' }}>
-          <Box sx={{ display: 'flex', gap: '.5rem', alignItems: 'center' }}>
-            <Typography>Custom Stopword Detection:</Typography>
-            {formatStopword.map((stopword, index) => (
-              <Chip
-                key={index}
-                label={`${stopword.label} x ${stopword.count}`}
-                color="secondary"
-                variant="outlined"
-              />
-            ))}
-          </Box>
+          {formatStopword.length > 0 ? (
+            <Box sx={{ display: 'flex', gap: '.5rem', alignItems: 'center' }}>
+              <Typography>Custom Stopword Detection:</Typography>
+              {formatStopword.map((stopword, index) => (
+                <Chip
+                  key={index}
+                  label={`${stopword.label} x ${stopword.count}`}
+                  color="secondary"
+                  variant="outlined"
+                />
+              ))}
+            </Box>
+          ) : null}
         </Box>
       </CardContent>
     </Card>

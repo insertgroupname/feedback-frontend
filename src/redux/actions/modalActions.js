@@ -102,3 +102,15 @@ export const closeSuccessFailModal = () => async (dispatch) => {
     type: actionTypes.CLOSE_SUCCESS_FAIL_MODAL
   });
 };
+
+export const openHelpModal = () => async (dispatch) => {
+  dispatch({
+    type: actionTypes.OPEN_HELP_MODAL
+  });
+};
+
+export const closeHelpModal = () => async (dispatch) => {
+  dispatch({
+    type: actionTypes.CLOSE_HELP_MODAL
+  });
+};

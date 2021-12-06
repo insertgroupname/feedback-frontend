@@ -9,7 +9,8 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  Typography
 } from '@material-ui/core';
 import LandingToolbar from '../components/landing/LandingToolbar';
 import LandingCard from 'src/components/landing/LandingCard';
@@ -18,6 +19,7 @@ import LandingInitial from 'src/components/landing/LandingInitial';
 import EditModal from '../components/modal/EditModal';
 import ServerDown from './ServerDown';
 import UploadModal from '../components/modal/UploadModal';
+import HelpModal from '../components/modal/HelpModal';
 import { openEditModal } from 'src/redux/actions/modalActions';
 import { getFirstUUID } from 'src/utils/getFirstUUID';
 
@@ -119,17 +121,33 @@ const Landing = () => {
             <Box sx={{ pt: 3 }}>
               <Grid container spacing={3}>
                 {items.length > 0 ? (
-                  formatItem.map((item) => (
-                    <Grid item key={item.videoUUID} lg={4} md={6} xs={12}>
-                      <LandingCard
-                        item={item}
-                        videoNumber={'#' + getFirstUUID(item.videoUUID)}
-                        openEditModalHandler={() =>
-                          openEditModalHandler(item.videoUUID)
-                        }
-                      />
-                    </Grid>
-                  ))
+                  formatItem.length > 0 ? (
+                    formatItem.map((item) => (
+                      <Grid item key={item.videoUUID} lg={4} md={6} xs={12}>
+                        <LandingCard
+                          item={item}
+                          videoNumber={'#' + getFirstUUID(item.videoUUID)}
+                          openEditModalHandler={() =>
+                            openEditModalHandler(item.videoUUID)
+                          }
+                        />
+                      </Grid>
+                    ))
+                  ) : (
+                    <Box
+                      sx={{
+                        height: '650px',
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                      }}
+                    >
+                      <Typography variant="h5">
+                        You don't have any video with this tag
+                      </Typography>
+                    </Box>
+                  )
                 ) : (
                   <LandingInitial />
                 )}
@@ -140,6 +158,7 @@ const Landing = () => {
       </Box>
       <UploadModal />
       <EditModal />
+      <HelpModal />
     </>
   );
 };

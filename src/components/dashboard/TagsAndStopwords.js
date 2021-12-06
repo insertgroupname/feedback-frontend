@@ -22,10 +22,14 @@ const TagsAndStopwords = () => {
           gap: '.5rem'
         }}
       >
-        <Typography variant="body1">Tags:</Typography>
-        {tags.map((tag, index) => (
-          <Chip key={index} label={tag} color="primary" />
-        ))}
+        {tags.length > 0 ? (
+          <>
+            <Typography variant="body1">Tags:</Typography>
+            {tags.map((tag, index) => (
+              <Chip key={index} label={tag} color="primary" />
+            ))}
+          </>
+        ) : null}
       </Box>
       <Box
         sx={{
@@ -34,10 +38,14 @@ const TagsAndStopwords = () => {
           gap: '.5rem'
         }}
       >
-        <Typography variant="body1">Stopwords:</Typography>
-        {stopwords.map((stopword, index) => (
-          <Chip key={index} label={stopword} color="secondary" />
-        ))}
+        {stopwords.length > 0 ? (
+          <>
+            <Typography variant="body1">Stopwords:</Typography>
+            {stopwords.map((stopword, index) => (
+              <Chip key={index} label={stopword} color="secondary" />
+            ))}
+          </>
+        ) : null}
       </Box>
     </Box>
   );

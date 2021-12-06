@@ -6,11 +6,16 @@ import InputIcon from '@material-ui/icons/Input';
 import Logo from './Logo';
 import { useDispatch } from 'react-redux';
 import { logout } from 'src/redux/actions/authActions';
+import { openHelpModal } from 'src/redux/actions/modalActions';
+import HelpIcon from '@material-ui/icons/Help';
 
 const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
+  };
+  const openHelpModalHandler = () => {
+    dispatch(openHelpModal());
   };
   return (
     <AppBar elevation={0} {...rest}>
@@ -20,6 +25,9 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
         </RouterLink>
         <Box sx={{ flexGrow: 1 }} />
         <Hidden lgDown>
+          <IconButton color="inherit" onClick={openHelpModalHandler}>
+            <HelpIcon />
+          </IconButton>
           <IconButton color="inherit" onClick={handleLogout}>
             <InputIcon />
           </IconButton>
