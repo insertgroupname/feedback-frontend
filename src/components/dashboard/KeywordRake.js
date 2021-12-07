@@ -7,39 +7,28 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
   TableRow,
+  TableHead,
   TableFooter,
   TablePagination
 } from '@material-ui/core';
 import { TablePaginationActions } from './TablePaginationActions';
+import shortid from 'shortid';
 
-const Vocabulary = () => {
+const KeywordRake = () => {
   const itemDetailState = useSelector((state) => state.itemDetail);
   const { item } = itemDetailState;
 
-  const vocabulary =
+  const keyword =
     item.report && item.report.postProcessing
-      ? item.report.postProcessing.vocab.vocab
-      : null;
-
-  let words = [];
-  console.log(words);
-  if (vocabulary) {
-    for (const [key, value] of Object.entries(vocabulary)) {
-      words.push({
-        id: key,
-        word: value.word,
-        partOfSpeech: value.pos
-      });
-    }
-  }
+      ? item.report.postProcessing.keyword_gen
+      : [];
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(4);
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, words.length - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, keyword.length - page * rowsPerPage);
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -50,27 +39,27 @@ const Vocabulary = () => {
     setPage(0);
   };
   return (
-    <Card>
-      <CardHeader title="Vocabulary" />
+    <Card sx={{ height: '100%' }}>
+      <CardHeader title="Keyword (Rake)" />
       <Box>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>Word</TableCell>
-              <TableCell align="right">Part of Speech</TableCell>
+              <TableCell align="right">Score</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {(rowsPerPage > 0
-              ? words.slice(
+              ? keyword.slice(
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
                 )
-              : words
+              : keyword
             ).map((word) => (
-              <TableRow hover key={word.id}>
-                <TableCell>{word.word}</TableCell>
-                <TableCell align="right">{word.partOfSpeech}</TableCell>
+              <TableRow hover key={shortid.generate()}>
+                <TableCell>{word[1]}</TableCell>
+                <TableCell align="right">{parseInt(word[0])}</TableCell>
               </TableRow>
             ))}
             {emptyRows > 0 && (
@@ -84,7 +73,7 @@ const Vocabulary = () => {
               <TablePagination
                 rowsPerPageOptions={[]}
                 colSpan={3}
-                count={words.length}
+                count={keyword.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{
@@ -103,4 +92,4 @@ const Vocabulary = () => {
   );
 };
 
-export default Vocabulary;
+export default KeywordRake;

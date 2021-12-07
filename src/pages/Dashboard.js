@@ -22,6 +22,7 @@ import SoundDetail from 'src/components/dashboard/SoundDetail';
 import Soundwave from 'src/components/dashboard/Soundwave';
 import ServerDown from './ServerDown';
 import { getItemDetail, resetItem } from 'src/redux/actions/itemsActions';
+import KeywordRake from 'src/components/dashboard/KeywordRake';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -114,6 +115,9 @@ const Dashboard = () => {
               </Grid>
               <Grid item lg={12} md={12} xl={12} xs={12}>
                 <Transcript />
+              </Grid>
+              <Grid item lg={4} md={12} xl={4} xs={12}>
+                <KeywordRake />
               </Grid>
             </Grid>
           </Container>
