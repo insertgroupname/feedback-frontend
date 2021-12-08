@@ -41,8 +41,8 @@ const GaugeForm = (props) => {
       validationSchema={validationSchema}
       onSubmit={(values) => {
         const formatWpmRange = values.wpmRange.map((ele) => [
-          ele.start,
-          ele.end
+          parseInt(ele.start),
+          parseInt(ele.end)
         ]);
         const formatData = {
           acceptableDisfluencyPerMinut: acceptable,

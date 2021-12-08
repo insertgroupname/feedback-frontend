@@ -61,7 +61,7 @@ export const AnalyticLegends = ({ payload }) => {
               color: 'black'
             }}
           >
-            Users Baseline
+            All Users Average
           </Typography>
         </Box>
       </Box>
