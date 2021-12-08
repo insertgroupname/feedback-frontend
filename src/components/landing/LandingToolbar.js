@@ -1,12 +1,23 @@
-import { Box, Button, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  IconButton,
+  Tooltip,
+  Typography
+} from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import UploadIcon from '@material-ui/icons/Upload';
-import { openUploadModal } from 'src/redux/actions/modalActions';
+import { openHelpModal, openUploadModal } from 'src/redux/actions/modalActions';
+import HelpIcon from '@material-ui/icons/Help';
 
 const LandingToolbar = (props) => {
   const dispatch = useDispatch();
   const openUploadModalHandler = () => {
     dispatch(openUploadModal());
+  };
+
+  const openHelpModalHandler = () => {
+    dispatch(openHelpModal());
   };
   return (
     <Box>
@@ -16,7 +27,14 @@ const LandingToolbar = (props) => {
           justifyContent: 'space-between'
         }}
       >
-        <Typography variant="h3">Welcome, {props.username}</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography variant="h3">Welcome, {props.username}</Typography>
+          <Tooltip title="Help">
+            <IconButton color="primary" onClick={openHelpModalHandler}>
+              <HelpIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
         {props.itemLength > 0 && (
           <Button
             variant="contained"

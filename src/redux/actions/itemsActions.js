@@ -109,6 +109,7 @@ export const getItemDetail = (videoUUID) => async (dispatch) => {
         credentials: 'include'
       }
     );
+
     const blob = await result.blob();
     const streamData = URL.createObjectURL(blob);
     dispatch({

@@ -4,7 +4,6 @@ import React from 'react';
 export const DashboardTooltip = ({ active, payload, acceptable }) => {
   if (active && payload && payload.length) {
     const capitalize = (s) => (s && s[0].toUpperCase() + s.slice(1)) || '';
-    console.log(payload);
     return (
       <Box
         sx={{

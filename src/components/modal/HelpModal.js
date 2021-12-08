@@ -49,7 +49,9 @@ const HelpModal = () => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title" disableTypography>
-          <Typography variant="h3">Help Center</Typography>
+          <Typography variant="h3">
+            Step to upload a video or audio file
+          </Typography>
         </DialogTitle>
         <DialogContent className={classes.dialogContentContainer}>
           <DialogContentText>

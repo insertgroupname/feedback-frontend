@@ -24,7 +24,6 @@ const Vocabulary = () => {
       : null;
 
   let words = [];
-  console.log(words);
   if (vocabulary) {
     for (const [key, value] of Object.entries(vocabulary)) {
       words.push({

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -14,11 +14,18 @@ import {
   BarChart as BarChartIcon,
   Settings as SettingsIcon,
   BarChart2 as BarChart2Icon,
-  User as AdminIcon
+  User as AdminIcon,
+  LogOut as LogoutIcon
 } from 'react-feather';
 import NavItem from './NavItem';
+import { logout } from 'src/redux/actions/authActions';
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   let items;
 
   const settingsState = useSelector((state) => state.settings);
@@ -47,6 +54,11 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
         href: '/app/admin',
         icon: AdminIcon,
         title: 'Admin'
+      },
+      {
+        icon: LogoutIcon,
+        title: 'Logout',
+        handle: handleLogout
       }
     ];
   } else {
@@ -65,6 +77,11 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
         href: '/app/settings',
         icon: SettingsIcon,
         title: 'Settings'
+      },
+      {
+        icon: LogoutIcon,
+        title: 'Logout',
+        handle: handleLogout
       }
     ];
   }
@@ -107,6 +124,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
                   key={item.title}
                   title={item.title}
                   icon={item.icon}
+                  handle={item.handle}
                 />
               ))}
         </List>
