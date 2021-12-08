@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import { Button, ListItem, Typography } from '@material-ui/core';
 
 const NavItem = ({ href, icon: Icon, title, handle, ...rest }) => {
-  console.log(handle);
   const location = useLocation();
 
   const active = href
