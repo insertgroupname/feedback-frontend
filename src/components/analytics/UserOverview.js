@@ -30,16 +30,19 @@ const UserOverview = (props) => {
   const data = [
     {
       label: 'WPM',
+      scoreBaseline: 3,
       score: Math.round(score.wpmScore),
       fullMark: 5
     },
     {
       label: 'Hesitation Duration',
+      scoreBaseline: 3,
       score: Math.round(score.hesitationDurationScore),
       fullMark: 5
     },
     {
       label: 'Silence Time',
+      scoreBaseline: 3,
       score: Math.round(score.silenceDurationScore),
       fullMark: 5
     }
@@ -77,8 +80,15 @@ const UserOverview = (props) => {
             <Radar
               name="score"
               dataKey="score"
-              stroke="#8884d8"
-              fill="#8884d8"
+              stroke="#5664d2"
+              fill="#5664d2"
+              fillOpacity={0.6}
+            />
+            <Radar
+              name="scoreBaseline"
+              dataKey="scoreBaseline"
+              stroke="#82ca9d"
+              fill="#82ca9d"
               fillOpacity={0.6}
             />
           </RadarChart>
